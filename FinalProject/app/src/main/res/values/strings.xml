@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EFriendly</string>
+    <string name="loginTitle">Login</string>
+    <string name="image">Image</string>
+    <string name="email">Email</string>
+    <string name="passWord">Password</string>
+    <string name="forgotPass"><u>Forgot password</u></string>
+    <string name="loginHint">Press here to login</string>
+    <string name="dontHaveAccount">Don\'t have account? <u>Create one</u></string>
+</resources>
