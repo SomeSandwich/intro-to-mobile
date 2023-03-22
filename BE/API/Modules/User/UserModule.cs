@@ -1,9 +1,7 @@
 using Api.Configurations.Extentions;
 using Api.Modules.User.Endpoints;
+using Api.Modules.User.Services;
 using Asp.Versioning.Builder;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.Modules.User;
 
@@ -11,6 +9,8 @@ public class UserModule : IModule
 {
     public IServiceCollection RegisterModule(IServiceCollection builder)
     {
+        builder.AddScoped<IUserService, UserService>();
+        
         return builder;
     }
 
