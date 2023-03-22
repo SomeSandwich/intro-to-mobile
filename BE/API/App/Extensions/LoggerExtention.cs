@@ -1,4 +1,6 @@
-namespace Api.Configurations.Extentions;
+using Microsoft.Extensions.Logging;
+
+namespace API.App.Extensions;
 
 public interface ILoggerAdapter<T>
 {

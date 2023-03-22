@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace API.App;
 

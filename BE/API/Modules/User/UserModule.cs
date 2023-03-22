@@ -1,6 +1,9 @@
 using Api.Configurations.Extentions;
 using Api.Modules.User.Endpoints;
 using Asp.Versioning.Builder;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.Modules.User;
 

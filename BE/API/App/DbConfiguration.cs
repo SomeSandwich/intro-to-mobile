@@ -1,5 +1,10 @@
+using System;
 using Api.Context;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace API.App;
 
@@ -19,7 +24,7 @@ public static class DbConfiguration
         {
             services.AddDbContextPool<MobileDbContext>(options =>
             {
-                options.UseNpgsql(Environment.GetEnvironmentVariable("ConnectionStrings:Url"));
+                options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTIONSTR"));
             });
         }
     }
