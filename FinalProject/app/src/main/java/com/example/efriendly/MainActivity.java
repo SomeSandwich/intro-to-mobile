@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,18 +39,8 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_main);
-
-        //addEventClick
-        TextView forgotPass = (TextView) findViewById(R.id.forgotPass);
-        System.out.println(forgotPass);
-        if (forgotPass != null) forgotPass.setOnClickListener(OnClickForgotPass);
+        setContentView(R.layout.activity_homepage);
     }
 
-    final private TextView.OnClickListener OnClickForgotPass = new TextView.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            System.out.println("Forgot password clicked");
-        }
-    };
+
 }
