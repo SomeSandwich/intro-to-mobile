@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Asp.Versioning.Builder;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Api.Configurations.Extentions;
+namespace API.App.Extensions;
 
 public interface IModule
 {
@@ -17,20 +11,20 @@ public interface IModule
 public static class ModuleExtensions
 {
     // this could also be added into the DI container
-    static readonly List<IModule> registeredModules = new List<IModule>();
+    private static readonly List<IModule> RegisteredModules = new List<IModule>();
     public static IServiceCollection RegisterModules(this IServiceCollection services)
     {
         var modules = DiscoverModules();
         foreach (var module in modules)
         {
             module.RegisterModule(services);
-            registeredModules.Add(module);
+            RegisteredModules.Add(module);
         }
         return services;
     }
     public static WebApplication MapEndpoints(this WebApplication app, ApiVersionSet version)
     {
-        foreach (var module in registeredModules)
+        foreach (var module in RegisteredModules)
         {
             module.MapEndpoints(app, version);
         }

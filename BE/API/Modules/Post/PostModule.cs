@@ -1,27 +1,28 @@
 using API.App.Extensions;
-using Api.Modules.User.Endpoints;
-using Api.Modules.User.Services;
+using Api.Modules.Post.Endpoints;
+using Api.Modules.Post.Services;
 using Asp.Versioning.Builder;
 
-namespace Api.Modules.User;
+namespace Api.Modules.Post;
 
-public class UserModule : IModule
+public class PostModule : IModule
 {
     public IServiceCollection RegisterModule(IServiceCollection builder)
     {
-        builder.AddScoped<IUserService, UserService>();
+        builder.AddScoped<IPostService, PostService>();
         
         return builder;
     }
 
     public IEndpointRouteBuilder MapEndpoints(IEndpointRouteBuilder endpoints, ApiVersionSet version)
     {
-        var userGroup = endpoints.MapGroup($"{GlobalConfig.BaseRoute}/user")
+        var postGroup = endpoints.MapGroup($"{GlobalConfig.BaseRoute}/post")
             .WithDisplayName("User")
             .WithApiVersionSet(version)
             .HasApiVersion(1);
 
-        userGroup.GetUserEp($"/");
+        postGroup.GetAllPostEndpoint("/all");
+        postGroup.GetPostEndpoint("/{postId}");
         
         return endpoints;
     }

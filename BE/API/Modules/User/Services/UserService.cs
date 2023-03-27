@@ -6,6 +6,7 @@ namespace Api.Modules.User.Services;
 
 public interface IUserService
 {
+    Task<bool> IsUserExist(int userId);
 }
 
 public class UserService : IUserService
@@ -20,5 +21,11 @@ public class UserService : IUserService
         var config = new MapperConfiguration(config => { config.AddProfile<UserProfile>(); });
 
         _mapper = config.CreateMapper();
+    }
+
+    public async Task<bool> IsUserExist(int userId)
+    {
+        return _context.Users
+            .Any(e => e.Id == userId);
     }
 }
