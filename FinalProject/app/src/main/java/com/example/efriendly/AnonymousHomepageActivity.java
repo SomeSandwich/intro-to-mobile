@@ -1,6 +1,7 @@
 package com.example.efriendly;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,10 +13,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-
-public class MainActivity extends AppCompatActivity {
-
+import com.example.efriendly.databinding.ActivityAnonymousHomepageBinding;
+import com.example.efriendly.ui.login.LoginActivity;
+public class AnonymousHomepageActivity extends AppCompatActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
         View view = getCurrentFocus();
@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
+    private ActivityAnonymousHomepageBinding binding;
+    private AnonymousHomepageActivityClickHandler handlers;
 
     @SuppressLint("AppCompatMethod")
     @Override
@@ -38,14 +40,18 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-
-        //setContentView(R.layout.activity_anonymous_homepage);
-
-        Intent myIntent = new Intent(MainActivity.this, AnonymousHomepageActivity.class);
-        startActivity(myIntent);
-        finish();
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_anonymous_homepage);
+        handlers = new AnonymousHomepageActivityClickHandler(this);
+        binding.setClickHandler(handlers);
     }
-
-
+    public class AnonymousHomepageActivityClickHandler{
+        Context context;
+        public AnonymousHomepageActivityClickHandler(Context context){
+            this.context = context;
+        }
+        public void LoginClick(View view){
+            Intent myIntent = new Intent(AnonymousHomepageActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+        }
+    }
 }

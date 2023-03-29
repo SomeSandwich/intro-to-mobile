@@ -30,7 +30,7 @@
         android:contentDescription="@string/image"
         app:srcCompat="@drawable/cart" />
     <ImageView
-        android:id="@+id/LoginPic"
+        android:id="@+id/chatPic"
         android:layout_marginTop="35dp"
         android:layout_marginStart="41dp"
         android:layout_toEndOf="@id/CartPic"
@@ -38,11 +38,11 @@
         android:layout_height="wrap_content"
         android:scaleType="center"
         android:contentDescription="@string/image"
-        app:srcCompat="@drawable/login_homepage" />
+        app:srcCompat="@drawable/chat_icon" />
     <LinearLayout
         android:id="@+id/CategoryLayout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:background="@color/gray"
         android:layout_marginTop="26dp"
@@ -53,6 +53,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true"
+            android:layout_marginVertical="9dp"
             android:measureAllChildren="false"
             android:scrollbars="none" >
             <LinearLayout
@@ -462,7 +463,57 @@
                         />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"/>
+                </LinearLayout>
             </GridLayout>
         </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/green"
+        android:orientation="horizontal"
+        android:layout_marginTop="-48dp"
+        android:gravity="center"
+        android:layout_below="@id/CategoryLayout">
+        <ImageView
+            android:id="@+id/home_nav_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:contentDescription="@string/image"
+            app:srcCompat="@drawable/home_nav"
+            />
+        <ImageView
+            android:id="@+id/store_nav_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:contentDescription="@string/image"
+            app:srcCompat="@drawable/store_nav"
+            />
+        <ImageView
+            android:id="@+id/noti_nav_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:contentDescription="@string/image"
+            app:srcCompat="@drawable/noti_nav"
+            />
+        <ImageView
+            android:id="@+id/profile_nav_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:contentDescription="@string/image"
+            app:srcCompat="@drawable/profile_nav"
+            />
     </LinearLayout>
 </RelativeLayout>
