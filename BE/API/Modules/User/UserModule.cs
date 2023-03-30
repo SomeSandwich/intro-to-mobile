@@ -10,7 +10,7 @@ public class UserModule : IModule
     public IServiceCollection RegisterModule(IServiceCollection builder)
     {
         builder.AddScoped<IUserService, UserService>();
-        
+
         return builder;
     }
 
@@ -18,11 +18,12 @@ public class UserModule : IModule
     {
         var userGroup = endpoints.MapGroup($"{GlobalConfig.BaseRoute}/user")
             .WithDisplayName("User")
+            .WithTags("User")
             .WithApiVersionSet(version)
             .HasApiVersion(1);
 
         userGroup.GetUserEp($"/");
-        
+
         return endpoints;
     }
 }

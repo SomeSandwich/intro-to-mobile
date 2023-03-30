@@ -11,6 +11,7 @@ var env = builder.Environment;
 builder.Services.ConfigureDatabase(config, env);
 builder.Services.ConfigureVersion();
 builder.Services.ConfigureSwagger();
+builder.Services.ConfigJwt(config);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.RegisterModules();
@@ -41,8 +42,6 @@ if (true)
             var name = desc.GroupName.ToUpperInvariant();
             options.SwaggerEndpoint(url, name);
         }
-
-        // options.RoutePrefix = string.Empty;
     });
 }
 

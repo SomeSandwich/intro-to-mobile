@@ -244,6 +244,48 @@ namespace API.Migrations
                     b.ToTable("Rates");
                 });
 
+            modelBuilder.Entity("Api.Context.Entities.RefreshToken", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("JwtId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Api.Context.Entities.Report", b =>
                 {
                     b.Property<int>("Id")
@@ -290,8 +332,8 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Legit")
-                        .HasColumnType("integer");
+                    b.Property<double>("Legit")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -311,6 +353,30 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Trái Đất",
+                            Email = "intro_to_mobile_root@gmail.com",
+                            Legit = 10.0,
+                            Name = "Root",
+                            PasswordHash = "$2a$10$TRWj0w/pbLzInMS6dkQN6eK4.zrfxoyjDQxxCscADvEC95SSFktj.",
+                            PhoneNumber = "0905473034",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Trái Đất",
+                            Email = "hieucckha@gmail.com",
+                            Legit = 10.0,
+                            Name = "Hiếu Nguyễn",
+                            PasswordHash = "$2a$10$6ERp6HOK/Wf2DAjE76hkJ.ZPRXAF.OVezxpCKgqdA4jPynPuLGylC",
+                            PhoneNumber = "0905473034",
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("Api.Context.Entities.Cart", b =>
@@ -442,6 +508,17 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Api.Context.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("Api.Context.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

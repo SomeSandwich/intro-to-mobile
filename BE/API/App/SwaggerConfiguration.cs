@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using API.App.OpenAPI;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -14,12 +12,11 @@ public static class SwaggerConfiguration
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services.AddSwaggerGen(options =>
         {
-
             options.OperationFilter<SwaggerDefaultValues>();
 
-            // config for minial api
+            // // config for minial api
             // options.TagActionsBy(e => new[] { e.GroupName });
-            // 
+            //
             // options.DocInclusionPredicate((version, desc) =>
             // {
             //     //fix cho nay lai
@@ -28,7 +25,7 @@ public static class SwaggerConfiguration
 
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n
                       Enter 'Bearer' [space] and then your token in the text input below.
                       \r\n\r\nExample: 'Bearer 12345abcdef'",
                 Name = "Authorization",
@@ -42,11 +39,7 @@ public static class SwaggerConfiguration
                 {
                     new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        },
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
                         Scheme = "oauth2",
                         Name = "Bearer",
                         In = ParameterLocation.Header
@@ -54,7 +47,6 @@ public static class SwaggerConfiguration
                     new List<string>()
                 }
             });
-
         });
     }
 }
