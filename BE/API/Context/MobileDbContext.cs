@@ -13,12 +13,12 @@ public class MobileDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        
+
+        new UserDetailConfiguration().Configure(builder.Entity<User>());
         new CartConfiguration().Configure(builder.Entity<Cart>());
         new ParticipationConfiguration().Configure(builder.Entity<Participation>());
         new OrderConfiguration().Configure(builder.Entity<Order>());
         new OrderDetailConfiguration().Configure(builder.Entity<OrderDetail>());
-        
     }
 
     #region Entities
@@ -34,6 +34,8 @@ public class MobileDbContext : DbContext
     public DbSet<Message> Messages { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
+
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     #endregion
 }

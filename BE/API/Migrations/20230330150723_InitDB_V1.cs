@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitMobileDbV1 : Migration
+    public partial class InitDB_V1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,7 +50,7 @@ namespace API.Migrations
                     Email = table.Column<string>(type: "text", nullable: false),
                     PhoneNumber = table.Column<string>(type: "text", nullable: false),
                     PasswordHash = table.Column<string>(type: "text", nullable: false),
-                    Legit = table.Column<int>(type: "integer", nullable: false),
+                    Legit = table.Column<double>(type: "double precision", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -173,6 +175,32 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Token = table.Column<string>(type: "text", nullable: false),
+                    JwtId = table.Column<string>(type: "text", nullable: false),
+                    IsUsed = table.Column<bool>(type: "boolean", nullable: false),
+                    IsRevoked = table.Column<bool>(type: "boolean", nullable: false),
+                    AddedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IpAddress = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
                 {
@@ -277,6 +305,15 @@ namespace API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Address", "Email", "Legit", "Name", "PasswordHash", "PhoneNumber", "Status" },
+                values: new object[,]
+                {
+                    { 1, "Trái Đất", "intro_to_mobile_root@gmail.com", 10.0, "Root", "$2a$10$TRWj0w/pbLzInMS6dkQN6eK4.zrfxoyjDQxxCscADvEC95SSFktj.", "0905473034", 0 },
+                    { 2, "Trái Đất", "hieucckha@gmail.com", 10.0, "Hiếu Nguyễn", "$2a$10$6ERp6HOK/Wf2DAjE76hkJ.ZPRXAF.OVezxpCKgqdA4jPynPuLGylC", "0905473034", 0 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_PostId",
                 table: "Carts",
@@ -334,6 +371,11 @@ namespace API.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reports_PostId",
                 table: "Reports",
                 column: "PostId");
@@ -361,6 +403,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Rates");
+
+            migrationBuilder.DropTable(
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "Reports");

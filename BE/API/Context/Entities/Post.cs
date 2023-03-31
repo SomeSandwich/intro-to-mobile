@@ -18,7 +18,7 @@ public class Post
 
     public string? Description { get; set; }
 
-    public string[]? MediaPath {  get; set; }
+    public string[]? MediaPath { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -31,7 +31,7 @@ public class Post
     public bool IsDeleted { get; set; } = false;
 
 
-    public virtual ICollection<Rate> Rates { get; set; }
+    public virtual Rate Rate { get; set; }
 
     public virtual ICollection<Report> Reports { get; set; }
 
@@ -41,11 +41,9 @@ public class Post
     public virtual OrderDetail OrderDetail { get; set; }
 
 
-    [ForeignKey("User")]
-    public int UserId { get; set; }
+    [ForeignKey("User")] public int UserId { get; set; }
     public virtual User User { get; set; }
 
-    [ForeignKey("Category")]
-    public int CategoryId { get; set; }
+    [ForeignKey("Category")] public int CategoryId { get; set; }
     public virtual Category Category { get; set; }
 }
