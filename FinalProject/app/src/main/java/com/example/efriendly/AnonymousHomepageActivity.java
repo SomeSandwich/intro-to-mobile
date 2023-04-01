@@ -32,6 +32,21 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
     private ActivityAnonymousHomepageBinding binding;
     private AnonymousHomepageActivityClickHandler handlers;
 
+    String[] des = {
+            "Test Description", "Test Description",
+            "Test Description", "Test Description",
+            "Test Description", "Test Description",
+            "Test Description", "Test Description",
+            "Test Description", "Test Description"
+    };
+    Integer[] img = {
+            R.drawable.clothes, R.drawable.clothes,
+            R.drawable.clothes, R.drawable.clothes,
+            R.drawable.clothes, R.drawable.clothes,
+            R.drawable.clothes, R.drawable.clothes,
+            R.drawable.clothes, R.drawable.clothes
+    };
+
     @SuppressLint("AppCompatMethod")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
