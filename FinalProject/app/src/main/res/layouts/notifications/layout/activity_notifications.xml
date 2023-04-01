@@ -32,7 +32,7 @@
             android:layout_marginStart="-100dp"
             android:layout_marginTop="5dp"
             android:contentDescription="@string/image"
-            app:srcCompat="@drawable/cart"
+            app:srcCompat="@drawable/cart_icon"
             tools:ignore="ImageContrastCheck"
             tools:layout_editor_absoluteX="303dp"
             tools:layout_editor_absoluteY="37dp" />
@@ -44,7 +44,7 @@
             android:contentDescription="@string/image"
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
-            app:srcCompat="@drawable/message"
+            app:srcCompat="@drawable/chat_icon"
             tools:layout_editor_absoluteX="333dp"
             tools:layout_editor_absoluteY="37dp" />
     </LinearLayout>
@@ -61,9 +61,46 @@
             android:background="@drawable/listview_border">
         </ListView>
         <LinearLayout
+            android:id="@+id/navBar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="@color/green"
+            android:orientation="horizontal"
             android:layout_marginTop="-48dp"
-            android:orientation="horizontal"></LinearLayout>
+            android:gravity="center"
+            android:layout_below="@id/CategoryLayout">
+            <ImageView
+                android:id="@+id/home_nav_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:contentDescription="@string/image"
+                app:srcCompat="@drawable/home_nav"
+                />
+            <ImageView
+                android:id="@+id/store_nav_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:contentDescription="@string/image"
+                app:srcCompat="@drawable/store_nav"
+                />
+            <ImageView
+                android:id="@+id/noti_nav_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:contentDescription="@string/image"
+                app:srcCompat="@drawable/noti_nav"
+                />
+            <ImageView
+                android:id="@+id/profile_nav_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:contentDescription="@string/image"
+                app:srcCompat="@drawable/profile_nav"
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
