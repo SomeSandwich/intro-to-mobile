@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         //setContentView(R.layout.activity_anonymous_homepage);
 
-        Intent myIntent = new Intent(MainActivity.this, AnonymousHomepageActivity.class);
+        Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
         startActivity(myIntent);
         finish();
     }

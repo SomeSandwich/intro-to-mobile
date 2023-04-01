@@ -9,7 +9,7 @@
     </data>
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <EditText
+        <SearchView
             android:id="@+id/SearchBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -17,9 +17,7 @@
             android:layout_marginTop="28dp"
             android:layout_marginEnd="150dp"
             android:background="@drawable/search_bar_frame"
-            android:hint="@string/SearchBar"
             android:labelFor="@id/SearchBar"
-            android:autofillHints="@string/SearchBar"
             android:inputType="textFilter"
             android:paddingHorizontal="10dp" />
         <ImageView

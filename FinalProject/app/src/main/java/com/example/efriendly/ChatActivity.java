@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,20 +12,18 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 
-import com.example.efriendly.databinding.ActivityNotificationsBinding;
-import com.example.efriendly.listviewAdpater.NofiticationsAdapter;
-import com.example.efriendly.ui.login.LoginActivity;
+import com.example.efriendly.databinding.ActivityChatBinding;
+import com.example.efriendly.listviewAdpater.ChatAdapter;
 
-public class NotificationsActivity extends AppCompatActivity {
-    private ActivityNotificationsBinding binding;
+public class ChatActivity extends AppCompatActivity {
+    private ActivityChatBinding binding;
     Integer[] avatars = {R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user,
             R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user};
-    String[] notifications = {"Notice 1", "Notice 2", "Notice 3", "Notice 4", "Notice 5", "Notice 6", "Notice 7", "Notice 8", "Notice 9", "Notice 10",
-            "Notice 1", "Notice 2", "Notice 3", "Notice 4", "Notice 5", "Notice 6", "Notice 7", "Notice 8", "Notice 9", "Notice 10"};
-    String[] times = {"2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h",
-            "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h"};
+    String[] name = {"Truong Trong Khanh", "Hoang Quoc Bao", "Kha Vinh Dat", "Nguyen Quoc Su", "Tran Minh Truong", "Nguyen Tan Hieu", "Nguyen Ho Hu Bang", "Phan Thanh Sang", "Do Nguyen Hung", "Tran Hong Quan",
+            "Truong Trong Khanh", "Hoang Quoc Bao", "Kha Vinh Dat", "Nguyen Quoc Su", "Tran Minh Truong", "Nguyen Tan Hieu", "Nguyen Ho Hu Bang", "Phan Thanh Sang", "Do Nguyen Hung", "Tran Hong Quan"};
+    String[] message = {"hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",
+            "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello"};
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
         View view = getCurrentFocus();
@@ -49,10 +46,10 @@ public class NotificationsActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_notifications);
-        NofiticationsAdapter adapter = new NofiticationsAdapter(this, R.layout.custom_notification_items, notifications, times, avatars);
-        binding.NotificationList.setAdapter(adapter);
-        binding.NotificationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        ChatAdapter adapter = new ChatAdapter(this, R.layout.custom_chat_items, name, message, avatars);
+        binding.ChatList.setAdapter(adapter);
+        binding.ChatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 System.out.println("hehe");

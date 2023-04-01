@@ -12,7 +12,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="17dp"
             app:cardCornerRadius="33dp"
             >
@@ -29,30 +29,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical">
+
             <TextView
-                android:id="@+id/txtNotification"
+                android:id="@+id/txtName"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:textSize="16sp"
+                android:layout_height="32dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alef_bold"
+                android:textSize="15sp" />
             <TextView
-                android:id="@+id/txtTime"
+                android:id="@+id/txtMessage"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="28dp"
                 android:layout_marginStart="20dp"/>
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="12dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="-50dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/image"
-            app:srcCompat="@drawable/ellipsis" />
     </LinearLayout>
 </layout>
