@@ -1,8 +1,9 @@
-package com.example.efriendly;
+package com.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.efriendly.R;
 import com.example.efriendly.databinding.ActivityHomepageBinding;
 
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".NotificationsActivity">
+    tools:context=".activities.NotificationsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:layout_marginStart="-100dp"
             android:layout_marginTop="5dp"
             android:contentDescription="@string/image"
-            app:srcCompat="@drawable/cart"
+            app:srcCompat="@drawable/cart_icon"
             tools:ignore="ImageContrastCheck"
             tools:layout_editor_absoluteX="303dp"
             tools:layout_editor_absoluteY="37dp" />
@@ -60,10 +60,5 @@
             android:layout_marginBottom="48dp"
             android:background="@drawable/listview_border">
         </ListView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="-48dp"
-            android:orientation="horizontal"></LinearLayout>
     </LinearLayout>
 </LinearLayout>

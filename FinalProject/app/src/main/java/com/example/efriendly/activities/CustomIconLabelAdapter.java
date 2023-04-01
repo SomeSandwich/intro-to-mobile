@@ -1,4 +1,4 @@
-package com.example.efriendly;
+package com.example.efriendly.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.efriendly.R;
 
 class CustomIconLabelAdapter extends ArrayAdapter<String> {
     Context context;

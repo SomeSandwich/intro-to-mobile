@@ -1,4 +1,4 @@
-package com.example.efriendly;
+package com.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.efriendly.R;
 
 public class NotificationsActivity extends AppCompatActivity {
 

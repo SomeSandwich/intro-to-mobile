@@ -1,4 +1,4 @@
-package com.example.efriendly;
+package com.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

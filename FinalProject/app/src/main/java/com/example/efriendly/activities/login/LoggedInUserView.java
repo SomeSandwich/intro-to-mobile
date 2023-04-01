@@ -1,4 +1,4 @@
-package com.example.efriendly.ui.login;
+package com.example.efriendly.activities.login;
 
 /**
  * Class exposing authenticated user details to the UI.
