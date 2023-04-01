@@ -18,4 +18,5 @@
     <string name="login_failed">"Login failed"</string>
     <string name="SearchBar">Search</string>
     <string name="clothesDes">Black plain t-shirt \n 50.000d</string>
+    <string name="Notifications">Notifications</string>
 </resources>
