@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
     <LinearLayout
-        android:id="@+id/grid"
+        android:id="@+id/parent"
         android:layout_width="fill_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content"
@@ -14,34 +17,14 @@
             android:orientation="vertical"
             android:background="@drawable/clothes_frame">
             <ImageView
-                android:id="@+id/leftItemPic"
+                android:id="@+id/ItemPic"
                 android:contentDescription="@string/image"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@drawable/clothes_frame" />
             <TextView
-                android:id="@+id/leftItemDes"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:orientation="vertical"
-            android:background="@drawable/clothes_frame">
-            <ImageView
-                android:id="@+id/rightItemPic"
-                android:contentDescription="@string/image"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="@drawable/clothes_frame" />
-            <TextView
-                android:id="@+id/rightItemDes"
+                android:id="@+id/ItemDes"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
