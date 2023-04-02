@@ -1,4 +1,3 @@
-using System.Data.Common;
 using Api.Context.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +14,14 @@ public class MobileDbContext : DbContext
         base.OnModelCreating(builder);
 
         new UserDetailConfiguration().Configure(builder.Entity<User>());
+        new CategoryConfiguration().Configure(builder.Entity<Category>());
+        new PostDetailConfiguration().Configure(builder.Entity<Post>());
+        new RateDetailConfiguration().Configure(builder.Entity<Rate>());
+        new ReportDetailConfiguration().Configure(builder.Entity<Report>());
         new CartConfiguration().Configure(builder.Entity<Cart>());
+        new ConversationConfiguration().Configure(builder.Entity<Conversation>());
         new ParticipationConfiguration().Configure(builder.Entity<Participation>());
+        new MessageConfiguration().Configure(builder.Entity<Message>());
         new OrderConfiguration().Configure(builder.Entity<Order>());
         new OrderDetailConfiguration().Configure(builder.Entity<OrderDetail>());
     }

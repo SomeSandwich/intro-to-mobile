@@ -26,7 +26,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
         var info = new OpenApiInfo()
         {
-            Title = "Tay Yen Tu API",
+            Title = "Intro To Mobile API",
             Version ="v"+ description.ApiVersion.ToString(),
         };
 

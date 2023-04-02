@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Context.Entities;
 
@@ -46,4 +45,11 @@ public class Post
 
     [ForeignKey("Category")] public int CategoryId { get; set; }
     public virtual Category Category { get; set; }
+}
+
+public class PostDetailConfiguration : IEntityTypeConfiguration<Post>
+{
+    public void Configure(EntityTypeBuilder<Post> builder)
+    {
+    }
 }

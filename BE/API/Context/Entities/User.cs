@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Api.Context.Constants.Enums;
+using API.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -56,7 +57,7 @@ public class UserDetailConfiguration : IEntityTypeConfiguration<User>
                 Name = "Root",
                 Email = "intro_to_mobile_root@gmail.com",
                 PhoneNumber = "0905473034",
-                PasswordHash = "$2a$10$TRWj0w/pbLzInMS6dkQN6eK4.zrfxoyjDQxxCscADvEC95SSFktj.",
+                PasswordHash = "123".HashPassword(),
                 Legit = 10,
                 Address = "Trái Đất"
             }, new User
@@ -65,7 +66,7 @@ public class UserDetailConfiguration : IEntityTypeConfiguration<User>
                 Name = "Hiếu Nguyễn",
                 Email = "hieucckha@gmail.com",
                 PhoneNumber = "0905473034",
-                PasswordHash = "$2a$10$6ERp6HOK/Wf2DAjE76hkJ.ZPRXAF.OVezxpCKgqdA4jPynPuLGylC",
+                PasswordHash = "123".HashPassword(),
                 Legit = 10,
                 Address = "Trái Đất"
             }
