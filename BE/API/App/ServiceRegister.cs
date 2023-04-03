@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using API.Services;
+using Minio.AspNetCore;
 
 namespace API.App;
 
@@ -11,6 +12,7 @@ public static class ServiceRegister
     {
         builder.AddScoped<IAccountService, AccountService>();
         builder.AddScoped<ICategoryService, CategoryService>();
+        builder.AddScoped<IMinioFileService, MinioFileService>();
         builder.AddScoped<IPostService, PostService>();
         builder.AddScoped<IUserService, UserService>();
     }
