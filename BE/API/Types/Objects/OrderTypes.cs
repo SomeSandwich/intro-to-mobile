@@ -21,8 +21,6 @@ public class Item
     public int UnitPrice { get; set; }
 }
 
--0
-
 public class OrderRes
 {
     public int Id { get; set; }

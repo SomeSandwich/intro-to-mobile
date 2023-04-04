@@ -33,7 +33,7 @@ public class OrderService : IOrderService
 
     public async Task<int> AddAsync(CreateOrderReq args)
     {
-        var checkUser = _context.Users.Any(e=>e.)
+        // var checkUser = _context.Users.Any(e=>e.Id == args.)
         await _context.Orders.AddAsync(args);
         await _context.SaveChangesAsync();
 
@@ -118,7 +118,8 @@ public class OrderService : IOrderService
             .FirstOrDefault(e => e.OrderId == id);
 
         var total = _context.OrderDetails
-            .FromSql($"select sum(\"UnitPrice\") as totalPrice from \"OrderDetails\" where \"OrderId\" = {id} group by \"OrderId\"");
+            .FromSql(
+                $"select sum(\"UnitPrice\") as totalPrice from \"OrderDetails\" where \"OrderId\" = {id} group by \"OrderId\"");
 
         // order.Total = total.totalPrice;
 

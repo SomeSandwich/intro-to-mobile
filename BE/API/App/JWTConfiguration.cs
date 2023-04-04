@@ -6,7 +6,7 @@ namespace API.App;
 
 public static class JwtConfiguration
 {
-    public static void ConfigJwt(this IServiceCollection services, IConfiguration configuration)
+    public static void ConfigureJwt(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuthentication(options =>
         {
