@@ -1,6 +1,7 @@
 using Api.Context;
 using API.Types.Mapping;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Services;
 
@@ -28,4 +29,5 @@ public class UserService : IUserService
         return _context.Users
             .Any(e => e.Id == userId);
     }
+
 }

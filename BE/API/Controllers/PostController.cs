@@ -24,25 +24,7 @@ public class PostController : ControllerBase
         var config = new MapperConfiguration(opt => { opt.AddProfile<PostProfile>(); });
         _mapper = config.CreateMapper();
     }
-
-    [HttpGet]
-    [Route("")]
-    public async Task<ActionResult> GetAll()
-    {
-        return Ok();
-    }
-
-
-    [HttpGet]
-    [Route("{id:int}")]
-    public async Task<ActionResult> GetId([FromRoute] int id)
-    {
-        var post = await _postSer.GetAsync(id);
-        if (post is null)
-            return BadRequest(new ResFailure { Message = $"Không tìm thấy bài đăng với ID: {id}" });
-
-        return Ok(post);
-    }
+    #region Post
 
     [HttpPost]
     [Route("")]
@@ -82,4 +64,41 @@ public class PostController : ControllerBase
 
         return CreatedAtAction(nameof(GetId), new { id = postId }, new ResSuccess());
     }
+
+    #endregion
+
+    #region Get
+
+    [HttpGet]
+    [Route("")]
+    public async Task<ActionResult> GetAll()
+    {
+        return Ok();
+    }
+
+
+    [HttpGet]
+    [Route("{id:int}")]
+    public async Task<ActionResult> GetId([FromRoute] int id)
+    {
+        var post = await _postSer.GetAsync(id);
+        if (post is null)
+            return BadRequest(new ResFailure { Message = $"Không tìm thấy bài đăng với ID: {id}" });
+
+        return Ok(post);
+    }
+
+    #endregion
+
+    #region Update
+
+
+
+    #endregion
+
+    #region Delete
+
+
+
+    #endregion
 }

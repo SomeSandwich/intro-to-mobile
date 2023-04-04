@@ -36,10 +36,18 @@ public class PostService : IPostService
 
     public async Task<int> AddAsync(Api.Context.Entities.Post post)
     {
-        _context.Posts.Add(post);
-        await _context.SaveChangesAsync();
+        try
+        {
+            _context.Posts.Add(post);
+            await _context.SaveChangesAsync();
 
-        return post.Id;
+            return post.Id;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     #endregion

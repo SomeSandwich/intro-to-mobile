@@ -7,6 +7,7 @@ public class MobileDbContext : DbContext
 {
     public MobileDbContext(DbContextOptions<MobileDbContext> options) : base(options)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

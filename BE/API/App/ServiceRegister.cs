@@ -13,5 +13,8 @@ public static class ServiceRegister
         builder.AddScoped<ICategoryService, CategoryService>();
         builder.AddScoped<IPostService, PostService>();
         builder.AddScoped<IUserService, UserService>();
+        builder.AddScoped<ICartService, CartService>();
+        builder.AddScoped<IReportService, ReportService>();
+        builder.AddScoped<IOrderService, OrderService>();
     }
 }
