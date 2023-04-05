@@ -206,4 +206,14 @@ public class PostController : ControllerBase
 
         return Ok(new ResSuccess());
     }
+
+    [HttpGet]
+    [Route("latestPost")]
+    public async Task<ActionResult<GetPostRes>> GetListLatest([FromBody] int number = 10)
+    {
+        var list = await _postSer.GetLatestAsync(number);
+
+        return Ok(list);
+
+    }
 }

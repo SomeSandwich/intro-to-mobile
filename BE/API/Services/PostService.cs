@@ -13,6 +13,7 @@ public interface IPostService
 
     Task<GetPostRes?> GetAsync(int id);
     Task<IEnumerable<GetPostRes>> GetByShopIdAsync(int shopId);
+    Task<IEnumerable<GetPostRes>> GetLatestAsync(int number);
 
     Task<bool> UpdateAsync(int id, UpdatePostArgs args);
     Task<bool> ToggleIsHide(int id);
@@ -73,6 +74,18 @@ public class PostService : IPostService
     {
         var listPost = _context.Posts
             .Where(e => e.IsDeleted == false)
+            .AsEnumerable();
+
+
+        return _mapper.Map<IEnumerable<Api.Context.Entities.Post>, IEnumerable<GetPostRes>>(listPost);
+    }
+
+    public async Task<IEnumerable<GetPostRes>> GetLatestAsync(int number)
+    {
+        var listPost = _context.Posts
+            .Where(e => e.IsDeleted == false && e.IsHide == false)
+            .OrderByDescending(e=>e.CreatedDate)
+            .Take(number)
             .AsEnumerable();
 
 

@@ -13,13 +13,15 @@ namespace API.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IAccountService _accSer;
+    private readonly IUserService _userSer;
 
     private readonly IMapper _mapper;
 
 
-    public UserController(IAccountService accSer)
+    public UserController(IAccountService accSer, IUserService userService)
     {
         _accSer = accSer;
+        _userSer = userService;
 
         var config = new MapperConfiguration(opt => { opt.AddProfile<UserProfile>(); });
         _mapper = config.CreateMapper();
@@ -38,5 +40,14 @@ public class UserController : ControllerBase
         }
 
         return Ok();
+    }
+
+    [HttpGet]
+    [Route("mostLegit")]
+    public async Task<ActionResult<IEnumerable<SellerRes>>> GetMostLegit([FromBody] int number)
+    {
+        var list = await _userSer.GetMostLegit(number);
+
+        return Ok(list);
     }
 }

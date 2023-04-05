@@ -1,3 +1,4 @@
+using Api.Context.Entities;
 using API.Utils;
 using Newtonsoft.Json;
 
@@ -18,4 +19,17 @@ public class CreateUserReq
     public string PhoneNumber { get; set; }
 
     public string Address { get; set; }
+}
+
+public class SellerRes
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+
+    public double Legit { get; set; }
+
+    public ICollection<Post> Posts { get; set; }
+
+    public virtual ICollection<Order> SellerOrders { get; set; }
 }
