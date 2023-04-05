@@ -3,7 +3,7 @@ package com.example.efriendly.httpclient.types;
 import lombok.Getter;
 
 @Getter
-public class Category {
+public class CategoryRes {
 
     private int id;
 

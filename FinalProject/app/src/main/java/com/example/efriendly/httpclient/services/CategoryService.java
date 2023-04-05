@@ -2,7 +2,7 @@ package com.example.efriendly.httpclient.services;
 
 import com.example.efriendly.httpclient.client.MobileServiceGenerator;
 import com.example.efriendly.httpclient.repositories.CategoryRepository;
-import com.example.efriendly.httpclient.types.Category;
+import com.example.efriendly.httpclient.types.CategoryRes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ public class CategoryService {
 
     }
 
-    public List<Category> GetAll() {
-        List<Category> categories = new ArrayList<Category>();
+    public List<CategoryRes> GetAll() {
+        List<CategoryRes> categories = new ArrayList<CategoryRes>();
 
-        Call<List<Category>> callSync = cateRepo.getAllCategory();
+        Call<List<CategoryRes>> callSync = cateRepo.getAllCategory();
         try {
-            Response<List<Category>> response = callSync.execute();
+            Response<List<CategoryRes>> response = callSync.execute();
             categories = response.body();
 
         } catch (IOException ignored) {
@@ -32,5 +32,19 @@ public class CategoryService {
         }
 
         return categories;
+    }
+
+    public CategoryRes GetById(int id) {
+        CategoryRes cate = null;
+
+        Call<CategoryRes> callSync = cateRepo.getCategoryId(id);
+        try {
+            Response<CategoryRes> response = callSync.execute();
+            cate = response.body();
+        } catch (IOException ignored) {
+
+        }
+
+        return cate;
     }
 }

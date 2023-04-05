@@ -1,6 +1,6 @@
 package com.example.efriendly.httpclient.repositories;
 
-import com.example.efriendly.httpclient.types.Category;
+import com.example.efriendly.httpclient.types.CategoryRes;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import retrofit2.http.Path;
 public interface CategoryRepository {
 
     @GET("/category")
-    public Call<List<Category>> getAllCategory();
+    public Call<List<CategoryRes>> getAllCategory();
 
     @GET("/category/{id}")
-    public Call<Category> getCategoryId(@Path("id") String id);
+    public Call<CategoryRes> getCategoryId(@Path("id") int id);
 }
