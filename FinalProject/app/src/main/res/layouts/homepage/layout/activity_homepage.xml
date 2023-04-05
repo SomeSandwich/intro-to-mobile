@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="LabelFor"
-    tools:context=".HomepageActivity">
+    tools:context=".activities.HomepageActivity">
     <data>
 
     </data>

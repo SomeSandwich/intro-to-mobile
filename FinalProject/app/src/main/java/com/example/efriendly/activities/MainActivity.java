@@ -1,7 +1,6 @@
-package com.example.efriendly;
+package com.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,9 +12,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import com.example.efriendly.databinding.ActivityAnonymousHomepageBinding;
-import com.example.efriendly.ui.login.LoginActivity;
-public class AnonymousHomepageActivity extends AppCompatActivity {
+
+
+public class MainActivity extends AppCompatActivity {
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
         View view = getCurrentFocus();
@@ -29,23 +29,6 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
-    private ActivityAnonymousHomepageBinding binding;
-    private AnonymousHomepageActivityClickHandler handlers;
-
-    String[] des = {
-            "Test Description", "Test Description",
-            "Test Description", "Test Description",
-            "Test Description", "Test Description",
-            "Test Description", "Test Description",
-            "Test Description", "Test Description"
-    };
-    Integer[] img = {
-            R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes, R.drawable.clothes
-    };
 
     @SuppressLint("AppCompatMethod")
     @Override
@@ -55,18 +38,13 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_anonymous_homepage);
-        handlers = new AnonymousHomepageActivityClickHandler(this);
-        binding.setClickHandler(handlers);
+
+        //setContentView(R.layout.activity_anonymous_homepage);
+
+        Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
+        startActivity(myIntent);
+        finish();
     }
-    public class AnonymousHomepageActivityClickHandler{
-        Context context;
-        public AnonymousHomepageActivityClickHandler(Context context){
-            this.context = context;
-        }
-        public void LoginClick(View view){
-            Intent myIntent = new Intent(AnonymousHomepageActivity.this, LoginActivity.class);
-            startActivity(myIntent);
-        }
-    }
+
+
 }

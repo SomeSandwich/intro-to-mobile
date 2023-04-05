@@ -1,4 +1,4 @@
-package com.example.efriendly;
+package com.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -14,10 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-
-import com.example.efriendly.databinding.ActivityNotificationsBinding;
-import com.example.efriendly.listviewAdpater.NofiticationsAdapter;
-import com.example.efriendly.ui.login.LoginActivity;
+import com.example.efriendly.R;
 
 public class NotificationsActivity extends AppCompatActivity {
     private ActivityNotificationsBinding binding;

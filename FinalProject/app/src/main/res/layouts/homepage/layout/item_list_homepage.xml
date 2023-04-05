@@ -17,14 +17,35 @@
             android:orientation="vertical"
             android:background="@drawable/clothes_frame">
             <ImageView
-                android:id="@+id/ItemPic"
+                android:id="@+id/LeftItemPic"
                 android:contentDescription="@string/image"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@drawable/clothes_frame" />
             <TextView
-                android:id="@+id/ItemDes"
+                android:id="@+id/LeftItemDes"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/rightItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:background="@drawable/clothes_frame">
+            <ImageView
+                android:id="@+id/RightItemPic"
+                android:contentDescription="@string/image"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/clothes_frame" />
+            <TextView
+                android:id="@+id/RightItemDes"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

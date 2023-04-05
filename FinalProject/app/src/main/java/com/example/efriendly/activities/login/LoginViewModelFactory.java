@@ -1,4 +1,4 @@
-package com.example.efriendly.ui.login;
+package com.example.efriendly.activities.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
