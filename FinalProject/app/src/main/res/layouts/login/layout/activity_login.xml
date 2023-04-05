@@ -3,17 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.login.LoginActivity">
+    <data>
+        <variable
+            name="clickHandler"
+            type="com.example.efriendly.activities.login.LoginActivity.LoginActivityClickHandler" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
+        <ImageButton
             android:id="@+id/back_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
             android:layout_marginTop="43dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="-30dp"
             android:src="@drawable/back_arrow"
+            android:background="@color/white"
+            android:onClick="@{clickHandler::backClick}"
             android:contentDescription="@string/image"
             />
 

@@ -3,10 +3,12 @@ package com.example.efriendly.activities.login;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -30,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.efriendly.R;
+import com.example.efriendly.activities.AnonymousHomepageActivity;
 import com.example.efriendly.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -49,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
+    private LoginActivityClickHandler handlers;
 
     @SuppressLint("AppCompatMethod")
     @Override
@@ -58,8 +62,10 @@ public class LoginActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_login);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        handlers = new LoginActivity.LoginActivityClickHandler(this);
+        binding.setClickHandler(handlers);
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -67,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = binding.emailInput;
         final EditText passwordEditText = binding.passInput;
         final Button loginButton = binding.LoginBtn;
-        final ImageView backButton = binding.backArrow;
         //final ProgressBar loadingProgressBar = binding.loading;
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -134,42 +139,31 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        /*loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
-        });
-
-        //add listener
-        TextView forgotPass = binding.forgotPass;
-        forgotPass.setOnClickListener(OnClickForgotPass);
-        backButton.setOnClickListener(OnClickBack);
-
+        });*/
     }
-
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
-
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
-    final private TextView.OnClickListener OnClickForgotPass = new TextView.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            System.out.println("Forgot password clicked");
+    public class LoginActivityClickHandler{
+        Context context;
+
+        public LoginActivityClickHandler(Context context) { this.context = context; }
+        public void backClick(View view){
+            Intent myIntent = new Intent(LoginActivity.this, AnonymousHomepageActivity.class);
+            startActivity(myIntent);
         }
-    };
-    final private ImageView.OnClickListener OnClickBack = new ImageView.OnClickListener(){
-        @Override
-        public void onClick(View view){
-            Log.d("Debug", "Back click");
-            finish();
-        }
-    };
+    }
+
 }
