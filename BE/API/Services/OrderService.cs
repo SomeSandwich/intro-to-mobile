@@ -1,7 +1,9 @@
 ﻿using Api.Context;
 using Api.Context.Constants.Enums;
 using Api.Context.Entities;
+using API.Types.Mapping;
 using API.Types.Objects;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -25,28 +27,52 @@ public interface IOrderService
 public class OrderService : IOrderService
 {
     private readonly MobileDbContext _context;
+    private readonly IMapper _mapper;
 
     public OrderService(MobileDbContext context)
     {
         _context = context;
+
+        var config = new MapperConfiguration(opt => { opt.AddProfile<OrderProfile>(); });
+        _mapper = config.CreateMapper();
     }
 
     public async Task<int> AddAsync(CreateOrderReq args)
     {
-        // var checkUser = _context.Users.Any(e=>e.Id == args.)
-        await _context.Orders.AddAsync(args);
-        await _context.SaveChangesAsync();
+        using var transaction = _context.Database.BeginTransaction();
 
-        var listDetail = args.OrderDetail;
-        foreach (var detail in listDetail)
+        try
         {
-            detail.OrderId = args.Id;
+            var order = _mapper.Map<CreateOrderReq, Order>(args);
+
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
+
+            var listItems = args.Details;
+
+            var listDetail = _mapper.Map<ICollection<Item>, ICollection<OrderDetail>>(listItems);
+
+            if (listDetail is not null)
+            {
+                foreach (var detail in listDetail)
+                {
+                    detail.OrderId = order.Id;
+                }
+
+                await _context.OrderDetails.AddRangeAsync(listDetail);
+                await _context.SaveChangesAsync();
+            }
+
+            transaction.Commit();
+
+            return order.Id;
         }
-
-        await _context.OrderDetails.AddRangeAsync(listDetail);
-        await _context.SaveChangesAsync();
-
-        return args.Id;
+        catch (Exception e)
+        {
+            transaction.Rollback();
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task<Order?> GetAsync(int id)

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Api.Context.Entities;
+using Newtonsoft.Json;
 
 namespace API.Types.Objects;
 
@@ -7,18 +8,15 @@ namespace API.Types.Objects;
 
 public class CreatePostReq
 {
-    [Required]
-    public int UserId { get; set; }
+    [JsonIgnore] public int UserId { get; set; }
 
-    [Required]
-    public int CategoryId { get; set; }
+    [Required] public int CategoryId { get; set; }
 
-    [Required]
-    public int Price { get; set; }
+    [Required] public int Price { get; set; }
 
-    public string Caption { get; set; }
+    [Required] public string Caption { get; set; } = string.Empty;
 
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     public IFormFileCollection MediaFiles { get; set; }
 }
@@ -35,7 +33,7 @@ public class UpdatePostReq
 
     public ICollection<string>? MediaFilesDelete { get; set; }
 
-    public IFormFileCollection? MediaFiles { get; set; }
+    public IFormFileCollection? MediaFilesAdd { get; set; }
 }
 
 public class UpdatePostArgs
@@ -61,7 +59,7 @@ public class GetPostRes
 
     public string Description { get; set; } = string.Empty;
 
-    public string[]? MediaPath {  get; set; }
+    public string[]? MediaPath { get; set; }
 
     public DateTime CreatedDate { get; set; }
 

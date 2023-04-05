@@ -1,4 +1,5 @@
 ﻿using Api.Context.Entities;
+using API.Types.Objects;
 using AutoMapper;
 
 namespace API.Types.Mapping;
@@ -7,6 +8,7 @@ public class OrderProfile :Profile
 {
     public OrderProfile()
     {
-        CreateMap<Order, Order>();
+        CreateMap<CreateOrderReq, Order>();
+        CreateMap<Item, OrderDetail>();
     }
 }

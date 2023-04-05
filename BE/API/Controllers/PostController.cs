@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Web;
 using Api.Context.Entities;
 using API.Services;
@@ -34,6 +35,16 @@ public class PostController : ControllerBase
     [Route("")]
     public async Task<ActionResult<string>> Create([FromForm] CreatePostReq request)
     {
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdString is null)
+        {
+            return Unauthorized();
+        }
+        int.TryParse(userIdString, out int userId);
+
+        request.UserId = userId;
+
         // Todo: Check file if upload if failed
         var keysSuccess = new List<string>();
         foreach (var file in request.MediaFiles)
@@ -60,18 +71,6 @@ public class PostController : ControllerBase
             {
                 Console.WriteLine(ex);
             }
-
-            // if (fileUploadRes is null)
-            // {
-            //     foreach (var key in listKeySuccess)
-            //     {
-            //         await _minioClient.DeleteFile(new MinioReqDeleteFile { Key = key, });
-            //     }
-            //
-            //     return BadRequest(new ResFailure { Message = "Upload File failure" });
-            // }
-            //
-            // listKeySuccess.Add(fileUploadRes.Key);
         }
 
         var now = DateTime.Now;
@@ -93,12 +92,13 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    [Route("")]
-    public async Task<ActionResult> GetAll()
+    [Route("{sellerId:int}")]
+    public async Task<ActionResult> GetAll([FromRoute] int sellerId)
     {
-        return Ok();
-    }
+        var listPost = await _postSer.GetByShopIdAsync(sellerId);
 
+        return Ok(listPost);
+    }
 
     [HttpGet]
     [Route("{id:int}")]
@@ -110,4 +110,13 @@ public class PostController : ControllerBase
 
         return Ok(post);
     }
+
+    [HttpPatch]
+    [Route("{id:int}")]
+    public async Task<ActionResult> UpdateInfoAsync([FromRoute] int id, [FromForm] UpdatePostReq)
+    {
+
+        return Ok(new ResSuccess());
+    }
+
 }

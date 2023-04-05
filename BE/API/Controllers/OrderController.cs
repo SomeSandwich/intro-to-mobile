@@ -31,7 +31,15 @@ public class OrderController : ControllerBase
     {
         var customerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        // var args =
+        if (customerId is null)
+        {
+            return Unauthorized();
+        }
+
+        int.TryParse(customerId, out int id);
+
+        request.CustomerId = id;
+
         var orderId = await _orderService.AddAsync(request);
 
         return CreatedAtAction(nameof(GetOne), new { id = orderId }, new ResSuccess());
