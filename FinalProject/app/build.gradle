@@ -32,7 +32,7 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\login', 'src\\main\\res\\layouts\\homepage', 'src\\main\\res\\layouts\\notifications', 'src\\main\\res\\layouts\\chat'
+                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\login', 'src\\main\\res\\layouts\\homepage', 'src\\main\\res\\layouts\\notifications', 'src\\main\\res\\layouts\\chat', 'src\\main\\res\\layouts\\cart'
             }
         }
     }

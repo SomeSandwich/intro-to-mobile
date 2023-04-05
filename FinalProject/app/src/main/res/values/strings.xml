@@ -20,4 +20,10 @@
     <string name="clothesDes">Black plain t-shirt \n 50.000d</string>
     <string name="Notifications">Notifications</string>
     <string name="Chat">Chat</string>
+    <string name="Cart">Cart</string>
+    <string name="SellerTitle">Seller:</string>
+    <string name="All">All</string>
+    <string name="TotalPayment">Total payment:</string>
+    <string name="Delete">Delete</string>
+    <string name="Buy">Buy</string>
 </resources>

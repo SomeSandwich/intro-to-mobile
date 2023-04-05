@@ -13,8 +13,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
+
 import com.example.efriendly.R;
+import com.example.efriendly.databinding.ActivityNotificationsBinding;
+import com.example.efriendly.listviewAdpater.NotificationsAdapter;
 
 public class NotificationsActivity extends AppCompatActivity {
     private ActivityNotificationsBinding binding;
@@ -24,6 +26,7 @@ public class NotificationsActivity extends AppCompatActivity {
             "Notice 1", "Notice 2", "Notice 3", "Notice 4", "Notice 5", "Notice 6", "Notice 7", "Notice 8", "Notice 9", "Notice 10"};
     String[] times = {"2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h",
             "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h"};
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
         View view = getCurrentFocus();
@@ -33,7 +36,7 @@ public class NotificationsActivity extends AppCompatActivity {
             float x = ev.getRawX() + view.getLeft() - scrcoords[0];
             float y = ev.getRawY() + view.getTop() - scrcoords[1];
             if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
-                ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+                ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -43,11 +46,11 @@ public class NotificationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Hide Title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_notifications);
-        NofiticationsAdapter adapter = new NofiticationsAdapter(this, R.layout.custom_notification_items, notifications, times, avatars);
+        NotificationsAdapter adapter = new NotificationsAdapter(this, R.layout.custom_notification_items, notifications, times, avatars);
         binding.NotificationList.setAdapter(adapter);
         binding.NotificationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

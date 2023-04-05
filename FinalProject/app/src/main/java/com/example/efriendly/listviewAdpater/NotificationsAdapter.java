@@ -9,13 +9,13 @@ import android.widget.ArrayAdapter;
 import com.example.efriendly.databinding.CustomNotificationItemsBinding;
 
 
-public class NofiticationsAdapter extends ArrayAdapter<String> {
+public class NotificationsAdapter extends ArrayAdapter<String> {
     private LayoutInflater inflater;
     Context context;
     Integer[] avatars;
     String[] notifications;
     String[] times;
-    public NofiticationsAdapter( Context context, int layoutToBeInflated, String[] notifications, String[] times, Integer[] avatars) {
+    public NotificationsAdapter( Context context, int layoutToBeInflated, String[] notifications, String[] times, Integer[] avatars) {
         super(context, layoutToBeInflated, notifications);
         this.context = context;
         this.notifications = notifications;

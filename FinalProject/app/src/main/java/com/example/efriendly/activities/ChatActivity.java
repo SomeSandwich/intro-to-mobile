@@ -1,4 +1,4 @@
-package com.example.efriendly;
+package com.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 
+import com.example.efriendly.R;
 import com.example.efriendly.databinding.ActivityChatBinding;
 import com.example.efriendly.listviewAdpater.ChatAdapter;
 

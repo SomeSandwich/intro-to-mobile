@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         //setContentView(R.layout.activity_anonymous_homepage);
 
-        Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
+        Intent myIntent = new Intent(MainActivity.this, CartActivity.class);
         startActivity(myIntent);
         finish();
     }
