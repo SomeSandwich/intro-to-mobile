@@ -1,4 +1,5 @@
 using Api.Context.Entities;
+using Api.Context.GenerateData;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Context;
@@ -13,6 +14,8 @@ public class MobileDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        FakerGenerating.Init();
 
         new UserDetailConfiguration().Configure(builder.Entity<User>());
         new CategoryConfiguration().Configure(builder.Entity<Category>());

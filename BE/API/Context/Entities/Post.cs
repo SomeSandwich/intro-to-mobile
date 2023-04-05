@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Api.Context.GenerateData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,8 +30,7 @@ public class Post
 
     public bool IsDeleted { get; set; } = false;
 
-
-    public virtual Rate Rate { get; set; }
+    public Rate Rate { get; set; }
 
     public virtual ICollection<Report> Reports { get; set; }
 
@@ -51,5 +51,6 @@ public class PostDetailConfiguration : IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
+        builder.HasData(FakerGenerating.Posts);
     }
 }

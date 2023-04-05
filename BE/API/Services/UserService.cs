@@ -11,8 +11,12 @@ public interface IUserService
 {
     Task<bool> IsUserExist(int userId);
 
+<<<<<<< HEAD
     Task<IEnumerable<SellerRes>> GetMostLegit(int number);
 
+=======
+    Task<User> AddAccountAsync(CreateUserReq arg);
+>>>>>>> 3910f3b50c084e1f07714a5924340b4dbc205949
 }
 
 public class UserService : IUserService
@@ -35,6 +39,7 @@ public class UserService : IUserService
             .Any(e => e.Id == userId);
     }
 
+<<<<<<< HEAD
     public async Task<IEnumerable<SellerRes>> GetMostLegit(int number)
     {
         var listSeller = _context.Users
@@ -44,5 +49,22 @@ public class UserService : IUserService
 
         var result =  _mapper.Map<IEnumerable<User>, IEnumerable<SellerRes>>(listSeller);
         return result;
+=======
+    public async Task<User> AddAccountAsync(CreateUserReq arg)
+    {
+        var user = _mapper.Map<CreateUserReq, User>(arg);
+
+
+        if (_context.Users.Any(e => e.Email == user.Email))
+        {
+            throw new Exception($"Email: {arg.Email}");
+        }
+
+        _context.Users.Add(user);
+
+        await _context.SaveChangesAsync();
+
+        return user;
+>>>>>>> 3910f3b50c084e1f07714a5924340b4dbc205949
     }
 }

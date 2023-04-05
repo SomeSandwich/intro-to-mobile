@@ -10,16 +10,17 @@ public static class DbConfiguration
     {
         if (env.IsDevelopment())
         {
-            services.AddDbContextPool<MobileDbContext>(options =>
+            services.AddDbContextPool<MobileDbContext>(opt =>
             {
-                options.UseNpgsql(config["ConnectionStrings:Url"]);
+                opt.UseNpgsql(config["ConnectionStrings:Url"]);
+                opt.EnableSensitiveDataLogging(true);
             });
         }
         else
         {
-            services.AddDbContextPool<MobileDbContext>(options =>
+            services.AddDbContextPool<MobileDbContext>(opt =>
             {
-                options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTIONSTR"));
+                opt.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTIONSTR"));
             });
         }
     }

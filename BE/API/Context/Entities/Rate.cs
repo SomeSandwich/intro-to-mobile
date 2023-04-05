@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Api.Context.GenerateData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -28,5 +29,6 @@ public class RateDetailConfiguration : IEntityTypeConfiguration<Rate>
 {
     public void Configure(EntityTypeBuilder<Rate> builder)
     {
+        builder.HasData(FakerGenerating.Rates);
     }
 }

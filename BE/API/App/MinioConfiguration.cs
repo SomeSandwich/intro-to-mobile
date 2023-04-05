@@ -19,7 +19,7 @@ public static class MinioConfiguration
                                 throw new InvalidOperationException("Not Found Minio:SecretKey In Configuration File");
 
                 // TODO: Make server with SSL
-                opt.ConfigureClient(client => { client.WithSSL(false); });
+                opt.ConfigureClient(client => { client.WithSSL(true); });
             });
         }
         else
@@ -37,7 +37,7 @@ public static class MinioConfiguration
                                 throw new InvalidOperationException("Not Found Minio:SecretKey In Configuration File");
 
                 // TODO: Make server with SSL
-                opt.ConfigureClient(client => { client.WithSSL(false); });
+                opt.ConfigureClient(client => { client.WithSSL(true); });
             });
         }
     }

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Api.Context.Constants.Enums;
+using Api.Context.GenerateData;
 using API.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -51,25 +51,7 @@ public class UserDetailConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.HasData(
-            new User
-            {
-                Id = 1,
-                Name = "Root",
-                Email = "intro_to_mobile_root@gmail.com",
-                PhoneNumber = "0905473034",
-                PasswordHash = "123".HashPassword(),
-                Legit = 10,
-                Address = "Trái Đất"
-            }, new User
-            {
-                Id = 2,
-                Name = "Hiếu Nguyễn",
-                Email = "hieucckha@gmail.com",
-                PhoneNumber = "0905473034",
-                PasswordHash = "123".HashPassword(),
-                Legit = 10,
-                Address = "Trái Đất"
-            }
+            FakerGenerating.Users
         );
     }
 }

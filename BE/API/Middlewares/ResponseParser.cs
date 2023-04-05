@@ -1,4 +1,5 @@
 using System.Text.Json;
+using API.Types.Objects;
 
 namespace MMS.GateApi.Middlewares;
 

@@ -35,14 +35,18 @@ public class PostController : ControllerBase
     [Route("")]
     public async Task<ActionResult<string>> Create([FromForm] CreatePostReq request)
     {
-        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        if (identity is null)
+            return Unauthorized();
 
-        if (userIdString is null)
+        var selfIdStr = identity.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Name)?.Value;
+        if (selfIdStr is null)
+            return Unauthorized();
+
+        if (!int.TryParse(selfIdStr, out var userId))
         {
             return Unauthorized();
         }
-
-        int.TryParse(userIdString, out int userId);
 
         request.UserId = userId;
 
@@ -54,7 +58,7 @@ public class PostController : ControllerBase
         {
             try
             {
-                var key = ShortId.Generate(GenHashOptions.FileKey);
+                var key = $"post/{ShortId.Generate(GenHashOptions.FileKey)}";
                 if (await _fileSer.UploadSmallFileAsync(
                         new UploadFileDto
                         {
@@ -147,7 +151,8 @@ public class PostController : ControllerBase
         {
             try
             {
-                var key = ShortId.Generate(GenHashOptions.FileKey);
+                var key = $"post/{ShortId.Generate(GenHashOptions.FileKey)}";
+
                 if (await _fileSer.UploadSmallFileAsync(
                         new UploadFileDto
                         {
