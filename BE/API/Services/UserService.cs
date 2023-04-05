@@ -10,8 +10,8 @@ namespace API.Services;
 public interface IUserService
 {
     Task<bool> IsUserExist(int userId);
-
     Task<User> AddAccountAsync(CreateUserReq arg);
+    Task<IEnumerable<SellerRes>> GetMostLegit(int number);
 }
 
 public class UserService : IUserService
@@ -49,5 +49,16 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
 
         return user;
+    }
+
+    public async Task<IEnumerable<SellerRes>> GetMostLegit(int number)
+    {
+        var listSeller = _context.Users
+            .OrderByDescending(e => e.Legit)
+            .Take(number)
+            .AsEnumerable();
+
+        var result = _mapper.Map<IEnumerable<User>, IEnumerable<SellerRes>>(listSeller);
+        return result;
     }
 }

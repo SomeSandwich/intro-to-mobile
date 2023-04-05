@@ -12,14 +12,16 @@ namespace API.Controllers;
 [Route("api/v{v:ApiVersion}/user")]
 public class UserController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly IAccountService _accSer;
+    private readonly IUserService _userSer;
 
     private readonly IMapper _mapper;
 
 
-    public UserController(IUserService userService)
+    public UserController(IAccountService accSer, IUserService userService)
     {
-        _userService = userService;
+        _accSer = accSer;
+        _userSer = userService;
 
         var config = new MapperConfiguration(opt => { opt.AddProfile<UserProfile>(); });
         _mapper = config.CreateMapper();
@@ -30,7 +32,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            Results.Ok(await _userService.AddAccountAsync(args));
+            Results.Ok(await _userSer.AddAccountAsync(args));
         }
         catch (Exception ex)
         {
@@ -38,5 +40,14 @@ public class UserController : ControllerBase
         }
 
         return Ok();
+    }
+
+    [HttpGet]
+    [Route("mostLegit")]
+    public async Task<ActionResult<IEnumerable<SellerRes>>> GetMostLegit([FromBody] int number)
+    {
+        var list = await _userSer.GetMostLegit(number);
+
+        return Ok(list);
     }
 }
