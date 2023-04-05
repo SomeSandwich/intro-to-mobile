@@ -1,4 +1,5 @@
-﻿using Api.Context;
+﻿using System.ComponentModel;
+using Api.Context;
 using Api.Context.Constants.Enums;
 using Api.Context.Entities;
 using API.Types.Mapping;
@@ -13,11 +14,11 @@ public interface IOrderService
 {
     Task<int> AddAsync(CreateOrderReq args);
 
-    Task<Order?> GetAsync(int id);
+    Task<Order?> GetAsync(int userId, int orderId);
     Task<IEnumerable<Order>> GetByCustomerId(int customerId);
     Task<IEnumerable<Order>> GetBySellerId(int sellerId);
 
-    Task<bool> UpdateAddressAsync(int id, string addr);
+    Task<bool> UpdateAddressAsync(int id, UpdateOrderAddressReq args);
     Task<bool> UpdateStatusAsync(int id, OrderStatus status);
     Task<bool> UpdateTotalAsync(int id);
 
@@ -75,21 +76,25 @@ public class OrderService : IOrderService
         }
     }
 
-    public async Task<Order?> GetAsync(int id)
+    public async Task<Order?> GetAsync(int userId, int orderId)
     {
         var order = _context.Orders
             .Include(e => e.OrderDetail)
-            .FirstOrDefault(e => e.Id == id);
+            .FirstOrDefault(e => e.Id == orderId);
 
         if (order is null)
             return null;
+
+        if (order.CustomerId != userId && order.SellerId != userId)
+            throw new InvalidOperationException("Không đủ quyền truy cập");
 
         return order;
     }
 
     public async Task<IEnumerable<Order>> GetByCustomerId(int customerId)
     {
-        var listOrder = _context.Orders.Where(e => e.CustomerId == customerId).AsEnumerable();
+        var listOrder = _context.Orders.Where(e => e.CustomerId == customerId)
+            .AsEnumerable();
 
         return listOrder;
     }
@@ -101,14 +106,17 @@ public class OrderService : IOrderService
         return listOrder;
     }
 
-    public async Task<bool> UpdateAddressAsync(int id, string addr)
+    public async Task<bool> UpdateAddressAsync(int id, UpdateOrderAddressReq args)
     {
         var order = _context.Orders.FirstOrDefault(e => e.Id == id);
 
         if (order is null)
             return false;
 
-        order.DeliveryAddress = addr;
+        if (order.CustomerId != args.CustomerId)
+            throw new InvalidOperationException("Không đủ quyền truy cập");
+
+        order.DeliveryAddress = args.DeliveryAddress;
 
         await _context.SaveChangesAsync();
 

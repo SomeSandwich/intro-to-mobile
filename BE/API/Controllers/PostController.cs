@@ -41,12 +41,15 @@ public class PostController : ControllerBase
         {
             return Unauthorized();
         }
+
         int.TryParse(userIdString, out int userId);
 
         request.UserId = userId;
 
         // Todo: Check file if upload if failed
         var keysSuccess = new List<string>();
+        var listFileFail = new List<string>();
+
         foreach (var file in request.MediaFiles)
         {
             try
@@ -65,6 +68,10 @@ public class PostController : ControllerBase
                         }))
                 {
                     keysSuccess.Add(key);
+                }
+                else
+                {
+                    listFileFail.Add(file.FileName);
                 }
             }
             catch (Exception ex)
@@ -88,12 +95,16 @@ public class PostController : ControllerBase
 
         var postId = await _postSer.AddAsync(post);
 
+        // Todo : return 206
+        // if(listFileFail.Count <= 0)
+        //     return CreatedAtAction(nameof(GetId), new { id = postId }, new ResSuccess());
+
         return CreatedAtAction(nameof(GetId), new { id = postId }, new ResSuccess());
     }
 
     [HttpGet]
     [Route("{sellerId:int}")]
-    public async Task<ActionResult> GetAll([FromRoute] int sellerId)
+    public async Task<ActionResult> GetBySellerId([FromRoute] int sellerId)
     {
         var listPost = await _postSer.GetByShopIdAsync(sellerId);
 
@@ -113,10 +124,86 @@ public class PostController : ControllerBase
 
     [HttpPatch]
     [Route("{id:int}")]
-    public async Task<ActionResult> UpdateInfoAsync([FromRoute] int id, [FromForm] UpdatePostReq)
+    public async Task<ActionResult> UpdateInfoAsync([FromRoute] int id, [FromForm] UpdatePostReq req)
     {
+        // #Todo
+        foreach (var file in req.MediaFilesDelete)
+        {
+            try
+            {
+                await _fileSer.DeleteFileAsync(file);
+            }
+            catch (Exception e)
+            {
+                req.MediaFilesDelete.Remove(file);
+                Console.WriteLine(e);
+            }
+        }
+
+        var keysSuccess = new List<string>();
+        var listFileFail = new List<string>();
+
+        foreach (var file in req.MediaFilesAdd)
+        {
+            try
+            {
+                var key = ShortId.Generate(GenHashOptions.FileKey);
+                if (await _fileSer.UploadSmallFileAsync(
+                        new UploadFileDto
+                        {
+                            Key = key,
+                            Stream = file.OpenReadStream(),
+                            ContentType = file.ContentType,
+                            Metadata = new Dictionary<string, string>()
+                            {
+                                { "OldName", HttpUtility.UrlEncode(file.FileName) }
+                            }
+                        }))
+                {
+                    keysSuccess.Add(key);
+                }
+                else
+                {
+                    listFileFail.Add(file.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        var args = new UpdatePostArgs
+        {
+            Caption = req.Caption, Description = req.Description, MediaFilesAdd = keysSuccess, Price = req.Price
+        };
+
+        await _postSer.UpdateAsync(id, args);
 
         return Ok(new ResSuccess());
     }
 
+    [HttpPatch]
+    [Route("{id:int}/toggleHide")]
+    public async Task<ActionResult> HideToggle([FromRoute] int id)
+    {
+        if (!await _postSer.ToggleIsHide(id))
+        {
+            return BadRequest(new ResFailure { Message = $"Toggle ẩn postId:{id} thất bại" });
+        }
+
+        return Ok(new ResSuccess());
+    }
+
+    [HttpPatch]
+    [Route("{id:int}/toggleDelete")]
+    public async Task<ActionResult> Delete([FromRoute] int id)
+    {
+        if (!await _postSer.DeleteAsync(id))
+        {
+            return BadRequest(new ResFailure { Message = $"Toggle xoá postId: {id} thất bại" });
+        }
+
+        return Ok(new ResSuccess());
+    }
 }

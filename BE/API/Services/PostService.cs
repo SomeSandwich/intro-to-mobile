@@ -1,3 +1,4 @@
+using System.Reactive;
 using Api.Context;
 using API.Types.Mapping;
 using API.Types.Objects;
@@ -14,6 +15,7 @@ public interface IPostService
     Task<IEnumerable<GetPostRes>> GetByShopIdAsync(int shopId);
 
     Task<bool> UpdateAsync(int id, UpdatePostArgs args);
+    Task<bool> ToggleIsHide(int id);
 
     Task<bool> DeleteAsync(int id);
 }
@@ -121,13 +123,28 @@ public class PostService : IPostService
         return true;
     }
 
+    public async Task<bool> ToggleIsHide(int id)
+    {
+        var post = await _context.Posts
+            .FirstOrDefaultAsync(e => e.Id == id);
+
+        if (post is null)
+            return false;
+
+        post.IsHide = !post.IsHide;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
     #endregion
 
     #region Delete
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var post = _context.Posts.FirstOrDefault(e => e.Id == id);
+        var post = await _context.Posts.FirstOrDefaultAsync(e => e.Id == id);
 
         if (post is null)
             return false;

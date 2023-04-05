@@ -6,8 +6,7 @@ namespace API.Types.Objects;
 
 public class CreateOrderReq
 {
-    [JsonIgnore]
-    public int CustomerId { get; set; }
+    [JsonIgnore] public int CustomerId { get; set; }
 
     public string DeliveryAddress { get; set; } = string.Empty;
 
@@ -38,6 +37,7 @@ public class OrderRes
 
 public class UpdateOrderAddressReq
 {
+    [JsonIgnore] public int CustomerId { get; set; }
     public string? DeliveryAddress { get; set; }
 }
 

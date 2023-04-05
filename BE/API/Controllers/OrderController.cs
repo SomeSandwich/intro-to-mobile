@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using Api.Context.Constants.Enums;
 using Api.Context.Entities;
 using API.Services;
@@ -46,38 +47,106 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{id:int}")]
-    public async Task<ActionResult<CreateOrderReq>> GetOne([FromBody] int id)
+    [Route("{orderId:int}")]
+    public async Task<ActionResult<CreateOrderReq>> GetOne([FromBody] int orderId)
     {
-        throw new NotImplementedException();
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdString is null)
+        {
+            return Unauthorized();
+        }
+
+        int.TryParse(userIdString, out int userId);
+
+        try
+        {
+            var order = await _orderService.GetAsync(userId, orderId);
+
+            if (order is null)
+                return BadRequest(new ResFailure { Message = $"Không tồn tại orderId: {orderId}" });
+
+            return Ok(order);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Forbid(ex.Message);
+        }
     }
 
     [HttpGet]
     [Route("purchase")]
     public async Task<ActionResult<IEnumerable<CreateOrderReq>>> GetPurchase()
     {
-        throw new NotImplementedException();
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdString is null)
+        {
+            return Unauthorized();
+        }
+
+        int.TryParse(userIdString, out int userId);
+
+        var listPurchase = await _orderService.GetByCustomerId(userId);
+
+        return Ok(listPurchase);
     }
 
     [HttpGet]
     [Route("sale")]
     public async Task<ActionResult<IEnumerable<CreateOrderReq>>> GetSale()
     {
-        throw new NotImplementedException();
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdString is null)
+        {
+            return Unauthorized();
+        }
+
+        int.TryParse(userIdString, out int userId);
+
+        var listSale = await _orderService.GetBySellerId(userId);
+
+        return Ok(listSale);
     }
 
     [HttpPatch]
-    [Route("{id:int}/address")]
-    public async Task<ActionResult> UpdateAddress([FromRoute] int id, [FromBody] UpdateOrderAddressReq req)
+    [Route("{orderId:int}/address")]
+    public async Task<ActionResult> UpdateAddress([FromRoute] int orderId, [FromBody] UpdateOrderAddressReq req)
     {
-        throw new NotImplementedException();
+        var customerIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (customerIdString is null)
+        {
+            return Unauthorized();
+        }
+
+        int.TryParse(customerIdString, out int customerId);
+
+        req.CustomerId = customerId;
+
+        var update = await _orderService.UpdateAddressAsync(orderId, req);
+
+        if (update == false)
+            return BadRequest(
+                new ResFailure { Message = $"Thay đổi địa chỉ giao hàng cho orderId: {orderId} thất bại" });
+        return Ok(new ResSuccess());
     }
 
     [HttpPatch]
-    [Route("{id:int}/status")]
-    public async Task<ActionResult> UpdateStatus([FromRoute] int id, [FromBody] OrderStatus status)
+    [Route("{orderId:int}/status")]
+    public async Task<ActionResult> UpdateStatus([FromRoute] int orderId, [FromBody] OrderStatus status)
     {
-        throw new NotImplementedException();
+        var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdString is null)
+        {
+            return Unauthorized();
+        }
+
+        int.TryParse(userIdString, out int userId);
+
+        return Ok(new ResSuccess());
     }
 
     [HttpPatch]
