@@ -12,14 +12,14 @@ namespace API.Controllers;
 [Route("api/v{v:ApiVersion}/user")]
 public class UserController : ControllerBase
 {
-    private readonly IAccountService _accSer;
+    private readonly IUserService _userService;
 
     private readonly IMapper _mapper;
 
 
-    public UserController(IAccountService accSer)
+    public UserController(IUserService userService)
     {
-        _accSer = accSer;
+        _userService = userService;
 
         var config = new MapperConfiguration(opt => { opt.AddProfile<UserProfile>(); });
         _mapper = config.CreateMapper();
@@ -30,7 +30,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            Results.Ok(await _accSer.AddAccountAsync(args));
+            Results.Ok(await _userService.AddAccountAsync(args));
         }
         catch (Exception ex)
         {

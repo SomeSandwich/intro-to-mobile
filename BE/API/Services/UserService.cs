@@ -1,5 +1,7 @@
 using Api.Context;
+using Api.Context.Entities;
 using API.Types.Mapping;
+using API.Types.Objects;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +10,8 @@ namespace API.Services;
 public interface IUserService
 {
     Task<bool> IsUserExist(int userId);
+
+    Task<User> AddAccountAsync(CreateUserReq arg);
 }
 
 public class UserService : IUserService
@@ -30,4 +34,20 @@ public class UserService : IUserService
             .Any(e => e.Id == userId);
     }
 
+    public async Task<User> AddAccountAsync(CreateUserReq arg)
+    {
+        var user = _mapper.Map<CreateUserReq, User>(arg);
+
+
+        if (_context.Users.Any(e => e.Email == user.Email))
+        {
+            throw new Exception($"Email: {arg.Email}");
+        }
+
+        _context.Users.Add(user);
+
+        await _context.SaveChangesAsync();
+
+        return user;
+    }
 }

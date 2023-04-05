@@ -51,7 +51,7 @@ if (true)
 
 app.ConfigureErrorResponse();
 
-app.UseResponseParser();
+// app.UseResponseParser();
 app.UseAuthorization();
 app.MapControllers();
 app.UseHttpsRedirection();

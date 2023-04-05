@@ -19,7 +19,7 @@ public interface IAccountService
     Task<User> LoginAsync(LoginReq req);
     Task<LoginRes> GenerateTokenAsync(User user, string ipv4);
     Task<LoginRes> RefreshTokenAsync(string refreshToken, string ipv4);
-    Task<User> AddAccountAsync(CreateUserReq arg);
+
 }
 
 public class AccountService : IAccountService
@@ -76,6 +76,7 @@ public class AccountService : IAccountService
         {
             new(ClaimTypes.Name, user.Id.ToString()),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
         };
         var token = new JwtSecurityToken
         (expires: tokenExpires,
@@ -125,20 +126,5 @@ public class AccountService : IAccountService
         return await GenerateTokenAsync(account, ipv4);
     }
 
-    public async Task<User> AddAccountAsync(CreateUserReq arg)
-    {
-        var user = _mapper.Map<CreateUserReq, User>(arg);
 
-
-        if (_context.Users.Any(e => e.Email == user.Email))
-        {
-            throw new Exception($"Email: {arg.Email}");
-        }
-
-        _context.Users.Add(user);
-
-        await _context.SaveChangesAsync();
-
-        return user;
-    }
 }
