@@ -126,6 +126,15 @@ public class PostController : ControllerBase
         return Ok(post);
     }
 
+    [HttpGet]
+    [Route("newest")]
+    public async Task<ActionResult<GetPostRes>> GetListLatest([FromQuery] int number = 10)
+    {
+        var list = await _postSer.GetLatestAsync(number);
+
+        return Ok(list);
+    }
+
     [HttpPatch]
     [Route("{id:int}")]
     public async Task<ActionResult> UpdateInfoAsync([FromRoute] int id, [FromForm] UpdatePostReq req)
@@ -189,7 +198,7 @@ public class PostController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("{id:int}/toggleHide")]
+    [Route("{id:int}/toggle-hide")]
     public async Task<ActionResult> HideToggle([FromRoute] int id)
     {
         if (!await _postSer.ToggleIsHide(id))
@@ -201,7 +210,7 @@ public class PostController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("{id:int}/toggleDelete")]
+    [Route("{id:int}/toggle-delete")]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         if (!await _postSer.DeleteAsync(id))
@@ -210,15 +219,5 @@ public class PostController : ControllerBase
         }
 
         return Ok(new ResSuccess());
-    }
-
-    [HttpGet]
-    [Route("latestPost")]
-    public async Task<ActionResult<GetPostRes>> GetListLatest([FromBody] int number = 10)
-    {
-        var list = await _postSer.GetLatestAsync(number);
-
-        return Ok(list);
-
     }
 }

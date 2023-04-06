@@ -28,6 +28,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Route("")]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserReq args)
     {
         try
@@ -43,8 +44,8 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    [Route("mostLegit")]
-    public async Task<ActionResult<IEnumerable<SellerRes>>> GetMostLegit([FromBody] int number)
+    [Route("most-legit")]
+    public async Task<ActionResult<IEnumerable<SellerRes>>> GetMostLegit([FromQuery] int number = 10)
     {
         var list = await _userSer.GetMostLegit(number);
 

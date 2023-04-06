@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Api.Context.Constants.Enums;
 using Api.Context.GenerateData;
-using API.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
