@@ -1,6 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using API.Services;
 using Minio.AspNetCore;
 
@@ -18,5 +15,6 @@ public static class ServiceRegister
         builder.AddScoped<ICartService, CartService>();
         builder.AddScoped<IReportService, ReportService>();
         builder.AddScoped<IOrderService, OrderService>();
+        builder.AddScoped<IRateService, RateService>();
     }
 }

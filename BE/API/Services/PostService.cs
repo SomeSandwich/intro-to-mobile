@@ -84,7 +84,7 @@ public class PostService : IPostService
     {
         var listPost = _context.Posts
             .Where(e => e.IsDeleted == false && e.IsHide == false)
-            .OrderByDescending(e=>e.CreatedDate)
+            .OrderByDescending(e => e.CreatedDate)
             .Take(number)
             .AsEnumerable();
 
