@@ -13,8 +13,20 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.example.efriendly.client.RetrofitClientGenerator;
+import com.example.efriendly.data.model.Category.CategoryRes;
+import com.example.efriendly.services.CategoryService;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class MainActivity extends AppCompatActivity {
+
+//    private static CategoryService categoryService = RetrofitClientGenerator.createService(CategoryService.class);
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
@@ -44,6 +56,21 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(MainActivity.this, HomepageActivity.class);
         startActivity(myIntent);
         finish();
+
+//        Call<List<CategoryRes>> allCateCall =  categoryService.getAll();
+//        allCateCall.enqueue(new Callback<List<CategoryRes>>() {
+//            @Override
+//            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
+//                List<CategoryRes> cates = response.body();
+//
+//                ...
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
+//
+//            }
+//        });
     }
 
 
