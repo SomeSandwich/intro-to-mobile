@@ -1,23 +1,18 @@
 package project.example.efriendly.activities.userFragments;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -25,21 +20,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.databinding.ActivityHomepageBinding;
-public class HomepageActivity extends AppCompatActivity {
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
-        View view = getCurrentFocus();
-        if (view != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && view instanceof EditText && !view.getClass().getName().startsWith("android.webkit.")) {
-            int[] scrcoords = new int[2];
-            view.getLocationOnScreen(scrcoords);
-            float x = ev.getRawX() + view.getLeft() - scrcoords[0];
-            float y = ev.getRawY() + view.getTop() - scrcoords[1];
-            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
-                ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
-        }
-        return super.dispatchTouchEvent(ev);
-    }
+public class HomepageActivity extends Fragment {
+    UserActivity main;
+    Context context = null;
+    String message = "";
+
+    FragmentTransaction ft;
+
     public ActivityHomepageBinding binding;
     private ActivityHomepageClickHandler handlers;
     String[] des = {
@@ -61,24 +50,31 @@ public class HomepageActivity extends AppCompatActivity {
             "All", "Men", "Women", "Kid", "Children", "Elder", "Give a way", "Challenge"
     };
 
-    @SuppressLint("AppCompatMethod")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Hide Title
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_homepage);
-        handlers = new ActivityHomepageClickHandler(this);
-        //binding.setClickHandler(handlers);
+        try{
+            context = getActivity();
+            main = (UserActivity) getActivity();
+        }
+        catch (IllegalStateException err){
+            throw new IllegalStateException("MainActivity must implement callbacks");
+        }
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = ActivityHomepageBinding.inflate(inflater, container,false);
+        handlers = new ActivityHomepageClickHandler(context);
+        SearchBarCartChatActivity searchbar = new SearchBarCartChatActivity();
+        ft = getParentFragmentManager().beginTransaction();
+        ft.replace(R.id.searchBarFragment, searchbar).commit();
 
         addCategory();
         addItem();
+        return binding.getRoot();
     }
     private LinearLayout createNewItem(String des, Integer img){
-        LinearLayout result = new LinearLayout(this);
+        LinearLayout result = new LinearLayout(context);
 
         result.setLayoutParams(new TableRow.LayoutParams(
                 0,
@@ -87,7 +83,7 @@ public class HomepageActivity extends AppCompatActivity {
         result.setOrientation(LinearLayout.VERTICAL);
         result.setBackgroundResource(R.drawable.clothes_frame);
 
-        ImageView clothImg = new ImageView(this);
+        ImageView clothImg = new ImageView(context);
 
         clothImg.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -97,7 +93,7 @@ public class HomepageActivity extends AppCompatActivity {
         clothImg.setImageResource(img);
         clothImg.setBackgroundResource(R.drawable.clothes_frame);
 
-        TextView clothDes = new TextView(this);
+        TextView clothDes = new TextView(context);
         clothDes.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -113,10 +109,10 @@ public class HomepageActivity extends AppCompatActivity {
     }
     private void addItem(){
         TableLayout tl = binding.ItemList;
-        TableRow tr = tr = new TableRow(this);
+        TableRow tr = tr = new TableRow(context);
 
         for (int i=0;i<des.length;i++){
-            if (i % 2 == 0) tr = new TableRow(this);
+            if (i % 2 == 0) tr = new TableRow(context);
             tr.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -133,7 +129,7 @@ public class HomepageActivity extends AppCompatActivity {
                 TableLayout.LayoutParams.WRAP_CONTENT));
     }
     private android.widget.Button createCategory(int id, String name, Integer img ){
-        android.widget.Button btn = new android.widget.Button(this);
+        android.widget.Button btn = new android.widget.Button(context);
 
         LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -165,7 +161,6 @@ public class HomepageActivity extends AppCompatActivity {
             ll.addView(newCategory, btnLayout);
         }
     }
-
     public class ActivityHomepageClickHandler{
         Context context;
         public ActivityHomepageClickHandler(Context context){

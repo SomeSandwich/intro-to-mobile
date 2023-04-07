@@ -12,26 +12,35 @@
         android:theme="@style/Theme.EFriendly"
         tools:targetApi="31">
         <activity
-            android:name="project.example.efriendly.activities.userFragments.CartActivity"
+            android:name=".activities.userFragments.SearchBarCartChatActivity"
             android:exported="false" />
         <activity
-            android:name="project.example.efriendly.activities.userFragments.ChatActivity"
+            android:name=".activities.navBarActivity"
             android:exported="false" />
         <activity
-            android:name="project.example.efriendly.activities.AnonymousHomepageActivity"
+            android:name=".activities.UserActivity"
             android:exported="false" />
         <activity
-            android:name="project.example.efriendly.activities.login.LoginActivity"
+            android:name=".activities.userFragments.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.userFragments.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AnonymousHomepageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.login.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login" />
         <activity
-            android:name="project.example.efriendly.activities.userFragments.HomepageActivity"
+            android:name=".activities.userFragments.HomepageActivity"
             android:exported="false" />
         <activity
-            android:name="project.example.efriendly.activities.userFragments.NotificationsActivity"
+            android:name=".activities.userFragments.NotificationsActivity"
             android:exported="false" />
         <activity
-            android:name="project.example.efriendly.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

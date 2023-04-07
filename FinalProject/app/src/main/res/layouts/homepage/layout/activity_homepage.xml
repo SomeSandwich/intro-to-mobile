@@ -4,50 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
     </data>
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.google.android.material.search.SearchView
-            android:id="@+id/SearchBar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="150dp"
-            android:background="@drawable/search_bar_frame"
-            android:labelFor="@id/SearchBar"
-            android:inputType="textFilter"
-            android:paddingHorizontal="10dp" />
-        <ImageButton
-            android:id="@+id/CartPic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="-110dp"
-            android:layout_toEndOf="@id/SearchBar"
-            android:scaleType="center"
-            android:contentDescription="@string/image"
-            app:srcCompat="@drawable/cart_icon" />
-        <ImageView
-            android:id="@+id/chatPic"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="25dp"
-            android:layout_toEndOf="@id/CartPic"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="center"
-            android:contentDescription="@string/image"
-            app:srcCompat="@drawable/chat_icon"
-            android:background="@color/white"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/searchBarFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
         <LinearLayout
             android:id="@+id/CategoryLayout"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
             android:orientation="vertical"
             android:background="@color/gray"
-            android:layout_marginTop="26dp"
-            android:layout_marginBottom="50dp"
-            android:layout_below="@id/SearchBar">
+            android:layout_below="@id/searchBarFragment">
             <HorizontalScrollView
                 android:id="@+id/CategoryBar"
                 android:layout_width="fill_parent"
@@ -77,47 +50,6 @@
                     android:layout_height="wrap_content"/>
             </ScrollView>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/navBar"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/green"
-            android:orientation="horizontal"
-            android:layout_marginTop="-48dp"
-            android:gravity="center"
-            android:layout_below="@id/CategoryLayout">
-            <ImageView
-                android:id="@+id/home_nav_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:contentDescription="@string/image"
-                app:srcCompat="@drawable/home_nav"
-                />
-            <ImageView
-                android:id="@+id/store_nav_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:contentDescription="@string/image"
-                app:srcCompat="@drawable/store_nav"
-                />
-            <ImageView
-                android:id="@+id/noti_nav_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:contentDescription="@string/image"
-                app:srcCompat="@drawable/noti_nav"
-                />
-            <ImageView
-                android:id="@+id/profile_nav_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:contentDescription="@string/image"
-                app:srcCompat="@drawable/profile_nav"
-                />
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
+
 </layout>

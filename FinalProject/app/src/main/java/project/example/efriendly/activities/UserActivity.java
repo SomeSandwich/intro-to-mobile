@@ -1,10 +1,10 @@
 package project.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,12 +13,19 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import project.example.efriendly.R;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
+import project.example.efriendly.activities.userFragments.NotificationsActivity;
+import project.example.efriendly.activities.userFragments.SearchBarCartChatActivity;
+import project.example.efriendly.databinding.ActivityUserBinding;
 
+public class UserActivity extends AppCompatActivity{
+    FragmentTransaction ft;
+    HomepageActivity homepage = new HomepageActivity();
+    navBarActivity navbar = new navBarActivity();
 
-public class MainActivity extends AppCompatActivity {
-
-//    private static CategoryService categoryService = RetrofitClientGenerator.createService(CategoryService.class);
+    NotificationsActivity notification = new NotificationsActivity();
+    ActivityUserBinding binding;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
@@ -43,27 +50,27 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        //setContentView(R.layout.activity_anonymous_homepage);
+        binding = ActivityUserBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Intent myIntent = new Intent(MainActivity.this, UserActivity.class);
-        startActivity(myIntent);
-        finish();
-
-//        Call<List<CategoryRes>> allCateCall =  categoryService.getAll();
-//        allCateCall.enqueue(new Callback<List<CategoryRes>>() {
-//            @Override
-//            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
-//                List<CategoryRes> cates = response.body();
-//
-//                ...
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
-//
-//            }
-//        });
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.userFragment, homepage).commit();
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.navBarFragment, navbar).commit();
     }
 
-
+    public void onMsgFromFragToMain(String sender, String strValue) {
+        if (sender.equals("nav")) {
+            switch (strValue){
+                case "2":
+                    getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, homepage).commit();
+                    break;
+                case "3":
+                    getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, notification).commit();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
