@@ -8,6 +8,6 @@ public class PostProfile : Profile
     public PostProfile()
     {
         CreateMap<CreatePostReq, Api.Context.Entities.Post>();
-        CreateMap<Api.Context.Entities.Post, GetPostRes>();
+        CreateMap<Api.Context.Entities.Post, PostRes>();
     }
 }

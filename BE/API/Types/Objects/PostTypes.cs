@@ -1,10 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Api.Context.Entities;
 using Newtonsoft.Json;
 
 namespace API.Types.Objects;
-
-#region Post
 
 public class CreatePostReq
 {
@@ -20,8 +17,6 @@ public class CreatePostReq
 
     public IFormFileCollection MediaFiles { get; set; }
 }
-
-#endregion
 
 public class UpdatePostReq
 {
@@ -49,7 +44,7 @@ public class UpdatePostArgs
     public ICollection<string>? MediaFilesAdd { get; set; }
 }
 
-public class GetPostRes
+public class PostRes
 {
     public int Id { get; set; }
 
@@ -67,8 +62,7 @@ public class GetPostRes
 
     public bool IsSold { get; set; } = false;
 
+    public RateRes Rate { get; set; }
 
-    public virtual Rate Rate { get; set; }
-
-    public virtual ICollection<Report> Reports { get; set; }
+    public virtual IEnumerable<ReportRes> Reports { get; set; }
 }

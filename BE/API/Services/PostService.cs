@@ -11,9 +11,9 @@ public interface IPostService
 {
     Task<int> AddAsync(Api.Context.Entities.Post post);
 
-    Task<GetPostRes?> GetAsync(int id);
-    Task<IEnumerable<GetPostRes>> GetByShopIdAsync(int shopId);
-    Task<IEnumerable<GetPostRes>> GetLatestAsync(int number);
+    Task<PostRes?> GetAsync(int id);
+    Task<IEnumerable<PostRes>> GetByShopIdAsync(int shopId);
+    Task<IEnumerable<PostRes>> GetLatestAsync(int number);
 
     Task<bool> UpdateAsync(int id, UpdatePostArgs args);
     Task<bool> ToggleIsHide(int id);
@@ -57,7 +57,7 @@ public class PostService : IPostService
 
     #region Get
 
-    public async Task<GetPostRes?> GetAsync(int id)
+    public async Task<PostRes?> GetAsync(int id)
     {
         var post = await _context.Posts
             .Include(e => e.Reports)
@@ -67,20 +67,20 @@ public class PostService : IPostService
         if (post is null)
             return null;
 
-        return _mapper.Map<Api.Context.Entities.Post, GetPostRes>(post);
+        return _mapper.Map<Api.Context.Entities.Post, PostRes>(post);
     }
 
-    public async Task<IEnumerable<GetPostRes>> GetByShopIdAsync(int shopId)
+    public async Task<IEnumerable<PostRes>> GetByShopIdAsync(int shopId)
     {
         var listPost = _context.Posts
             .Where(e => e.IsDeleted == false)
             .AsEnumerable();
 
 
-        return _mapper.Map<IEnumerable<Api.Context.Entities.Post>, IEnumerable<GetPostRes>>(listPost);
+        return _mapper.Map<IEnumerable<Api.Context.Entities.Post>, IEnumerable<PostRes>>(listPost);
     }
 
-    public async Task<IEnumerable<GetPostRes>> GetLatestAsync(int number)
+    public async Task<IEnumerable<PostRes>> GetLatestAsync(int number)
     {
         var listPost = _context.Posts
             .Where(e => e.IsDeleted == false && e.IsHide == false)
@@ -89,7 +89,7 @@ public class PostService : IPostService
             .AsEnumerable();
 
 
-        return _mapper.Map<IEnumerable<Api.Context.Entities.Post>, IEnumerable<GetPostRes>>(listPost);
+        return _mapper.Map<IEnumerable<Api.Context.Entities.Post>, IEnumerable<PostRes>>(listPost);
     }
 
     #endregion

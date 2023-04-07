@@ -51,7 +51,7 @@ public class CategoryController : ControllerBase
             return BadRequest();
         }
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 
     [HttpPut]
@@ -63,7 +63,7 @@ public class CategoryController : ControllerBase
             return BadRequest();
         }
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 
     [HttpDelete]
@@ -75,6 +75,6 @@ public class CategoryController : ControllerBase
             return BadRequest();
         }
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 }

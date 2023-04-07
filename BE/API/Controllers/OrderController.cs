@@ -43,7 +43,7 @@ public class OrderController : ControllerBase
 
         var orderId = await _orderService.AddAsync(request);
 
-        return CreatedAtAction(nameof(GetOne), new { id = orderId }, new ResSuccess());
+        return CreatedAtAction(nameof(GetOne), new { id = orderId }, new SuccessRes());
     }
 
     [HttpGet]
@@ -64,7 +64,7 @@ public class OrderController : ControllerBase
             var order = await _orderService.GetAsync(userId, orderId);
 
             if (order is null)
-                return BadRequest(new ResFailure { Message = $"Không tồn tại orderId: {orderId}" });
+                return BadRequest(new FailureRes { Message = $"Không tồn tại orderId: {orderId}" });
 
             return Ok(order);
         }
@@ -129,8 +129,8 @@ public class OrderController : ControllerBase
 
         if (update == false)
             return BadRequest(
-                new ResFailure { Message = $"Thay đổi địa chỉ giao hàng cho orderId: {orderId} thất bại" });
-        return Ok(new ResSuccess());
+                new FailureRes { Message = $"Thay đổi địa chỉ giao hàng cho orderId: {orderId} thất bại" });
+        return Ok(new SuccessRes());
     }
 
     [HttpPatch]
@@ -146,7 +146,7 @@ public class OrderController : ControllerBase
 
         int.TryParse(userIdString, out int userId);
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 
     [HttpPatch]

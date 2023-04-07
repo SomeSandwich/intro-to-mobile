@@ -4,8 +4,7 @@ namespace API.Types.Objects;
 
 public class LoginReq
 {
-    public string Email { get; set; } = string.Empty;
-
+    [Required] public string Email { get; set; } = string.Empty;
     [Required] public string Password { get; set; } = string.Empty;
 }
 

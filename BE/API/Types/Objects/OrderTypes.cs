@@ -4,35 +4,20 @@ using Api.Context.Entities;
 
 namespace API.Types.Objects;
 
-public class CreateOrderReq
-{
-    [JsonIgnore] public int CustomerId { get; set; }
-
-    public string DeliveryAddress { get; set; } = string.Empty;
-
-    public ICollection<Item> Details { get; set; }
-}
-
-public class Item
+public class OrderItemReq
 {
     public int PostId { get; set; }
 
     public int UnitPrice { get; set; }
 }
 
-public class OrderRes
+public class CreateOrderReq
 {
-    public int Id { get; set; }
-
-    public int CustomerId { get; set; }
-
-    public int SellerId { get; set; }
+    [JsonIgnore] public int CustomerId { get; set; }
 
     public string DeliveryAddress { get; set; } = string.Empty;
 
-    public OrderStatus Status { get; set; }
-
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+    public ICollection<OrderItemReq> Details { get; set; }
 }
 
 public class UpdateOrderAddressReq
@@ -50,13 +35,26 @@ public class UpdateOrderArg
     public int? Total { get; set; }
 }
 
-// public class OrderDetailRes
-// {
-//     public int PostId { get; set; }
-//
-//     public int OrderId { get; set; }
-//
-//     public int UnitPrice { get; set; }
-//
-//     public virtual Post Post { get; set; }
-// }
+public class OrderDetailRes
+{
+    public int OrderId { get; set; }
+
+    public int PostId { get; set; }
+
+    public int UnitPrice { get; set; }
+}
+
+public class OrderRes
+{
+    public int Id { get; set; }
+
+    public int CustomerId { get; set; }
+
+    public int SellerId { get; set; }
+
+    public string DeliveryAddress { get; set; } = string.Empty;
+
+    public OrderStatus Status { get; set; }
+
+    public IEnumerable<OrderDetailRes> OrderDetails { get; set; }
+}

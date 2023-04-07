@@ -51,7 +51,7 @@ public class OrderService : IOrderService
 
             var listItems = args.Details;
 
-            var listDetail = _mapper.Map<ICollection<Item>, ICollection<OrderDetail>>(listItems);
+            var listDetail = _mapper.Map<ICollection<OrderItemReq>, ICollection<OrderDetail>>(listItems);
 
             if (listDetail is not null)
             {
