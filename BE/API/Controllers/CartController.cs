@@ -27,12 +27,12 @@ public class CartController : ControllerBase
         var add = await _cartService.Create(cart);
 
         if (add == false)
-            return BadRequest(new ResFailure
+            return BadRequest(new FailureRes
             {
                 Message = $"Thêm PostId: {postId} vào giỏ hàng của UserId: {id} thất bại !!!"
             });
 
-        return CreatedAtAction(nameof(GetByUserId), new { userId = id }, new ResSuccess());
+        return CreatedAtAction(nameof(GetByUserId), new { userId = id }, new SuccessRes());
     }
 
     [HttpGet]
@@ -51,9 +51,9 @@ public class CartController : ControllerBase
         var delete = await _cartService.Delete(userId, postId);
 
         if (delete == false)
-            return BadRequest(new ResFailure { Message = $"Xoá PostId: {postId} từ UserID: {userId} thất bại !!!" });
+            return BadRequest(new FailureRes { Message = $"Xoá PostId: {postId} từ UserID: {userId} thất bại !!!" });
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 
     [HttpDelete]
@@ -62,7 +62,7 @@ public class CartController : ControllerBase
     {
         await _cartService.DeleteByUserId(userId);
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 
     [HttpDelete]
@@ -71,6 +71,6 @@ public class CartController : ControllerBase
     {
         await _cartService.DeleteByPostId(postId);
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 }

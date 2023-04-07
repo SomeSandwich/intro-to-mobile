@@ -2,8 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Types.Objects;
 
-#region REQUEST
-
 public class ReqUploadSmallFile
 {
     [Required] public IFormFile File { get; set; }
@@ -27,10 +25,6 @@ public class ReqDeleteFile
     [Required] public string Key { get; set; }
 }
 
-#endregion
-
-#region OTHERS
-
 public class UploadFileDto
 {
     public string Key { get; set; }
@@ -44,10 +38,6 @@ public class DownloadFileDto
     public string Bucket { get; set; }
     public string Key { get; set; }
 }
-
-#endregion
-
-#region RESPONSE
 
 public class ResStatFile
 {
@@ -69,5 +59,3 @@ public class ResUploadFile
     public string Key { get; set; }
     public string OldName { get; set; }
 }
-
-#endregion

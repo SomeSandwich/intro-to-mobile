@@ -9,6 +9,6 @@ public class OrderProfile :Profile
     public OrderProfile()
     {
         CreateMap<CreateOrderReq, Order>();
-        CreateMap<Item, OrderDetail>();
+        CreateMap<OrderItemReq, OrderDetail>();
     }
 }

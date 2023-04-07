@@ -103,7 +103,7 @@ public class PostController : ControllerBase
         // if(listFileFail.Count <= 0)
         //     return CreatedAtAction(nameof(GetId), new { id = postId }, new ResSuccess());
 
-        return CreatedAtAction(nameof(GetId), new { id = postId }, new ResSuccess());
+        return CreatedAtAction(nameof(GetId), new { id = postId }, new SuccessRes());
     }
 
     [HttpGet]
@@ -121,14 +121,14 @@ public class PostController : ControllerBase
     {
         var post = await _postSer.GetAsync(id);
         if (post is null)
-            return BadRequest(new ResFailure { Message = $"Không tìm thấy bài đăng với ID: {id}" });
+            return BadRequest(new FailureRes { Message = $"Không tìm thấy bài đăng với ID: {id}" });
 
         return Ok(post);
     }
 
     [HttpGet]
     [Route("newest")]
-    public async Task<ActionResult<GetPostRes>> GetListLatest([FromQuery] int number = 10)
+    public async Task<ActionResult<PostRes>> GetListLatest([FromQuery] int number = 10)
     {
         var list = await _postSer.GetLatestAsync(number);
 
@@ -194,7 +194,7 @@ public class PostController : ControllerBase
 
         await _postSer.UpdateAsync(id, args);
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 
     [HttpPatch]
@@ -203,10 +203,10 @@ public class PostController : ControllerBase
     {
         if (!await _postSer.ToggleIsHide(id))
         {
-            return BadRequest(new ResFailure { Message = $"Toggle ẩn postId:{id} thất bại" });
+            return BadRequest(new FailureRes { Message = $"Toggle ẩn postId:{id} thất bại" });
         }
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 
     [HttpPatch]
@@ -215,9 +215,9 @@ public class PostController : ControllerBase
     {
         if (!await _postSer.DeleteAsync(id))
         {
-            return BadRequest(new ResFailure { Message = $"Toggle xoá postId: {id} thất bại" });
+            return BadRequest(new FailureRes { Message = $"Toggle xoá postId: {id} thất bại" });
         }
 
-        return Ok(new ResSuccess());
+        return Ok(new SuccessRes());
     }
 }

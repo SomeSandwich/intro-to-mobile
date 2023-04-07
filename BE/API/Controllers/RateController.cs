@@ -23,7 +23,7 @@ public class RateController : ControllerBase
     public async Task<IActionResult> SyncRate()
     {
         if (!await _rateService.SyncRateAsync())
-            return StatusCode(500, new ResFailure { Message = "Sync Rate thất bại" });
+            return StatusCode(500, new FailureRes { Message = "Sync Rate thất bại" });
 
         return Ok();
     }

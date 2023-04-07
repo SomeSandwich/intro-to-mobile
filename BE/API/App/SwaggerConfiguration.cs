@@ -1,3 +1,4 @@
+using System.Reflection;
 using API.App.OpenAPI;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -10,11 +11,17 @@ public static class SwaggerConfiguration
     public static void ConfigureSwagger(this IServiceCollection services)
     {
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
         services.AddSwaggerGen(opt =>
         {
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            opt.IncludeXmlComments(xmlPath);
+
             opt.EnableAnnotations();
 
             opt.OperationFilter<SwaggerDefaultValues>();
+
 
             opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {

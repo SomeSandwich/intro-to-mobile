@@ -1,11 +1,11 @@
 namespace API.Types.Objects;
 
-public class ResSuccess
+public class SuccessRes
 {
     public string Message { get; set; } = "Success";
 }
 
-public class ResFailure
+public class FailureRes
 {
     public string Message { get; set; } = "Failure";
 }
