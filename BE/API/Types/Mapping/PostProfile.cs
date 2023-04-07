@@ -1,3 +1,4 @@
+using Api.Context.Entities;
 using API.Types.Objects;
 using AutoMapper;
 
@@ -7,7 +8,7 @@ public class PostProfile : Profile
 {
     public PostProfile()
     {
-        CreateMap<CreatePostReq, Api.Context.Entities.Post>();
-        CreateMap<Api.Context.Entities.Post, PostRes>();
+        CreateMap<CreatePostReq, Post>();
+        CreateMap<Post, PostRes>();
     }
 }

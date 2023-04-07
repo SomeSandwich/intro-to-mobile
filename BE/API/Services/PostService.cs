@@ -1,5 +1,5 @@
-using System.Reactive;
 using Api.Context;
+using Api.Context.Entities;
 using API.Types.Mapping;
 using API.Types.Objects;
 using AutoMapper;
@@ -9,7 +9,7 @@ namespace API.Services;
 
 public interface IPostService
 {
-    Task<int> AddAsync(Api.Context.Entities.Post post);
+    Task<int> AddAsync(Post post);
 
     Task<PostRes?> GetAsync(int id);
     Task<IEnumerable<PostRes>> GetByShopIdAsync(int shopId);
@@ -19,6 +19,7 @@ public interface IPostService
     Task<bool> ToggleIsHide(int id);
 
     Task<bool> DeleteAsync(int id);
+    Task<IEnumerable<PostRes>> GetByCategoryAsync(int categoryId, int number = 10, string sort = "inc");
 }
 
 public class PostService : IPostService
@@ -37,7 +38,7 @@ public class PostService : IPostService
 
     #region Create
 
-    public async Task<int> AddAsync(Api.Context.Entities.Post post)
+    public async Task<int> AddAsync(Post post)
     {
         try
         {
@@ -67,7 +68,7 @@ public class PostService : IPostService
         if (post is null)
             return null;
 
-        return _mapper.Map<Api.Context.Entities.Post, PostRes>(post);
+        return _mapper.Map<Post, PostRes>(post);
     }
 
     public async Task<IEnumerable<PostRes>> GetByShopIdAsync(int shopId)
@@ -77,7 +78,7 @@ public class PostService : IPostService
             .AsEnumerable();
 
 
-        return _mapper.Map<IEnumerable<Api.Context.Entities.Post>, IEnumerable<PostRes>>(listPost);
+        return _mapper.Map<IEnumerable<Post>, IEnumerable<PostRes>>(listPost);
     }
 
     public async Task<IEnumerable<PostRes>> GetLatestAsync(int number)
@@ -89,7 +90,7 @@ public class PostService : IPostService
             .AsEnumerable();
 
 
-        return _mapper.Map<IEnumerable<Api.Context.Entities.Post>, IEnumerable<PostRes>>(listPost);
+        return _mapper.Map<IEnumerable<Post>, IEnumerable<PostRes>>(listPost);
     }
 
     #endregion
@@ -106,19 +107,16 @@ public class PostService : IPostService
             return false;
 
 
-        var lsit = post.MediaPath.ToList();
+        var list = post.MediaPath.ToList();
 
         foreach (var file in args.MediaFilesDelete)
         {
-            lsit.Remove(file);
+            list.Remove(file);
         }
 
-        foreach (var file in args.MediaFilesAdd)
-        {
-            lsit.Add(file);
-        }
+        list.AddRange(args.MediaFilesAdd);
 
-        post.MediaPath = lsit.ToArray();
+        post.MediaPath = list.ToArray();
 
         if (args.Price is not null)
             post.Price = (int)args.Price;
@@ -168,6 +166,34 @@ public class PostService : IPostService
         await _context.SaveChangesAsync();
 
         return true;
+    }
+
+    public async Task<IEnumerable<PostRes>> GetByCategoryAsync(int categoryId, int number, string sort)
+    {
+        var query = _context.Posts
+            // #TODO: Generated Post and Enable this comment
+            // .Where(e => e.IsHide != false)
+            // .Where(e => e.IsDeleted != false)
+            .Where(e => e.CategoryId == categoryId)
+            .AsQueryable();
+
+        if (sort == "desc")
+        {
+            query = query
+                .OrderByDescending(e => e.CreatedDate)
+                .AsQueryable();
+        }
+        else
+        {
+            query = query
+                .OrderBy(e => e.CreatedDate)
+                .AsQueryable();
+        }
+
+        return query
+            .Take(number)
+            .Select(e => _mapper.Map<Post, PostRes>(e))
+            .AsEnumerable();
     }
 
     #endregion
