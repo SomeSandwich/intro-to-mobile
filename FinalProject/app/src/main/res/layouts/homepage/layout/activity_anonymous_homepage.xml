@@ -5,12 +5,12 @@
     <data>
         <variable
             name="clickHandler"
-            type="com.example.efriendly.activities.AnonymousHomepageActivity.AnonymousHomepageActivityClickHandler"/>
+            type="project.example.efriendly.activities.AnonymousHomepageActivity.AnonymousHomepageActivityClickHandler"/>
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <SearchView
+        <com.google.android.material.search.SearchView
             android:id="@+id/SearchBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

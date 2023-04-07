@@ -12,26 +12,26 @@
         android:theme="@style/Theme.EFriendly"
         tools:targetApi="31">
         <activity
-            android:name=".activities.CartActivity"
+            android:name="project.example.efriendly.activities.userFragments.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ChatActivity"
+            android:name="project.example.efriendly.activities.userFragments.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AnonymousHomepageActivity"
+            android:name="project.example.efriendly.activities.AnonymousHomepageActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.login.LoginActivity"
+            android:name="project.example.efriendly.activities.login.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".activities.HomepageActivity"
+            android:name="project.example.efriendly.activities.userFragments.HomepageActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.NotificationsActivity"
+            android:name="project.example.efriendly.activities.userFragments.NotificationsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="project.example.efriendly.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

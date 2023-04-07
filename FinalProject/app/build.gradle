@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.efriendly'
+    namespace 'project.example.efriendly'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.efriendly"
+        applicationId "project.example.efriendly"
         minSdk 22
         targetSdk 33
         versionCode 1

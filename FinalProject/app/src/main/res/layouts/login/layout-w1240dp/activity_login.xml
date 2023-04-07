@@ -33,7 +33,7 @@
         android:layout_marginStart="46dp"
         android:labelFor="@id/emailInput"
         android:text="@string/email"
-    />
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
