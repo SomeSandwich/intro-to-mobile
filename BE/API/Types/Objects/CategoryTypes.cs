@@ -5,11 +5,15 @@ namespace API.Types.Objects;
 public class CreateCategoryReq
 {
     [Required] public string Description { get; set; }
+
+    public string Icon { get; set; }
 }
 
 public class UpdateCategoryReq
 {
     public string? Description { get; set; }
+
+    public string Icon { get; set; }
 }
 
 public class CategoryRes

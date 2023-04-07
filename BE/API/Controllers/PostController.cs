@@ -31,6 +31,53 @@ public class PostController : ControllerBase
         _mapper = config.CreateMapper();
     }
 
+
+    #region Get
+
+    [HttpGet]
+    [Route("{id:int}")]
+    public async Task<ActionResult> GetId([FromRoute] int id)
+    {
+        var post = await _postSer.GetAsync(id);
+        if (post is null)
+            return BadRequest(new FailureRes { Message = $"Không tìm thấy bài đăng với ID: {id}" });
+
+        return Ok(post);
+    }
+
+    [HttpGet]
+    [Route("{sellerId:int}")]
+    public async Task<ActionResult> GetBySellerId([FromRoute] int sellerId)
+    {
+        var listPost = await _postSer.GetByShopIdAsync(sellerId);
+
+        return Ok(listPost);
+    }
+
+
+    [HttpGet]
+    [Route("newest")]
+    public async Task<ActionResult<PostRes>> GetListLatest([FromQuery] int number = 10)
+    {
+        var list = await _postSer.GetLatestAsync(number);
+
+        return Ok(list);
+    }
+
+    [HttpGet]
+    [Route("category/{categoryId:int}")]
+    public async Task<ActionResult> GetListByCategory([FromRoute] int categoryId, [FromQuery] int number = 10,
+        [FromQuery] string sort = "inc")
+    {
+        var list = await _postSer.GetByCategoryAsync(categoryId, number, sort);
+
+        return Ok(list);
+    }
+
+    #endregion
+
+    #region Post
+
     [HttpPost]
     [Route("")]
     public async Task<ActionResult<string>> Create([FromForm] CreatePostReq request)
@@ -106,34 +153,7 @@ public class PostController : ControllerBase
         return CreatedAtAction(nameof(GetId), new { id = postId }, new SuccessRes());
     }
 
-    [HttpGet]
-    [Route("{sellerId:int}")]
-    public async Task<ActionResult> GetBySellerId([FromRoute] int sellerId)
-    {
-        var listPost = await _postSer.GetByShopIdAsync(sellerId);
-
-        return Ok(listPost);
-    }
-
-    [HttpGet]
-    [Route("{id:int}")]
-    public async Task<ActionResult> GetId([FromRoute] int id)
-    {
-        var post = await _postSer.GetAsync(id);
-        if (post is null)
-            return BadRequest(new FailureRes { Message = $"Không tìm thấy bài đăng với ID: {id}" });
-
-        return Ok(post);
-    }
-
-    [HttpGet]
-    [Route("newest")]
-    public async Task<ActionResult<PostRes>> GetListLatest([FromQuery] int number = 10)
-    {
-        var list = await _postSer.GetLatestAsync(number);
-
-        return Ok(list);
-    }
+    #endregion
 
     [HttpPatch]
     [Route("{id:int}")]
@@ -209,13 +229,13 @@ public class PostController : ControllerBase
         return Ok(new SuccessRes());
     }
 
-    [HttpPatch]
-    [Route("{id:int}/toggle-delete")]
+    [HttpDelete]
+    [Route("{id:int}")]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         if (!await _postSer.DeleteAsync(id))
         {
-            return BadRequest(new FailureRes { Message = $"Toggle xoá postId: {id} thất bại" });
+            return BadRequest(new FailureRes { Message = $"Xoá postId: {id} thất bại" });
         }
 
         return Ok(new SuccessRes());
