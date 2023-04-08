@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.efriendly.R;
+import com.example.efriendly.activities.AnonymousHomepageActivity;
 import com.example.efriendly.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -159,10 +161,16 @@ public class LoginActivity extends AppCompatActivity {
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
-    final private TextView.OnClickListener OnClickForgotPass = new TextView.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            System.out.println("Forgot password clicked");
+    public class LoginActivityClickHandler{
+        Context context;
+
+        public LoginActivityClickHandler(Context context) {
+
+            this.context = context;
+        }
+        public void backClick(View view) {
+            Intent myIntent = new Intent(LoginActivity.this, AnonymousHomepageActivity.class);
+            startActivity(myIntent);
         }
     };
     final private ImageView.OnClickListener OnClickBack = new ImageView.OnClickListener(){
