@@ -26,4 +26,9 @@
     <string name="TotalPayment">Total payment:</string>
     <string name="Delete">Delete</string>
     <string name="Buy">Buy</string>
+    <string name="legit">Legit</string>
+    <string name="size">Size</string>
+    <string name="detail">
+        <b><font size="35">Detail</font></b>
+    </string>
 </resources>

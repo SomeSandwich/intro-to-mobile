@@ -12,6 +12,9 @@
         android:theme="@style/Theme.EFriendly"
         tools:targetApi="31">
         <activity
+            android:name=".activities.showPost"
+            android:exported="false" />
+        <activity
             android:name=".activities.userFragments.SearchBarCartChatActivity"
             android:exported="false" />
         <activity
