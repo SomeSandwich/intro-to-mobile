@@ -1,3 +1,4 @@
+using System.Reflection;
 using API.App.OpenAPI;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -10,20 +11,19 @@ public static class SwaggerConfiguration
     public static void ConfigureSwagger(this IServiceCollection services)
     {
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-        services.AddSwaggerGen(options =>
+
+        services.AddSwaggerGen(opt =>
         {
-            options.OperationFilter<SwaggerDefaultValues>();
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            opt.IncludeXmlComments(xmlPath);
 
-            // // config for minial api
-            // options.TagActionsBy(e => new[] { e.GroupName });
-            //
-            // options.DocInclusionPredicate((version, desc) =>
-            // {
-            //     //fix cho nay lai
-            //     return true;
-            // });
+            opt.EnableAnnotations();
 
-            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            opt.OperationFilter<SwaggerDefaultValues>();
+
+
+            opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n
                       Enter 'Bearer' [space] and then your token in the text input below.
@@ -34,7 +34,7 @@ public static class SwaggerConfiguration
                 Scheme = "Bearer"
             });
 
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            opt.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme

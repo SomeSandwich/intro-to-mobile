@@ -52,61 +52,12 @@
                 tools:layout_editor_absoluteX="333dp"
                 tools:layout_editor_absoluteY="37dp" />
         </LinearLayout>
-
-        <LinearLayout
+        <ListView
+            android:id="@+id/NotificationList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ListView
-                android:id="@+id/NotificationList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="48dp"
-                android:background="@drawable/listview_border"
-                tools:listitem="@layout/custom_notification_items">
-            </ListView>
-            <LinearLayout
-                android:id="@+id/navBar"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@color/green"
-                android:orientation="horizontal"
-                android:layout_marginTop="-48dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/home_nav_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
-                    android:contentDescription="@string/image"
-                    app:srcCompat="@drawable/home_nav" />
-
-                <ImageView
-                    android:id="@+id/store_nav_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
-                    android:contentDescription="@string/image"
-                    app:srcCompat="@drawable/store_nav"
-                    />
-                <ImageView
-                    android:id="@+id/noti_nav_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
-                    android:contentDescription="@string/image"
-                    app:srcCompat="@drawable/noti_nav"
-                    />
-                <ImageView
-                    android:id="@+id/profile_nav_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
-                    android:contentDescription="@string/image"
-                    app:srcCompat="@drawable/profile_nav"
-                    />
-            </LinearLayout>
-        </LinearLayout>
+            android:background="@drawable/listview_border"
+            tools:listitem="@layout/custom_notification_items">
+        </ListView>
     </LinearLayout>
 </layout>

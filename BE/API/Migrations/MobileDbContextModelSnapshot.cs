@@ -49,9 +49,45 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Áo",
+                            Icon = "icons/"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Quần",
+                            Icon = "icons/"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Váy",
+                            Icon = "icons/"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Áo khoác",
+                            Icon = "icons/"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Mũ",
+                            Icon = "icons/"
+                        });
                 });
 
             modelBuilder.Entity("Api.Context.Entities.Conversation", b =>
@@ -179,7 +215,7 @@ namespace API.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -200,7 +236,7 @@ namespace API.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -212,6 +248,764 @@ namespace API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Caption = "Omnis nulla fugiat sed quo sit cum.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 166, DateTimeKind.Local).AddTicks(710),
+                            Description = "Inventore quaerat saepe expedita molestias quis nesciunt blanditiis rerum unde. Tempora libero voluptas illum vitae est omnis non sapiente qui. Id esse iure voluptatem. Non vel aut et. Voluptas explicabo rem libero molestiae deleniti est iusto eum sunt. Tempora et repellat unde fugit in alias quidem.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 275491,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 174, DateTimeKind.Local).AddTicks(6310),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Caption = "Adipisci dolorum nihil minus culpa explicabo iste recusandae voluptatem molestias et molestias sed ut quisquam nulla.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(4670),
+                            Description = "Non veritatis est incidunt dolores voluptatem illo quo tempora. Consequatur debitis minus facere voluptate quae impedit. Deleniti blanditiis aut delectus quia quisquam. Molestias natus ab doloremque recusandae itaque reprehenderit molestiae.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 256342,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(4670),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Caption = "Aliquam qui sed qui architecto veritatis nihil sed molestiae dolores.",
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(4890),
+                            Description = "Saepe sunt ea consequatur et voluptatum accusantium ea id. Illum molestias ut. Voluptatem quod commodi quas. Libero dolorem maiores nesciunt.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 281673,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(4890),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Caption = "Ut iusto sit sunt molestias error vel velit.",
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(5150),
+                            Description = "Rerum illum sit. Iste sit pariatur omnis iste error voluptatem occaecati eos. Tempore dolorem saepe culpa qui voluptate vitae dignissimos illo. Voluptatum eos impedit sunt est. Consequatur quia est voluptas. Et vel modi. Sunt repellendus provident quae magni quidem.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 61653,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(5160),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Caption = "Ipsum illo omnis aut deleniti qui veniam consequuntur enim eos et accusamus illum praesentium ut suscipit est totam est sed.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(5360),
+                            Description = "Qui iste error nulla veritatis labore aliquid. Iusto totam ut labore accusamus nobis et animi. Quia praesentium eveniet vitae hic dicta. Ex culpa nesciunt iusto. Et reprehenderit et.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 249275,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(5360),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Caption = "Dolores doloribus culpa voluptatem laborum laboriosam voluptas.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6340),
+                            Description = "Et et consequuntur consequatur. Eum corrupti maxime ratione non enim modi odit error aliquam. Quibusdam velit cupiditate dignissimos architecto. Ea ea eligendi assumenda debitis. Aut autem quod quo numquam saepe similique quisquam assumenda. Est ab soluta vero asperiores unde est quaerat in reprehenderit.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 96540,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6340),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Caption = "Veniam molestiae occaecati ratione velit laboriosam molestias dolorum magni soluta ipsam assumenda est aut.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6630),
+                            Description = "Qui enim ipsum. Doloribus nostrum nobis expedita nam tenetur architecto sint. Explicabo illo ipsam labore temporibus neque sit est sit ut. Impedit voluptas omnis placeat esse. Nihil quis vel. Sapiente asperiores eos aut distinctio blanditiis. Ut ut id ratione velit.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 136992,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6630),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Caption = "Saepe nemo facilis magni tenetur officiis quis in ut vero quo laborum voluptatem minus ipsam ut.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6840),
+                            Description = "Sed id maiores dolorem est dolor. Reprehenderit vel veritatis similique. Accusamus ex qui quia provident ipsa vel dolor deserunt. Hic expedita reiciendis. Dolores nesciunt et et.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 124795,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6840),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Caption = "Nihil cumque in minus dignissimos enim veritatis exercitationem est praesentium sit quam nesciunt doloremque ut et et.",
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(7050),
+                            Description = "Et voluptas rerum quibusdam est. Veniam ex tenetur et similique ea. Molestias quis eos cum. Quos quae laudantium repudiandae sint dolor iure cumque dolores.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 147888,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(7050),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Caption = "Et laudantium aperiam eos et eum non ea optio autem asperiores ut et.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8030),
+                            Description = "Voluptatem unde animi. Tempore et eveniet consequuntur. Reprehenderit ea ipsam qui dolorem sed repudiandae et non porro. Nulla itaque quas qui culpa alias.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 53796,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8030),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Caption = "Aut ipsa cumque voluptatibus laboriosam officiis nostrum quia laboriosam voluptas rem.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8230),
+                            Description = "Qui nostrum reprehenderit quos atque. Aspernatur sit suscipit. Deserunt beatae alias. Doloribus sit eos ex enim. Quae quasi corrupti et beatae neque. Eveniet et quo quas quod voluptas quis commodi qui harum.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 93031,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8240),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Caption = "Aliquid a et soluta consectetur quis sint.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8410),
+                            Description = "Est temporibus eos dolorem sunt tempore aspernatur in consequatur. Quae et esse eos non velit praesentium delectus et. Quasi autem sunt. Placeat temporibus exercitationem optio earum vel et dolores.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 249603,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8410),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Caption = "Ut qui quod quis aut aut voluptatem nobis eligendi corporis explicabo facilis repellat ut.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8610),
+                            Description = "Et quia ad eaque temporibus neque eum. Omnis est ut aut. Cupiditate est nostrum ducimus. Recusandae animi et. Quam voluptates impedit fugit recusandae.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 209867,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8610),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Caption = "Aut omnis soluta eos sint rerum porro dolorem eos itaque molestias rem aut iure quos vel.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(9840),
+                            Description = "Nisi molestiae omnis libero ab non. Praesentium eaque soluta enim ex. Hic deserunt et non rem nisi. Voluptatem a quis placeat commodi excepturi ullam. Quod accusamus qui consequatur reprehenderit. Sit consequuntur omnis voluptas est voluptas officia. Velit rem suscipit dicta autem necessitatibus aspernatur ut repellat.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 57394,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(9840),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Caption = "Vel molestiae animi aspernatur molestias ut recusandae corrupti recusandae quidem debitis accusantium commodi odio rerum adipisci.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(70),
+                            Description = "Laudantium rerum animi magni neque placeat quae et fugiat. Eos vel repellendus. Autem saepe et explicabo beatae soluta nam inventore rerum. Aperiam error ad at perferendis et quisquam qui enim.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 223260,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(70),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Caption = "Ad ut mollitia praesentium deserunt perspiciatis eligendi libero.",
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(290),
+                            Description = "Nesciunt consequatur porro omnis amet. Non qui ea numquam nam voluptates distinctio maiores et. Consequatur vel harum deserunt eos hic quia corporis. Reiciendis vel inventore aut libero. Ullam libero recusandae commodi eos. Itaque dolorem ad repellendus soluta voluptas neque repudiandae aut.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 185205,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(290),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Caption = "Nesciunt necessitatibus error esse soluta doloribus rem recusandae cum et voluptatem nisi omnis ad repellendus.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(1480),
+                            Description = "Adipisci sed beatae nobis. Sunt tenetur nemo aut et unde quo nulla. Nam facilis hic animi et amet eos eaque. Repudiandae quis quasi ut praesentium numquam sint quis voluptas. Illo sed eos dolorum eveniet reiciendis recusandae voluptatem occaecati. Explicabo consequatur omnis consequuntur hic.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 231948,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(1480),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Caption = "Omnis sed doloremque qui nobis.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(3740),
+                            Description = "Officiis reiciendis ipsam mollitia commodi velit aliquam magnam repellat. Libero facere consequatur voluptatem ipsum quasi qui labore beatae quae. Aut dolor iusto voluptas aut modi. Aut accusamus cumque eum et libero vel dolore.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 220589,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(3790),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Caption = "Enim nihil magni et aut quod repudiandae cupiditate quisquam iusto ex ipsa rem quia nostrum ut.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4120),
+                            Description = "Voluptatum et dolorem est. Sed quis ut quia non omnis et et aut. Id voluptatem aut consequatur sed aperiam officiis praesentium ut. Laudantium recusandae illo accusantium qui. Voluptas odit maiores excepturi. Expedita similique totam similique mollitia repellendus commodi autem laborum cumque.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 85679,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4130),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Caption = "Ipsam ipsam dignissimos porro eos.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4340),
+                            Description = "Ducimus error nostrum doloribus sit consequatur a numquam quas. Praesentium dignissimos quis incidunt totam voluptas laboriosam aut doloribus. Voluptate ab iusto voluptate in autem sapiente illo. Et ullam qui dolores aut non sit eum esse.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 65785,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4340),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Caption = "Animi quis quia numquam aperiam.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4530),
+                            Description = "Est adipisci commodi necessitatibus harum et. Expedita ut est. Sit temporibus dolor voluptates repellendus architecto saepe itaque mollitia ratione. Modi beatae ea ut esse eveniet voluptas inventore. Architecto cum consectetur.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 79561,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4540),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Caption = "Repudiandae numquam nemo ut dolore sed blanditiis minima sed sint quia harum occaecati atque omnis.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4820),
+                            Description = "Cupiditate qui necessitatibus excepturi non sed rerum. Porro et molestias. Ipsum quisquam dicta voluptates eaque. Tenetur et a perferendis sint adipisci earum et. Perspiciatis aliquam tempora nisi ea voluptas. Ab sint odio ratione iusto ullam et a ratione.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 159711,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4820),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Caption = "Veniam iure ipsam quis omnis.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(5080),
+                            Description = "Nobis molestias soluta odio consectetur dolor aut et incidunt. Et est nostrum ut. Voluptate nemo aspernatur dolorem sint ut quia non sit quae. Dignissimos aut nesciunt porro. Aut harum recusandae provident expedita est repellendus. Rem molestiae et praesentium aperiam reiciendis.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 250338,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(5080),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Caption = "Architecto quasi repudiandae quas id impedit ut hic voluptas.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(5770),
+                            Description = "Blanditiis qui voluptate. Aliquam voluptas necessitatibus explicabo veniam sequi et iure. Unde ut consectetur necessitatibus. Est cupiditate doloribus distinctio minus voluptatem sequi. Voluptatem quis molestiae. Saepe laudantium qui delectus error perspiciatis voluptatum quam qui. Ipsam porro vel et alias consectetur suscipit.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 168217,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(5770),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Caption = "Sunt culpa aut omnis voluptatem labore explicabo animi autem eveniet.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6050),
+                            Description = "Molestiae ex eius ullam sint quia. Reprehenderit mollitia itaque aut suscipit cumque. Ullam vitae quisquam quo qui fuga est aut ipsam. Facilis consectetur est earum provident vel corrupti et. Consequatur consequuntur quisquam quia non consequatur temporibus. Temporibus provident eos unde.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 78871,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6060),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Caption = "Necessitatibus autem sunt non quia non eveniet aut soluta non omnis placeat et autem dolor.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6240),
+                            Description = "Ut voluptas doloremque amet voluptate aspernatur mollitia. Cumque iusto voluptate. Voluptatem id sed dolores molestiae. Minus voluptatem ea esse aut.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 284453,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6240),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Caption = "At et fugiat rem nemo odit eos odit numquam excepturi molestiae optio ratione ratione doloremque magnam dolorem.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6500),
+                            Description = "Voluptatibus perspiciatis blanditiis et. Cum sit et assumenda officia eius voluptas neque nisi. Est accusantium exercitationem corrupti unde quibusdam quia sed amet autem. Velit repudiandae eos sint sed minima illum quaerat. Blanditiis tempora nostrum voluptates. Eius velit ut similique similique amet beatae est suscipit. Aut vel quia distinctio eum aspernatur non.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 77239,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6500),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Caption = "Quis commodi cupiditate qui voluptatem odio nostrum.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7080),
+                            Description = "Ipsum aut eum ea eos ab soluta voluptatem omnis. Consequatur beatae exercitationem eius dolor soluta fugit ut magnam. Aut sint ut error asperiores commodi non. Veniam aut deleniti dolorem eius voluptatibus omnis autem. Officia et quisquam nulla laboriosam eveniet alias non temporibus magni.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 85051,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7080),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Caption = "Quia numquam architecto magnam consequuntur voluptatem modi voluptate et ut voluptatem perferendis molestias consequuntur ratione at.",
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7280),
+                            Description = "Earum enim ipsa aspernatur sit quia esse nostrum. Quia id nam ex suscipit maiores. Adipisci ut libero rem suscipit mollitia repellat voluptas. Quia veniam id accusantium voluptate sunt.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 165638,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7280),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Caption = "Et occaecati fugiat sint rerum exercitationem.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7480),
+                            Description = "Numquam et modi minima mollitia sit et aut amet minima. Molestiae consequatur fugit laborum pariatur non. Dolorem doloremque voluptas soluta. Voluptatum hic quae nisi qui rerum. Magni est perferendis totam assumenda. Consequatur fugit voluptatem.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 78783,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7480),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Caption = "Rerum natus fuga neque et consequatur maiores nobis voluptas et voluptas neque distinctio ut voluptas corrupti qui.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(8610),
+                            Description = "Sint deleniti sed ea asperiores reprehenderit nostrum laudantium. Assumenda odio minima. Commodi earum corporis magnam expedita. Non quae in ut qui sit officia. Cumque blanditiis consequatur dicta fuga et nam eius. Et quidem expedita et.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 67107,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(8620),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Caption = "Quia repudiandae eum soluta et rerum minus quo voluptatem et minima placeat.",
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(8840),
+                            Description = "Sit officia voluptate sed perspiciatis eum ea nihil sunt sed. Quia eveniet repudiandae quis est. Ea autem odit nemo distinctio ipsam non esse vitae et. Quibusdam et enim ullam voluptas veritatis saepe soluta optio.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 80673,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(8840),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Caption = "Sit qui ex consequatur rerum corporis dicta officia qui tempore at repellat consectetur ut delectus.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(9080),
+                            Description = "Et cumque provident dolor. Eos accusantium ducimus placeat. Ea beatae et dolores quos doloremque sed aut at. Nihil delectus officia dolores in autem inventore. Omnis et id optio dolore qui enim. Velit et ut impedit est qui corporis quos deserunt consequatur.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 179702,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(9080),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Caption = "Ab et voluptas voluptatibus blanditiis consequatur esse voluptatibus sapiente corrupti laboriosam molestiae.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(9300),
+                            Description = "Commodi saepe ipsa voluptas. Nostrum dolorum hic magnam. Placeat cupiditate quod omnis laborum. Molestiae exercitationem voluptas. Ut corrupti ut voluptas hic cum aliquid. Laudantium delectus inventore quam unde commodi autem neque. Et aut et enim.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 163037,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(9300),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Caption = "Ipsa reprehenderit ullam quia architecto mollitia voluptas rerum.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(300),
+                            Description = "Fugiat provident dolorem labore magnam. Tempora aliquid ab distinctio possimus assumenda soluta. Fugit harum exercitationem sed alias. Magnam quasi sequi aut et quo a aut. Adipisci nemo aliquam ut dicta et. Quia sint soluta at ut nesciunt iste possimus corporis. Nihil omnis earum sed quisquam eum.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 56623,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(300),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Caption = "Similique id cumque officiis earum placeat mollitia velit quo quas deleniti ullam consequatur corrupti consectetur voluptate rerum adipisci voluptatem earum.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(560),
+                            Description = "Accusantium voluptatem numquam dolor quia laboriosam nemo iusto tempore quia. A sunt in dolor. Labore debitis officiis corporis est veritatis vitae enim. Quis voluptas praesentium eligendi nobis. Est consectetur quos aut officia illum incidunt excepturi magni sed. Veniam sed molestiae sint. Ut est qui.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 133850,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(560),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Caption = "Ad voluptas magni aut eos.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(740),
+                            Description = "Ipsa iusto explicabo et perspiciatis dolores. Ab error dolores ullam blanditiis ex quia asperiores velit incidunt. Vitae error dolores et aut facere. Sed a tempora pariatur. Illo sunt ex est consequatur quaerat exercitationem.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 77122,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(740),
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Caption = "Sunt autem laudantium enim vel earum magni eaque veritatis voluptatum omnis ut dicta qui ut voluptatibus qui adipisci voluptatem officia.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(990),
+                            Description = "Est ut magni. Doloremque aut quo voluptas qui. Ab et et pariatur explicabo ut eos. Velit harum modi distinctio reprehenderit nemo quia qui nam. Officiis et at itaque. Vel magnam modi libero est voluptate harum qui et eligendi. Temporibus aspernatur et necessitatibus quia et nesciunt.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 109657,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(990),
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Caption = "Velit est omnis quis doloribus soluta non unde minima iure rerum sunt mollitia sit voluptas rem inventore.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(1830),
+                            Description = "Fugit neque dolores atque asperiores consequatur magnam esse voluptas. Expedita qui dolore. Sed libero hic. Harum et rerum odit provident quasi perspiciatis excepturi ipsum autem. Architecto tempore eveniet a repellendus exercitationem. Aspernatur vel quasi.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 179986,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(1830),
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Caption = "Qui eos voluptates harum et est dolorum quo mollitia omnis mollitia soluta id quas.",
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(2090),
+                            Description = "Illo nobis aspernatur. Non quae voluptatem. Praesentium voluptate quia delectus similique reprehenderit quo maxime veniam distinctio. Quis nihil blanditiis quasi qui officia fugit sed. Sed dignissimos ut. Ad nesciunt omnis facilis voluptate in voluptatibus consequatur. Praesentium reiciendis cupiditate et accusamus qui vel.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 173529,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(2090),
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Caption = "Qui eos perferendis incidunt qui cum omnis sunt vitae.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(2310),
+                            Description = "Officiis nostrum facilis quisquam. Sint expedita nisi accusantium. Et labore veniam nemo quis saepe aut similique. Iure quis ducimus sunt rem. Ratione praesentium voluptatibus adipisci officiis odio aspernatur excepturi reiciendis eos. Aut sequi occaecati quia facilis ea aut.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 143967,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(2310),
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Caption = "Omnis necessitatibus aliquam id cupiditate perferendis eligendi voluptate qui laudantium ad nihil error.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3330),
+                            Description = "Facere sit est quia alias minus. Sapiente impedit impedit id atque nihil sed. Omnis aut aut ut in consequatur odio dolore amet. Ex dicta tenetur quia. Soluta harum reiciendis voluptas aperiam magni qui. Doloremque placeat velit aut reiciendis.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 105352,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3330),
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Caption = "Qui consequatur sed voluptatum repellendus doloribus quas.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3560),
+                            Description = "Labore occaecati aspernatur architecto. Aut vel sit totam enim voluptatibus. Modi ipsa temporibus eos culpa rerum magni exercitationem. Nobis placeat unde vel distinctio quod officiis officiis ullam recusandae. Repudiandae unde deserunt autem consequatur quidem delectus. Ut rerum ea perspiciatis. Aut architecto et.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 196614,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3560),
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Caption = "Delectus sunt ullam ducimus fugit voluptatem labore dolorum harum eaque reprehenderit et.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3790),
+                            Description = "Repellendus aperiam aut et sit. Earum quis aspernatur. Rem beatae assumenda tempore eius nulla. Maiores nobis reprehenderit alias deserunt. Aperiam praesentium sint vero rerum exercitationem est beatae. Officiis est quidem tempore rem laboriosam. Architecto vitae minus corrupti.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 274223,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3790),
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Caption = "Quis ea non dolores rerum aut vero magnam hic dolorum qui aut consectetur sed magnam.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(4020),
+                            Description = "Eos eius explicabo exercitationem. Repellendus possimus ut omnis ut eligendi quo voluptatem culpa ducimus. Magnam quis commodi explicabo sequi in velit qui. Velit ducimus aut sapiente sit nostrum. Deleniti ipsam aliquam. Ipsa consequuntur fugit nesciunt aliquid assumenda. Maiores sed eum qui.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 183104,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(4020),
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Caption = "Id rerum sunt natus debitis omnis et dolores voluptatem voluptate maxime a sit tenetur.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5010),
+                            Description = "Laboriosam odio dolorem a voluptatem voluptatibus ipsam in eos doloribus. Cumque quo et iste quis vel porro laudantium. Est rerum aut reiciendis nam odit voluptatem. Et quis dolorum corrupti quis.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 64124,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5010),
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Caption = "Voluptatem cumque quo ut impedit et corrupti voluptatem magnam et in.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5200),
+                            Description = "Voluptas quidem sequi quia error sapiente occaecati fuga quia. Quo quis veniam laborum aut maxime ex voluptatem qui id. Vel suscipit velit minus ducimus sint quo recusandae ut. Eius dolorem laborum enim pariatur.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 161614,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5200),
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Caption = "Dolore et minima neque est voluptas qui rerum consequatur quos voluptatem delectus alias excepturi autem eos.",
+                            CategoryId = 2,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5530),
+                            Description = "Placeat expedita ab quisquam blanditiis recusandae sequi ratione ex in. Officiis pariatur deserunt ut quos saepe numquam. Optio ratione sapiente neque consectetur ut voluptas sed. Natus fugiat quia fugit rerum recusandae omnis et voluptates. Et laudantium eligendi laudantium molestiae quos sed quis est reiciendis. Impedit perferendis illum ullam optio modi corporis.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 131455,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5530),
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Caption = "Consequuntur dolor nemo debitis non impedit non voluptate a voluptas eum et consequatur.",
+                            CategoryId = 4,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5690),
+                            Description = "Repudiandae est perferendis eaque. Tenetur aspernatur itaque in repellendus. Nobis fuga non delectus. Omnis illo voluptatibus.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 75771,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5690),
+                            UserId = 9
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Caption = "Et consequatur illo labore laborum.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6510),
+                            Description = "Iure suscipit nemo culpa id suscipit et quis. Consequuntur aut iure ab molestiae fugiat magnam numquam consequatur. Est repellat non odit adipisci. Perferendis at quaerat ducimus sed qui et.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 248538,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6510),
+                            UserId = 9
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Caption = "Voluptatem quod tempore molestiae in voluptates.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6710),
+                            Description = "Saepe ex perspiciatis reiciendis sed reprehenderit molestiae. Itaque nisi dolor velit dolores doloremque officiis delectus fugiat. Exercitationem et consequatur sit et ut sed. Et ut neque voluptatum qui qui corrupti.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 248636,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6710),
+                            UserId = 9
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Caption = "Dolorum blanditiis quos hic deserunt ut rem exercitationem distinctio iste quos et et.",
+                            CategoryId = 5,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6920),
+                            Description = "Ut corporis autem. Et molestiae nihil et ut debitis. Reprehenderit hic dolores et nulla. Sint cum enim. Voluptas rerum minima recusandae.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 83360,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6920),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Caption = "Asperiores ut est hic laboriosam totam et.",
+                            CategoryId = 1,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(8330),
+                            Description = "Officiis repellendus vitae. Tempora velit unde id itaque. Delectus dolorem illo illum doloremque et eveniet enim. Perferendis et itaque laboriosam voluptatibus et sit deserunt. A ab tenetur atque harum ratione. Dolorum qui quaerat ab reiciendis nulla ab ut. Aut exercitationem placeat error et sit et velit et.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 61475,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(8340),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Caption = "Et aspernatur at non voluptates fugiat qui vel omnis sint voluptatum qui.",
+                            CategoryId = 3,
+                            CreatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(8570),
+                            Description = "Qui ipsum minima aut adipisci. Recusandae unde qui et odio temporibus necessitatibus consequuntur. Necessitatibus pariatur quae et voluptatem laboriosam quo sit. Reprehenderit sit praesentium maiores enim. Quia dolores fugiat quos. Id deleniti commodi necessitatibus ducimus sint aperiam ipsa qui soluta.",
+                            IsDeleted = false,
+                            IsHide = false,
+                            IsSold = true,
+                            Price = 83775,
+                            UpdatedDate = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(8570),
+                            UserId = 10
+                        });
                 });
 
             modelBuilder.Entity("Api.Context.Entities.Rate", b =>
@@ -232,16 +1026,508 @@ namespace API.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("RatingAt")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("PostId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Rates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Comment = "Commodi alias quia molestias qui. Aut nisi quod accusamus error nemo voluptate nulla ut.",
+                            PostId = 1,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(2630),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Comment = "Reprehenderit ab officiis qui maxime porro in qui voluptatibus hic. Ad totam est veritatis eius laboriosam nostrum praesentium.",
+                            PostId = 2,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(4680),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Comment = "Atque quia rem provident quia quos neque officia illo aliquid. Veritatis sit et quia et ullam.",
+                            PostId = 3,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(4900),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Comment = "Harum aut aliquam voluptates quisquam magni. Quia asperiores nobis corrupti.",
+                            PostId = 4,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(5160),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Comment = "Animi alias ducimus. Quaerat molestiae voluptates modi odio facilis ea distinctio nemo rem.",
+                            PostId = 5,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(5370),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Comment = "At iste et voluptas quisquam. Exercitationem et qui similique culpa quas.",
+                            PostId = 6,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6350),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Comment = "Occaecati delectus totam ut ratione error labore assumenda illum enim. Temporibus fugit sunt nihil laborum iste maxime iusto et ipsam.",
+                            PostId = 7,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6630),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Comment = "Quisquam quisquam repellendus omnis expedita a odio rerum voluptas. Ea vero voluptatem ut temporibus fugiat laborum cupiditate aspernatur.",
+                            PostId = 8,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(6840),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Comment = "Dolore expedita fuga sapiente. Culpa nostrum aut ut voluptatem et ratione.",
+                            PostId = 9,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(7060),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Comment = "Velit rerum autem. Similique qui molestiae.",
+                            PostId = 10,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8030),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Comment = "Est iste minus fuga ut. Ipsam voluptatem earum voluptatem sed assumenda.",
+                            PostId = 11,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8240),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Comment = "Qui reprehenderit non. Recusandae reiciendis accusantium doloremque veniam saepe a.",
+                            PostId = 12,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8420),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Comment = "Non et fugiat minima vel et maxime omnis est adipisci. Autem facere aut enim dolore reprehenderit blanditiis.",
+                            PostId = 13,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(8610),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Comment = "Et voluptatem iste eos deserunt nihil nesciunt sit. Amet tenetur dolores optio sit at qui enim.",
+                            PostId = 14,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 175, DateTimeKind.Local).AddTicks(9840),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Comment = "Aspernatur eos pariatur iste omnis numquam dolorem quia enim. Qui ut alias non consequatur.",
+                            PostId = 15,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(70),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Comment = "Ratione dolor qui. Perspiciatis fuga veritatis fugit sit.",
+                            PostId = 16,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(300),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Comment = "Temporibus omnis quia officiis. Adipisci tempore sequi repudiandae quibusdam sed dolorum soluta laudantium aut.",
+                            PostId = 17,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 176, DateTimeKind.Local).AddTicks(1490),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Comment = "Voluptatem quia accusamus. Qui qui eligendi enim odit iure aut repudiandae eaque ipsa.",
+                            PostId = 18,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(3820),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Comment = "Voluptas iste tempore rerum ex sequi facilis. Animi totam id velit suscipit eos.",
+                            PostId = 19,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4130),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Comment = "Sit voluptatem quos est voluptates odio exercitationem. Dignissimos eligendi molestiae et autem odit et.",
+                            PostId = 20,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4340),
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Comment = "Eligendi qui quaerat aut. Vel et sunt maxime maxime molestias.",
+                            PostId = 21,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4540),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Comment = "Sed nesciunt accusantium quo at magni aliquam rerum voluptas nisi. Ut fugiat quis et molestiae eum commodi id qui aut.",
+                            PostId = 22,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(4830),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Comment = "Aperiam voluptates commodi et consectetur aperiam veritatis quia deserunt. Ipsum consectetur rem aspernatur maiores.",
+                            PostId = 23,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(5080),
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Comment = "Voluptate et ipsam sunt autem quia similique accusantium omnis eum. Doloribus dolores facilis optio esse quas eveniet.",
+                            PostId = 24,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(5780),
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Comment = "Ab eos quia asperiores et voluptatibus amet laudantium ab accusantium. Mollitia eum asperiores blanditiis harum.",
+                            PostId = 25,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6060),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Comment = "Quis iste facere rerum amet debitis quasi quia. Voluptate velit sed.",
+                            PostId = 26,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6240),
+                            UserId = 9
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Comment = "Voluptas nostrum culpa suscipit rerum quisquam ea. Ipsum est qui pariatur ipsam dolores qui.",
+                            PostId = 27,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(6500),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Comment = "Sed vel sunt ad tempora dolor qui. Doloremque officiis in perferendis.",
+                            PostId = 28,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7080),
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Comment = "Et magnam veniam. Quia totam error ipsam provident magnam inventore.",
+                            PostId = 29,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7280),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Comment = "Fugiat qui saepe. Sit delectus eos velit aliquid corporis et similique corrupti.",
+                            PostId = 30,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(7480),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Comment = "Repellat totam hic autem sunt accusantium dolorum. Saepe dolores voluptas voluptas occaecati.",
+                            PostId = 31,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(8620),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Comment = "Qui dolor amet et accusamus autem ut ipsa aut. Aperiam nemo voluptates quam.",
+                            PostId = 32,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(8840),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Comment = "Possimus at amet fuga cumque nisi amet. Non a natus itaque doloribus autem corrupti explicabo numquam.",
+                            PostId = 33,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(9090),
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Comment = "Adipisci hic est minima similique sit at. Facilis est facere.",
+                            PostId = 34,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 321, DateTimeKind.Local).AddTicks(9300),
+                            UserId = 9
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Comment = "Explicabo recusandae rerum aut illum. Voluptatem consectetur et et neque ut excepturi quod.",
+                            PostId = 35,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(310),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Comment = "Voluptatem pariatur vel numquam. Doloribus rem ut libero dicta rerum vel ipsa.",
+                            PostId = 36,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(560),
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Comment = "Temporibus quia ut ad beatae beatae. Dolorem maxime expedita debitis a voluptatibus itaque ea.",
+                            PostId = 37,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(740),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Comment = "Eveniet qui tempore. Maxime reiciendis itaque est quibusdam.",
+                            PostId = 38,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(990),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Comment = "Dolor consequatur eveniet hic et blanditiis autem iusto incidunt. Velit harum molestiae voluptatum quos perferendis ducimus et reprehenderit.",
+                            PostId = 39,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(1830),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Comment = "Consequatur veritatis eligendi est harum porro et quidem et est. Quia illum dolores.",
+                            PostId = 40,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(2090),
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Comment = "Aperiam perspiciatis qui dolorum ab tempore provident in eligendi ratione. Voluptatem nam itaque.",
+                            PostId = 41,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(2310),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Comment = "Ullam neque eos rem. Quidem recusandae dolor repellendus nihil.",
+                            PostId = 42,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3340),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Comment = "Ratione explicabo perferendis libero suscipit vero reprehenderit adipisci molestiae. Placeat sit laborum eligendi id reprehenderit.",
+                            PostId = 43,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3560),
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Comment = "Officia enim et ut asperiores itaque. Ea suscipit ad explicabo rem sed eius fugit ducimus.",
+                            PostId = 44,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(3790),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Comment = "Sunt qui illum quia commodi aliquam sit similique quaerat beatae. Aliquam id aut natus temporibus placeat perferendis.",
+                            PostId = 45,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(4020),
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Comment = "Eaque qui eum. Beatae quia consequuntur nemo maiores aspernatur fuga quaerat autem tempora.",
+                            PostId = 46,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5020),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Comment = "Aspernatur sint sapiente in quis sit velit earum. Excepturi odio sit earum.",
+                            PostId = 47,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5200),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Comment = "Aspernatur fuga quia adipisci perspiciatis qui atque debitis. Perspiciatis ullam dolorum voluptatem.",
+                            PostId = 48,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5540),
+                            UserId = 9
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Comment = "Eius soluta quisquam dolore. Illum optio consectetur enim quia laboriosam consequuntur.",
+                            PostId = 49,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(5690),
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Comment = "Ut totam quos labore blanditiis dolores qui consectetur. Nostrum dolores eos consequatur.",
+                            PostId = 50,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6520),
+                            UserId = 10
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Comment = "Sit soluta iusto qui distinctio animi aspernatur illo rem sapiente. Iure voluptatem nobis aut.",
+                            PostId = 51,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6710),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Comment = "Temporibus maiores repellat. Enim ut voluptatem fugiat.",
+                            PostId = 52,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(6920),
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Comment = "Id distinctio ut numquam. Est alias dolore asperiores totam aut omnis.",
+                            PostId = 53,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(8340),
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Comment = "Unde cupiditate exercitationem recusandae ex. Consequatur soluta impedit doloremque.",
+                            PostId = 54,
+                            Rating = 0,
+                            RatingAt = new DateTime(2023, 4, 6, 0, 27, 47, 322, DateTimeKind.Local).AddTicks(8570),
+                            UserId = 7
+                        });
                 });
 
             modelBuilder.Entity("Api.Context.Entities.RefreshToken", b =>
@@ -253,10 +1539,10 @@ namespace API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("AddedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("IpAddress")
                         .IsRequired()
@@ -302,7 +1588,7 @@ namespace API.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ReportAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -358,23 +1644,111 @@ namespace API.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Trái Đất",
-                            Email = "intro_to_mobile_root@gmail.com",
-                            Legit = 10.0,
-                            Name = "Root",
-                            PasswordHash = "$2a$10$TRWj0w/pbLzInMS6dkQN6eK4.zrfxoyjDQxxCscADvEC95SSFktj.",
-                            PhoneNumber = "0905473034",
+                            Address = "497 Stamm Fields, North Monserratchester, Kazakhstan",
+                            Email = "hieucckha@gmail.com",
+                            Legit = -1.0,
+                            Name = "Hiếu Nguyễn",
+                            PasswordHash = "1000:L/M6l+BLtD1DDrZXn0a2yzqNofqtrl52:z3MXqLw0X0wX3UA5dMlYNPrwttw=",
+                            PhoneNumber = "0197313668",
                             Status = 0
                         },
                         new
                         {
                             Id = 2,
-                            Address = "Trái Đất",
-                            Email = "hieucckha@gmail.com",
-                            Legit = 10.0,
-                            Name = "Hiếu Nguyễn",
-                            PasswordHash = "$2a$10$6ERp6HOK/Wf2DAjE76hkJ.ZPRXAF.OVezxpCKgqdA4jPynPuLGylC",
-                            PhoneNumber = "0905473034",
+                            Address = "35668 Brekke Square, Averyshire, Mayotte",
+                            Email = "Cade63@gmail.com",
+                            Legit = -1.0,
+                            Name = "Jedidiah Goyette",
+                            PasswordHash = "1000:BgXZIy3r2oeyuauzGZd88eQhyPXP+7+s:uRYKEk/+BLdDjzwOXA9TQpK1V6Y=",
+                            PhoneNumber = "3639204153",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "92853 Zachery Harbors, Gleasonfort, Hong Kong",
+                            Email = "Agustina_Erdman@gmail.com",
+                            Legit = -1.0,
+                            Name = "Destiney Cassin",
+                            PasswordHash = "1000:UkXyg4O+pJuhhZTCV2qGC0k8Qh14fYnL:1RJ/CmRQ5HhidTOxF5um75W2XHU=",
+                            PhoneNumber = "7156547870",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "582 Block Common, Rooseveltmouth, Macedonia",
+                            Email = "Juana.Dach85@hotmail.com",
+                            Legit = -1.0,
+                            Name = "Mason Kunde",
+                            PasswordHash = "1000:KeliJSeRyoUzgptuWsQsYvTT/ItDoYh+:e3UFivHBW+1F0G637pInakxwDAw=",
+                            PhoneNumber = "5646135754",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "2673 Baumbach Court, Wiegandchester, Pitcairn Islands",
+                            Email = "Clair22@gmail.com",
+                            Legit = -1.0,
+                            Name = "Lilla Wolff",
+                            PasswordHash = "1000:g0N5E/8sDObPIRjVW4fyUjDHtYIec6m7:OIQMGn2XN3PUcHs7+lujMlzjdNA=",
+                            PhoneNumber = "2668370946",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Address = "797 Adam Track, South Wilma, Austria",
+                            Email = "Izaiah.Weber65@gmail.com",
+                            Legit = -1.0,
+                            Name = "Emmanuelle Kerluke",
+                            PasswordHash = "1000:eORBnOa8O0Wcc+h6IAFkSLqtzsaaVEvM:fPOMX8B0iCv2WCnTqClobJ8siGo=",
+                            PhoneNumber = "4598419531",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Address = "6735 Ratke Ports, Arthurshire, Cocos (Keeling) Islands",
+                            Email = "Bennett_Kessler91@gmail.com",
+                            Legit = -1.0,
+                            Name = "Constantin Dietrich",
+                            PasswordHash = "1000:K/BUMAeJOPLFMxkzFtT+jkQletAqDBj0:KMK4y7UFPfK1v5Nr69C4jkxfd44=",
+                            PhoneNumber = "1985140582",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Address = "791 Leffler Plaza, Port Erik, Gibraltar",
+                            Email = "Ebba.Wiegand@gmail.com",
+                            Legit = -1.0,
+                            Name = "Sarina Stiedemann",
+                            PasswordHash = "1000:oZDBSCRm1J3fivBPXdTFdEzaEPY6cpf/:YERFZX0TH8P3+7K708SyyKvu0mQ=",
+                            PhoneNumber = "0320901788",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Address = "6585 Mueller Rapid, Louieville, Australia",
+                            Email = "Thad_Haag98@gmail.com",
+                            Legit = -1.0,
+                            Name = "Reynold Kreiger",
+                            PasswordHash = "1000:Rq0fNelqYfeJGRR2bNeHSTgJwzktGFu8:t4AOkHyrH4AD77L9Y6Bg0AtLODU=",
+                            PhoneNumber = "2407790242",
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Address = "152 Jaiden Summit, Port Orionmouth, Rwanda",
+                            Email = "Evangeline.Howell@yahoo.com",
+                            Legit = -1.0,
+                            Name = "Earl Wyman",
+                            PasswordHash = "1000:z47UgvVGTeUkQZ0no3O9kiDLaUHbLqIW:3N2qAb/mMRELgWaYOlyI5cG3bss=",
+                            PhoneNumber = "3581021763",
                             Status = 0
                         });
                 });
@@ -496,8 +1870,8 @@ namespace API.Migrations
             modelBuilder.Entity("Api.Context.Entities.Rate", b =>
                 {
                     b.HasOne("Api.Context.Entities.Post", "Post")
-                        .WithMany("Rates")
-                        .HasForeignKey("PostId")
+                        .WithOne("Rate")
+                        .HasForeignKey("Api.Context.Entities.Rate", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -566,7 +1940,8 @@ namespace API.Migrations
                     b.Navigation("OrderDetail")
                         .IsRequired();
 
-                    b.Navigation("Rates");
+                    b.Navigation("Rate")
+                        .IsRequired();
 
                     b.Navigation("Reports");
                 });

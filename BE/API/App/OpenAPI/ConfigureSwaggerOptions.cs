@@ -14,8 +14,6 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 
     public void Configure(SwaggerGenOptions options)
     {
-        // add a swagger document for each discovered API version
-        // note: you might choose to skip or document deprecated API versions differently
         foreach (var description in _provider.ApiVersionDescriptions)
         {
             options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
@@ -26,8 +24,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
         var info = new OpenApiInfo()
         {
-            Title = "Tay Yen Tu API",
-            Version ="v"+ description.ApiVersion.ToString(),
+            Title = "Intro To Mobile API", Version = "v" + description.ApiVersion.ToString(),
         };
 
         if (description.IsDeprecated)

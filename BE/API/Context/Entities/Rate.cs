@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Api.Context.GenerateData;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Context.Entities;
 
@@ -20,4 +23,12 @@ public class Rate
 
     [ForeignKey("Post")] public int PostId { get; set; }
     public virtual Post Post { get; set; }
+}
+
+public class RateDetailConfiguration : IEntityTypeConfiguration<Rate>
+{
+    public void Configure(EntityTypeBuilder<Rate> builder)
+    {
+        builder.HasData(FakerGenerating.Rates);
+    }
 }

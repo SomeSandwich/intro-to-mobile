@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.efriendly'
+    namespace 'project.example.efriendly'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.efriendly"
+        applicationId "project.example.efriendly"
         minSdk 22
         targetSdk 33
         versionCode 1
@@ -32,13 +32,21 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\login', 'src\\main\\res\\layouts\\homepage', 'src\\main\\res\\layouts\\notifications', 'src\\main\\res\\layouts\\chat', 'src\\main\\res\\layouts\\cart'
+                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\login', 'src\\main\\res\\layouts\\homepage', 'src\\main\\res\\layouts\\notifications', 'src\\main\\res\\layouts\\chat', 'src\\main\\res\\layouts\\cart', 'src\\main\\res\\layouts\\searchBarCartChatIcon', 'src\\main\\res\\layouts\\navbar', 'src\\main\\res\\layouts\\showpost'
             }
         }
     }
 }
 
 dependencies {
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'

@@ -9,5 +9,6 @@ public class AuthProfile : Profile
     public AuthProfile()
     {
         CreateMap<CreateUserReq, User>();
+        CreateMap<CreateUserReq, Api.Context.Entities.User>();
     }
 }
