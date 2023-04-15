@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         //setContentView(R.layout.activity_anonymous_homepage);
 
-        Intent myIntent = new Intent(MainActivity.this, UserActivity.class);
+        Intent myIntent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(myIntent);
         finish();
 

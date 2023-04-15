@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -149,8 +150,8 @@ public class LoginActivity extends AppCompatActivity {
     public class LoginActivityClickHandler{
         Context context;
 
-        public LoginActivityClickHandler(Context context) { this.context = context; }
-        
+        public LoginActivityClickHandler(Context context) {this.context = context;}
+
         public void backClick(View view){
             Intent myIntent = new Intent(LoginActivity.this, AnonymousHomepageActivity.class);
             startActivity(myIntent);
