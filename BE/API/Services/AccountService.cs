@@ -19,7 +19,6 @@ public interface IAccountService
     Task<User> LoginAsync(LoginReq req);
     Task<LoginRes> GenerateTokenAsync(User user, string ipv4);
     Task<LoginRes> RefreshTokenAsync(string refreshToken, string ipv4);
-
 }
 
 public class AccountService : IAccountService
@@ -125,6 +124,4 @@ public class AccountService : IAccountService
 
         return await GenerateTokenAsync(account, ipv4);
     }
-
-
 }

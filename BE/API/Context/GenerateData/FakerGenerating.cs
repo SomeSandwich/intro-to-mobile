@@ -7,9 +7,9 @@ namespace Api.Context.GenerateData;
 public static class FakerGenerating
 {
     private static int s_userId = 1;
-    public static List<User> Users { get; set; } = new List<User>();
+    public static List<User> Users { get; set; } = new();
 
-    public static List<Category> Categories { get; set; } = new List<Category>()
+    public static List<Category> Categories { get; set; } = new()
     {
         new Category { Id = 1, Description = "Áo", Icon = "icons/" },
         new Category { Id = 2, Description = "Quần", Icon = "icons/" },
@@ -19,10 +19,10 @@ public static class FakerGenerating
     };
 
     private static int s_rateId = 1;
-    public static List<Rate> Rates { get; set; } = new List<Rate>();
+    public static List<Rate> Rates { get; set; } = new();
 
     private static int s_postId = 1;
-    public static List<Post> Posts { get; set; } = new List<Post>();
+    public static List<Post> Posts { get; set; } = new();
 
     private static Faker f;
 
@@ -32,19 +32,12 @@ public static class FakerGenerating
 
         GenUser(5);
         GenPost();
-
-        Console.WriteLine($"UserCount: {Users.Count}");
-        Console.WriteLine($"CategoryCount: {Categories.Count}");
-        Console.WriteLine($"PostCount: {Posts.Count}");
-        Console.WriteLine($"RateCount: {Rates.Count}");
     }
 
     private static void GenUser(int count)
     {
         for (int i = 0; i < count; i++, s_userId++)
         {
-            Console.WriteLine($"Begin Gen user:{s_userId}");
-
             var user = new User
             {
                 Id = s_userId,
@@ -57,25 +50,29 @@ public static class FakerGenerating
 
             Users.Add(user);
 
-            // var postCount = f.Random.Number(3, 5);
-            // GenPost(s_userId, postCount);
-
             Console.WriteLine($"Gen Success user:{user.Id} - {user.Name}");
         }
     }
 
     private static void GenPost()
     {
-        Console.WriteLine($"In GenRate: PostCount: {Posts.Count}");
-        Console.WriteLine($"In GenRate: RateCount: {Rates.Count}");
-
         foreach (var user in Users)
         {
             var postCount = f.Random.Number(3, 5);
 
             for (int i = 0; i < postCount; i++, s_postId++)
             {
-                Console.WriteLine($"Begin Gen User{user.Id} - PostIndex:{i}");
+                List<int> userShare = new();
+                int nShare = f.Random.Number(0, 4);
+                while (userShare.Count != nShare)
+                {
+                    int sharer = f.PickRandom(Users).Id;
+                    if (sharer == user.Id || userShare.Contains(sharer))
+                        continue;
+
+                    userShare.Add(sharer);
+                }
+
 
                 var post = new Post
                 {
@@ -83,22 +80,18 @@ public static class FakerGenerating
                     Price = f.Random.Number(50_000, 300_000),
                     Caption = f.Lorem.Sentence(5, 15),
                     Description = f.Lorem.Paragraph(4),
+                    MediaPath = new[] { "post/8_C1_FMCcqxIlA", "post/PNHb-tbQIUWjV6" },
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
                     IsSold = true,
-                    // RateId = GenRate(user.Id, s_postId),
                     UserId = user.Id,
-                    CategoryId = f.PickRandom<Category>(Categories).Id
+                    CategoryId = f.PickRandom(Categories).Id,
+                    UserShare = userShare
                 };
 
                 Posts.Add(post);
 
                 var rateId = GenRate(user.Id, s_postId);
-
-                Console.WriteLine($"Gen Success User{user.Id} - PostIndex:{i}");
-
-                Console.WriteLine($"IP GenRate: PostCount: {Posts.Count}");
-                Console.WriteLine($"IP GenRate: RateCount: {Rates.Count}");
             }
         }
     }
@@ -108,7 +101,7 @@ public static class FakerGenerating
         int ratingUserId;
         do
         {
-            ratingUserId = f.PickRandom<User>(Users).Id;
+            ratingUserId = f.PickRandom(Users).Id;
         } while (ratingUserId == userId);
 
         var rate = new Rate
@@ -121,10 +114,6 @@ public static class FakerGenerating
         };
 
         Rates.Add(rate);
-
-        Console.WriteLine($"IN GenRate: PostCount: {Posts.Count}");
-        Console.WriteLine(
-            $"IN GenRate: RateCount: {Rates.Count} - {rate.Id} - {rate.Comment} - {rate.UserId} - {rate.PostId}");
 
         return s_rateId;
     }
