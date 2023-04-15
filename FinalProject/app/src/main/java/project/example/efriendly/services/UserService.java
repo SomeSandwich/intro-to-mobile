@@ -17,7 +17,6 @@ public interface UserService {
     @POST("/user")
     @FormUrlEncoded
     Call CreateUser(@Body CreateUserReq request);
-
     @GET("/user/most-legit")
     Call<List<SellerRes>> GetMostLegit(@Query("number") Integer number);
 }

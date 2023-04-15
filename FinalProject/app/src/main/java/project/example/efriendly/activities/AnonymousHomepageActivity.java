@@ -25,7 +25,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import project.example.efriendly.R;
-import project.example.efriendly.activities.login.LoginActivity;
 import project.example.efriendly.databinding.ActivityAnonymousHomepageBinding;
 
 public class AnonymousHomepageActivity extends AppCompatActivity {

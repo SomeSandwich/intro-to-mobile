@@ -33,7 +33,7 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\login', 'src\\main\\res\\layouts\\homepage', 'src\\main\\res\\layouts\\notifications', 'src\\main\\res\\layouts\\chat', 'src\\main\\res\\layouts\\cart', 'src\\main\\res\\layouts\\searchBarCartChatIcon', 'src\\main\\res\\layouts\\navbar', 'src\\main\\res\\layouts\\showpost', 'src\\main\\res\\layouts\\register'
+                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\login', 'src\\main\\res\\layouts\\homepage', 'src\\main\\res\\layouts\\notifications', 'src\\main\\res\\layouts\\chat', 'src\\main\\res\\layouts\\cart', 'src\\main\\res\\layouts\\searchBarCartChatIcon', 'src\\main\\res\\layouts\\navbar', 'src\\main\\res\\layouts\\showpost', 'src\\main\\res\\layouts\\register', 'src\\main\\res\\layouts\\newfeel'
             }
         }
     }

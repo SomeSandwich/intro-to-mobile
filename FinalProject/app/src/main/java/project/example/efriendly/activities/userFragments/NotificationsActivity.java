@@ -10,11 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.UserActivity;
@@ -22,8 +18,12 @@ import project.example.efriendly.adapter.ChatAdapter;
 import project.example.efriendly.databinding.ActivityNotificationsBinding;
 import project.example.efriendly.adapter.NotificationsAdapter;
 
-public class NotificationsActivity extends AppCompatActivity {
+public class NotificationsActivity extends Fragment {
+    UserActivity main;
+    Context context = null;
+
     private ActivityNotificationsBinding binding;
+    
     Integer[] avatars = {R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user,
             R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user};
     String[] notifications = {"Notice 1", "Notice 2", "Notice 3", "Notice 4", "Notice 5", "Notice 6", "Notice 7", "Notice 8", "Notice 9", "Notice 10",
@@ -46,15 +46,12 @@ public class NotificationsActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Hide Title
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_notifications);
-        NotificationsAdapter adapter = new NotificationsAdapter(this, R.layout.custom_notification_items, notifications, times, avatars);
+        binding = ActivityNotificationsBinding.inflate(inflater, container,false);
+
+        NotificationsAdapter adapter = new NotificationsAdapter(main, R.layout.custom_notification_items, notifications, times, avatars);
+        
         binding.NotificationList.setAdapter(adapter);
         binding.NotificationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
