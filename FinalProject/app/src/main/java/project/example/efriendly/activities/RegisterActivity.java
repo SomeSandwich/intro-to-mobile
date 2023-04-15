@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import project.example.efriendly.R;
-import project.example.efriendly.activities.login.LoginActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.data.model.User.CreateUserReq;
 import project.example.efriendly.data.model.User.UserRes;
