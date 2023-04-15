@@ -37,10 +37,46 @@ public class CommentService : ICommentService
         return _mapper.Map<Comment, CommentRes>(comment);
     }
 
-    public async Task<IEnumerable<CommentRes>> GetComment() => throw new NotImplementedException();
+    public async Task<IEnumerable<CommentRes>> GetComment()
+    {
+        var cmts = await _context.Comments
+            .ToListAsync();
 
-    public async Task<IEnumerable<CommentRes>> GetByPost(int postId) => throw new NotImplementedException();
-    public async Task<bool> AddComment(CreateCommentReq request) => throw new NotImplementedException();
+        return _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentRes>>(cmts);
+    }
 
-    public async Task<bool> RemoveComment(int id) => throw new NotImplementedException();
+    public async Task<IEnumerable<CommentRes>> GetByPost(int postId)
+    {
+        var cmts = await _context.Comments
+            .Where(e => e.PostId == postId)
+            .ToListAsync();
+
+        return _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentRes>>(cmts);
+    }
+
+    public async Task<bool> AddComment(CreateCommentReq request)
+    {
+        var cmt = _mapper.Map<CreateCommentReq, Comment>(request);
+
+        await _context.Comments.AddAsync(cmt);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> RemoveComment(int id)
+    {
+        var cmt = await _context.Comments
+            .FirstOrDefaultAsync(e => e.Id == id);
+
+        if (cmt is null)
+            return false;
+
+        _context.Comments.Remove(cmt);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
 }
