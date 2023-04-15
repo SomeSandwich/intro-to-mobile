@@ -18,21 +18,21 @@ namespace API.Controllers;
 public class PostController : ControllerBase
 {
     private readonly IPostService _postSer;
+    private readonly IUserService _userSer;
+    private readonly ICommentService _commentSer;
     private readonly IMinioFileService _fileSer;
 
     private readonly IMapper _mapper;
 
-    public PostController(IPostService postSer, IMinioFileService fileSer)
+    public PostController(IPostService postSer, IUserService userSer, IMinioFileService fileSer)
     {
         _postSer = postSer;
+        _userSer = userSer;
         _fileSer = fileSer;
 
         var config = new MapperConfiguration(opt => { opt.AddProfile<PostProfile>(); });
         _mapper = config.CreateMapper();
     }
-
-
-    #region Get
 
     [HttpGet]
     [Route("{id:int}")]
@@ -74,9 +74,6 @@ public class PostController : ControllerBase
         return Ok(list);
     }
 
-    #endregion
-
-    #region Post
 
     [HttpPost]
     [Route("")]
@@ -153,7 +150,60 @@ public class PostController : ControllerBase
         return CreatedAtAction(nameof(GetId), new { id = postId }, new SuccessRes());
     }
 
-    #endregion
+    [HttpPost]
+    [Route("{postId:int}/share-by/{userId:int}")]
+    public async Task<IActionResult> AddShareBy([FromRoute] int postId, [FromRoute] int userId)
+    {
+        var userExist = await _userSer.IsUserExist(userId);
+        if (!userExist)
+            return BadRequest(new FailureRes { Message = "Not Found User" });
+
+        var success = await _postSer.AddSharePost(postId, userId);
+        if (!success)
+            return BadRequest(new FailureRes { Message = "Not Found Post" });
+
+        return Ok(new SuccessRes());
+    }
+
+    [HttpDelete]
+    [Route("{postId:int}/share-by/{userId:int}")]
+    public async Task<IActionResult> RemoveShareBy([FromRoute] int postId, [FromRoute] int userId)
+    {
+        var userExist = await _userSer.IsUserExist(userId);
+        if (!userExist)
+            return BadRequest(new FailureRes { Message = "Not Found User" });
+
+        var success = await _postSer.RemoveSharePost(postId, userId);
+        if (!success)
+            return BadRequest(new FailureRes { Message = "Not Found Post" });
+
+        return Ok(new SuccessRes());
+    }
+
+    [HttpPost]
+    [Route("{id:int}/comment")]
+    public async Task<IActionResult> AddComment([FromRoute] int id, [FromBody] CommentPostReq request)
+    {
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        if (identity is null)
+            return Unauthorized();
+
+        var selfIdStr = identity.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Name)?.Value;
+        if (selfIdStr is null)
+            return Unauthorized();
+
+        if (!int.TryParse(selfIdStr, out var userId))
+        {
+            return Unauthorized();
+        }
+
+        var success = await _commentSer.AddComment(new CreateCommentReq
+        {
+            UserId = userId, PostId = id, Content = request.Content, CreateAt = DateTime.Now
+        });
+
+        return !success ? StatusCode(500, new FailureRes()) : Ok(new SuccessRes());
+    }
 
     [HttpPatch]
     [Route("{id:int}")]

@@ -16,5 +16,6 @@ public static class ServiceRegister
         builder.AddScoped<IReportService, ReportService>();
         builder.AddScoped<IOrderService, OrderService>();
         builder.AddScoped<IRateService, RateService>();
+        builder.AddScoped<ICommentService, CommentService>();
     }
 }
