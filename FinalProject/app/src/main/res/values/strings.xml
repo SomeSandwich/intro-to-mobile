@@ -11,6 +11,7 @@
     <string name="passConfirm">Confirm password</string>
     <string name="forgotPass"><u>Forgot password</u></string>
     <string name="loginHint">Press here to login</string>
+    <string name="signUpHint">Press here to sign up</string>
     <string name="haveAccount">Already have an account? <u>Log in</u></string>
     <string name="dontHaveAccount">Don\'t have account? <u>Create one</u></string>
     <string name="title_activity_login">LoginActivity</string>

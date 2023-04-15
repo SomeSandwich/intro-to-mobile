@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -59,14 +58,6 @@ public class RegisterActivity extends AppCompatActivity {
         binding.setClickHandler(handlers);
 
         userService = RetrofitClientGenerator.createService(UserService.class);
-
-        final EditText nameEditText = binding.nameInput;
-        final EditText emailEditText = binding.emailInput;
-        final EditText passwordEditText = binding.passInput;
-        final EditText passwordConfirmEditText = binding.passConfirmInput;
-        final EditText phoneEditText = binding.phone;
-        final EditText addressEditText = binding.address;
-        final Button signUpButton = binding.SignUp;
     }
 
     public class RegisterActivityClickHandler{

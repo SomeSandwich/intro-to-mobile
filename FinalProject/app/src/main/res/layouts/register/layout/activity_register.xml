@@ -7,6 +7,7 @@
             name="clickHandler"
             type="project.example.efriendly.activities.RegisterActivity.RegisterActivityClickHandler" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,7 +25,7 @@
             />
 
         <TextView
-            android:id="@+id/loginTitle"
+            android:id="@+id/SignUpTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -37,7 +38,7 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="140dp">
 
             <LinearLayout
@@ -71,7 +72,6 @@
                         android:layout_height="48dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="31dp"
-
                         android:autofillHints="@string/name"
                         android:ems="10"
                         android:inputType="text" />
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="56dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="30dp"
                     android:labelFor="@id/emailInput"
                     android:text="@string/email" />
 
@@ -113,7 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="56dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="30dp"
                     android:labelFor="@id/passInput"
                     android:text="@string/passWord" />
 
@@ -144,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="56dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="30dp"
                     android:labelFor="@id/passConfirmInput"
                     android:text="@string/passConfirm" />
 
@@ -175,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="56dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="30dp"
                     android:labelFor="@id/address"
                     android:text="@string/address" />
 
@@ -242,15 +242,15 @@
             android:layout_marginTop="-140dp">
 
             <Button
-            android:id="@+id/SignUp"
-            android:layout_width="259dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/loginHint"
-            android:backgroundTint="@color/button_background_green"
-            android:onClick="@{clickHandler::signUp}"
-            android:text="@string/signUpTitle" />
+                android:id="@+id/SignUp"
+                android:layout_width="259dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/signUpHint"
+                android:backgroundTint="@color/button_background_green"
+                android:onClick="@{clickHandler::signUp}"
+                android:text="@string/signUpTitle" />
 
             <TextView
                 android:layout_width="wrap_content"
