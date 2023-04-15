@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
         Context context;
 
         public LoginActivityClickHandler(Context context) { this.context = context; }
+        
         public void backClick(View view){
             Intent myIntent = new Intent(LoginActivity.this, AnonymousHomepageActivity.class);
             startActivity(myIntent);

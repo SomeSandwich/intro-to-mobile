@@ -8,6 +8,7 @@ public class UserProfile : Profile
 {
     public UserProfile()
     {
+        CreateMap<CreateUserReq, User>();
         CreateMap<User, SellerRes>();
     }
 }

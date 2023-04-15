@@ -38,7 +38,6 @@ public class UserService : IUserService
     {
         var user = _mapper.Map<CreateUserReq, User>(arg);
 
-
         if (_context.Users.Any(e => e.Email == user.Email))
         {
             throw new Exception($"Email: {arg.Email}");
