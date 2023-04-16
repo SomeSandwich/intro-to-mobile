@@ -46,7 +46,7 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{sellerId:int}")]
+    [Route("seller/{sellerId:int}")]
     public async Task<ActionResult> GetBySellerId([FromRoute] int sellerId)
     {
         var listPost = await _postSer.GetByShopIdAsync(sellerId);
