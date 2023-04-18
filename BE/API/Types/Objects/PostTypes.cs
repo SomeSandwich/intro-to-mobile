@@ -31,6 +31,11 @@ public class UpdatePostReq
     public IFormFileCollection? MediaFilesAdd { get; set; }
 }
 
+public class CommentPostReq
+{
+    public string Content { get; set; }
+}
+
 public class UpdatePostArgs
 {
     public int? Price { get; set; }
@@ -64,5 +69,7 @@ public class PostRes
 
     public RateRes Rate { get; set; }
 
-    public virtual IEnumerable<ReportRes> Reports { get; set; }
+    public List<int> UserShare { get; set; }
+
+    public IEnumerable<ReportRes> Reports { get; set; }
 }

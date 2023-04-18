@@ -4,7 +4,8 @@ import org.threeten.bp.LocalDateTime;
 import java.util.List;
 
 import lombok.Getter;
-import project.example.efriendly.data.model.User.SellerRes;
+import project.example.efriendly.data.model.Rate.RateRes;
+import project.example.efriendly.data.model.Report.ReportRes;
 
 @Getter
 public class PostRes {
@@ -25,6 +26,12 @@ public class PostRes {
     private LocalDateTime updatedDate;
 
     private Boolean isSold;
+
+    private RateRes rate;
+
+    private List<Integer> userShare;
+
+    private List<ReportRes> reports;
 
     public PostRes(SellerRes author, Integer id, Integer price, String caption, String description, List<String> mediaPath, LocalDateTime createdDate, LocalDateTime updatedDate, Boolean isSold) {
         this.author = author;
