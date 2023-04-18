@@ -10,5 +10,6 @@ public class UserProfile : Profile
     {
         CreateMap<CreateUserReq, User>();
         CreateMap<User, SellerRes>();
+        CreateMap<User, UserRes>();
     }
 }
