@@ -5,6 +5,7 @@ import project.example.efriendly.data.model.User.SellerRes;
 
 import java.util.List;
 
+import project.example.efriendly.data.model.User.UserRes;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.FormUrlEncoded;
@@ -13,10 +14,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface UserService {
-
-    @POST("/user")
-    @FormUrlEncoded
-    Call CreateUser(@Body CreateUserReq request);
-    @GET("/user/most-legit")
+    @POST("user")
+    //@FormUrlEncoded
+    Call<UserRes> CreateUser(@Body CreateUserReq request);
+    @GET("user/most-legit")
     Call<List<SellerRes>> GetMostLegit(@Query("number") Integer number);
 }

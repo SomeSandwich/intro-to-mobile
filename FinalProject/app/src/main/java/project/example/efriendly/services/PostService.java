@@ -27,9 +27,9 @@ public interface PostService {
     @GET("post/{id}")
     Call<List<PostRes>> GetById(@Path("id") Integer id);
 
-    @GET("/post/newest")
+    @GET("post/newest")
     Call<List<PostRes>> GetNewest(@Query("number") Integer number);
 
-    @PATCH("/post/{id}")
+    @PATCH("post/{id}")
     Call<String> Update(@Path("id") Integer id, @Body UpdatePostReq request);
 }

@@ -1,9 +1,11 @@
 package project.example.efriendly.data.model.Auth;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 
 @Getter
-public class LoginRes {
+public class LoginRes implements Serializable {
 
-    private String password;
+    private String token;
 }
