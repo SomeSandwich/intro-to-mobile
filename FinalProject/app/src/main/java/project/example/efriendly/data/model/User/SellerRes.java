@@ -15,4 +15,16 @@ public class SellerRes {
         this.name = name;
         this.legit = legit;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getLegit() {
+        return legit;
+    }
 }

@@ -9,7 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.FileInputStream;
+import com.jakewharton.threetenabp.AndroidThreeTen;
+
+import org.threeten.bp.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import project.example.efriendly.R;
@@ -25,8 +29,6 @@ public class NewfeelActivity extends Fragment {
     UserActivity main;
     Context context = null;
     FragmentNewfeelActivityBinding binding;
-
-    Vector<PostRes> posts = new Vector<>();
 
     public NewfeelActivity() {}
 
@@ -48,7 +50,28 @@ public class NewfeelActivity extends Fragment {
         SearchBarCartChatActivity searchbar = new SearchBarCartChatActivity();
         getParentFragmentManager().beginTransaction().replace(R.id.searchBarFragment, searchbar).commit();
 
-        //PostAdapter posts = new PostAdapter(main, posts);
+        List<String> imagePath = new ArrayList<>();
+        imagePath.add("https://bizweb.dktcdn.net/thumb/1024x1024/100/416/517/products/nguyen-01.png?v=1617871985973");
+        imagePath.add("https://bizweb.dktcdn.net/thumb/1024x1024/100/416/517/products/nguyen-01.png?v=1617871985973");
+        imagePath.add("https://bizweb.dktcdn.net/thumb/1024x1024/100/416/517/products/nguyen-01.png?v=1617871985973");
+        imagePath.add("https://bizweb.dktcdn.net/thumb/1024x1024/100/416/517/products/nguyen-01.png?v=1617871985973");
+
+        AndroidThreeTen.init(context);
+
+        LocalDateTime dt1 = LocalDateTime.now();
+
+        Vector<PostRes> posts = new Vector<>();
+
+        posts.add(new PostRes(new SellerRes(1,"Hoang Quoc Bao", 4.5),
+                1,
+                100000,
+                "Black t-shirt",
+                "This is description",
+                imagePath, dt1, dt1, false
+                ));
+        PostAdapter PostA = new PostAdapter(main, posts);
+
+        binding.newfeelPost.setAdapter(PostA);
         return binding.getRoot();
     }
 }

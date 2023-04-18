@@ -48,8 +48,9 @@
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
         <TextView
+            android:id="@+id/des"
             android:layout_marginTop="15dp"
-            android:text="Mo ta dai vailon"
+            android:text="Mo ta dai lam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <ImageSwitcher
@@ -97,32 +98,29 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="30dp"
                 android:text="Like"
                 android:drawableStart="@drawable/post_likebutton_icon"
-                android:background="@color/button_background_while"
                 android:textColor="@android:color/black"/>
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
                 android:text="Comment"
                 android:drawableStart="@drawable/post_comment_icon"
-                android:background="@color/button_background_while"
                 android:textColor="@android:color/black"/>
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="20dp"
                 android:text="Share"
                 android:drawableStart="@drawable/post_share_icon"
-                android:background="@color/button_background_while"
                 android:textColor="@android:color/black"/>
         </LinearLayout>
     </LinearLayout>

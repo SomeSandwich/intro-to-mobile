@@ -1,10 +1,9 @@
 package project.example.efriendly.data.model.Post;
 
-import java.time.LocalDateTime;
+import org.threeten.bp.LocalDateTime;
 import java.util.List;
 
 import lombok.Getter;
-import lombok.Setter;
 import project.example.efriendly.data.model.User.SellerRes;
 
 @Getter
@@ -39,4 +38,39 @@ public class PostRes {
         this.isSold = isSold;
     }
 
+    public SellerRes getAuthor() {
+        return author;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<String> getMediaPath() {
+        return mediaPath;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public Boolean getSold() {
+        return isSold;
+    }
 }

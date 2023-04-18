@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
+import project.example.efriendly.activities.userFragments.NewfeelActivity;
 import project.example.efriendly.activities.userFragments.NotificationsActivity;
 import project.example.efriendly.activities.userFragments.SearchBarCartChatActivity;
 import project.example.efriendly.databinding.ActivityUserBinding;
@@ -54,7 +55,7 @@ public class UserActivity extends AppCompatActivity{
         setContentView(binding.getRoot());
 
         ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.userFragment, new showPost()).commit();
+        ft.replace(R.id.userFragment, new NewfeelActivity()).commit();
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.navBarFragment, navbar).commit();
     }
