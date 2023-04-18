@@ -18,12 +18,11 @@ public class AuthController : ControllerBase
 
     private readonly IMapper _mapper;
 
-    public AuthController(IAccountService accSer)
+    public AuthController(IAccountService accSer, IMapper mapper)
     {
         _accSer = accSer;
 
-        var config = new MapperConfiguration(opt => { opt.AddProfile<AuthProfile>(); });
-        _mapper = config.CreateMapper();
+        _mapper = mapper;
     }
 
     [HttpPost]
