@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -56,16 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
         handlers = new RegisterActivity.RegisterActivityClickHandler(this);
         binding.setClickHandler(handlers);
-
-        userService = RetrofitClientGenerator.createService(UserService.class);
-
-        final EditText nameEditText = binding.nameInput;
-        final EditText emailEditText = binding.emailInput;
-        final EditText passwordEditText = binding.passInput;
-        final EditText passwordConfirmEditText = binding.passConfirmInput;
-        final EditText phoneEditText = binding.phone;
-        final EditText addressEditText = binding.address;
-        final Button signUpButton = binding.SignUp;
     }
 
     public class RegisterActivityClickHandler{
@@ -90,17 +81,17 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
             }
 
-            else if(binding.passInput.getText() != binding.passConfirmInput.getText()) {
+            else if(!binding.passInput.getText().toString().equals(binding.passConfirmInput.getText().toString())) {
                 String message = "Passwords does not match ..";
                 Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
             }
 
             else {
-                CreateUserReq userReq = new CreateUserReq(binding.nameInput.toString(),
-                        binding.emailInput.toString(),
-                        binding.passInput.toString(),
-                        binding.phone.toString(),
-                        binding.address.toString());
+                CreateUserReq userReq = new CreateUserReq(binding.nameInput.getText().toString(),
+                        binding.emailInput.getText().toString(),
+                        binding.passInput.getText().toString(),
+                        binding.phone.getText().toString(),
+                        binding.address.getText().toString());
 
                 registerUser(userReq);
             }
@@ -108,26 +99,29 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registerUser(CreateUserReq userReq) {
-            Call<UserRes> userResCall = userService.CreateUser(userReq);
-            userResCall.enqueue(new Callback<UserRes>() {
-                @Override
-                public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                    if (response.isSuccessful()) {
-                        String message = "Successful ..";
-                        Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
+        userService = RetrofitClientGenerator.getService(UserService.class);
+        Call<UserRes> userResCall = userService.CreateUser(userReq);
+        userResCall.enqueue(new Callback<UserRes>() {
+            @Override
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
 
-                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                        finish();
-                    } else {
-                        String message = "An error occurred please try again later ...";
-                        Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
-                    }
-                }
+                if (response.isSuccessful()) {
+                    String message = "Successful ..";
+                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
 
-                @Override
-                public void onFailure(Call<UserRes> call, Throwable t) {
-                    Toast.makeText(RegisterActivity.this, "Failed !", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    finish();
+                } else {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
                 }
-            });
+            }
+
+            @Override
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

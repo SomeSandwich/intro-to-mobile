@@ -15,10 +15,10 @@ import project.example.efriendly.databinding.ActivityNotificationsBinding;
 import project.example.efriendly.adapter.NotificationsAdapter;
 
 public class NotificationsActivity extends Fragment {
-
     UserActivity main;
     Context context = null;
     private ActivityNotificationsBinding binding;
+    
     Integer[] avatars = {R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user,
             R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user};
     String[] notifications = {"Notice 1", "Notice 2", "Notice 3", "Notice 4", "Notice 5", "Notice 6", "Notice 7", "Notice 8", "Notice 9", "Notice 10",
@@ -27,23 +27,12 @@ public class NotificationsActivity extends Fragment {
             "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h", "2h"};
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        try{
-            context = getActivity();
-            main = (UserActivity) getActivity();
-        }
-        catch (IllegalStateException err){
-            throw new IllegalStateException("MainActivity must implement callbacks");
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = ActivityNotificationsBinding.inflate(inflater, container,false);
 
         NotificationsAdapter adapter = new NotificationsAdapter(main, R.layout.custom_notification_items, notifications, times, avatars);
+        
         binding.NotificationList.setAdapter(adapter);
         binding.NotificationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -51,6 +40,7 @@ public class NotificationsActivity extends Fragment {
                 System.out.println("hehe");
             }
         });
+
         return binding.getRoot();
     }
 }

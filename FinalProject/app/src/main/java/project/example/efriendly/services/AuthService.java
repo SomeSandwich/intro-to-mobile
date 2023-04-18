@@ -11,8 +11,8 @@ import retrofit2.http.Query;
 
 public interface AuthService {
 
-    @POST("login")
-    @FormUrlEncoded
+    @POST("auth/login")
+    //@FormUrlEncoded
     Call<LoginRes> Login(@Body LoginReq request);
 
     @POST("refresh-token")

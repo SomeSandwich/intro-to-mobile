@@ -17,7 +17,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserService {
-
     @GET("/user/{id}")
     Call<UserRes> GetById(@Path("id") Integer id);
 
