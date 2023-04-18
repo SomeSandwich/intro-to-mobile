@@ -97,12 +97,11 @@ public class PostService : IPostService
     public async Task<IEnumerable<PostRes>> GetLatestAsync(int number)
     {
         var listPost = _context.Posts
+            .Join(_context.Users, e => e.UserId, p => p.Id, (e, p) => e)
             .Where(e => e.IsDeleted == false && e.IsHide == false)
             .OrderByDescending(e => e.CreatedDate)
             .Take(number)
             .AsEnumerable();
-
-
         return _mapper.Map<IEnumerable<Post>, IEnumerable<PostRes>>(listPost);
     }
 

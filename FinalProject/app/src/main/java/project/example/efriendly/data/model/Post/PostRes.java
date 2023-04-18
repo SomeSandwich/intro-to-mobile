@@ -1,9 +1,8 @@
 package project.example.efriendly.data.model.Post;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 
-import org.threeten.bp.LocalDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Vector;
 
@@ -20,8 +19,8 @@ public class PostRes {
     private String caption;
     private String description;
     private List<String> mediaPath;
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
+    private String createdDate;
+    private String updatedDate;
     private Boolean isSold;
 
     private RateRes rate;
@@ -30,17 +29,6 @@ public class PostRes {
 
     private List<ReportRes> reports;
 
-    public PostRes(SellerRes author, Integer id, Integer price, String caption, String description, List<String> mediaPath, LocalDateTime createdDate, LocalDateTime updatedDate, Boolean isSold) {
-        this.author = author;
-        this.id = id;
-        this.price = price;
-        this.caption = caption;
-        this.description = description;
-        this.mediaPath = mediaPath;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
-        this.isSold = isSold;
-    }
 
     public SellerRes getAuthor() {
         return author;
@@ -66,11 +54,11 @@ public class PostRes {
         return mediaPath;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public LocalDateTime getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
@@ -86,7 +74,6 @@ public class PostRes {
         return currentIndex;
     }
     public Vector<Bitmap> getImgBitmap(){return this.imgBitmap;}
-
     public void setImgBitmap(Vector<Bitmap> imgBitmapInput){this.imgBitmap = imgBitmapInput;}
     public void setCurrentIndex(int currentIndex){
         this.currentIndex = currentIndex;

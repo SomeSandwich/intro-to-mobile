@@ -21,7 +21,7 @@
             android:background="@color/white"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="32dp"
+            android:paddingHorizontal="32dp"
             android:layout_height="wrap_content">
             <androidx.cardview.widget.CardView
                 android:id="@+id/avt"
@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <ListView
+            android:background="@color/white"
             android:layout_marginTop="10dp"
             android:layout_weight="9"
             android:layout_width="match_parent"

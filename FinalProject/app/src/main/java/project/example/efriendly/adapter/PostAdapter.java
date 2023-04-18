@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import project.example.efriendly.R;
@@ -23,13 +25,13 @@ import project.example.efriendly.databinding.ShowPostNewfeelAdapterBinding;
 
 public class PostAdapter extends BaseAdapter {
     private Activity activity;
-    private Vector<PostRes> posts = new Vector<>();
+    private List<PostRes> posts = new ArrayList<>();
 
     private ShowPostNewfeelAdapterBinding binding;
 
     private PostNewFeelClickHandler handler;
 
-    public PostAdapter(Activity activity, Vector<PostRes> posts){
+    public PostAdapter(Activity activity, List<PostRes> posts){
         this.activity = activity;
         this.posts = posts;
     }

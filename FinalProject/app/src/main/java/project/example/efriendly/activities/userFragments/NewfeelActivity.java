@@ -1,6 +1,7 @@
 package project.example.efriendly.activities.userFragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,10 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.LocalDateTime;
+import android.widget.Toast;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -23,13 +21,17 @@ import java.util.List;
 import java.util.Vector;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.LoginActivity;
 import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.adapter.PostAdapter;
+import project.example.efriendly.client.RetrofitClientGenerator;
+import project.example.efriendly.data.model.Auth.LoginRes;
 import project.example.efriendly.data.model.Post.PostRes;
-import project.example.efriendly.data.model.User.SellerRes;
-import project.example.efriendly.databinding.ActivityHomepageBinding;
 import project.example.efriendly.databinding.FragmentNewfeelActivityBinding;
 import project.example.efriendly.services.PostService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewfeelActivity extends Fragment {
 
@@ -37,7 +39,7 @@ public class NewfeelActivity extends Fragment {
     Context context = null;
     FragmentNewfeelActivityBinding binding;
 
-    PostService service;
+    PostService postService;
 
     public NewfeelActivity() {}
 
@@ -59,81 +61,42 @@ public class NewfeelActivity extends Fragment {
         SearchBarCartChatActivity searchbar = new SearchBarCartChatActivity();
         getParentFragmentManager().beginTransaction().replace(R.id.searchBarFragment, searchbar).commit();
 
-        List<String> imagePath = new ArrayList<>();
-        imagePath.add("https://bizweb.dktcdn.net/thumb/1024x1024/100/416/517/products/nguyen-01.png?v=1617871985973");
-        imagePath.add("https://s.imgur.com/images/logo-1200-630.jpg?2");
-        imagePath.add("https://bizweb.dktcdn.net/thumb/1024x1024/100/416/517/products/nguyen-01.png?v=1617871985973");
-        imagePath.add("https://www.vectortemplates.com/raster/batman-logo-big.gif");
-
-        Vector<Bitmap> imgBitmap = new Vector<>();
-
-
-        AndroidThreeTen.init(context);
-
-        LocalDateTime dt1 = LocalDateTime.now();
-
-        Vector<PostRes> posts = new Vector<>();
-
-        for(int i=0;i<imagePath.size();i++){
-            try {
-                URL newUrl = new URL(imagePath.get(i));
-                URLConnection conn = newUrl.openConnection();
-                Bitmap mIcon_val = BitmapFactory.decodeStream(conn.getInputStream());
-                imgBitmap.add(mIcon_val);
+        postService = RetrofitClientGenerator.getService(PostService.class);
+        Call<List<PostRes>> postsCallback = postService.GetNewest(10);
+        postsCallback.enqueue(new Callback<List<PostRes>>() {
+            @Override
+            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
+                if (response.isSuccessful()) {
+                    List<PostRes> posts = new ArrayList<>();
+                    posts = response.body();
+                    for(int i=0;i<posts.size();i++){
+                        Vector<Bitmap> imgBitmap = new Vector<>();
+                        for(int j = 0;j<posts.get(i).getMediaPath().size();j++){
+                            try {
+                                URL newUrl = new URL(posts.get(i).getMediaPath().get(j));
+                                URLConnection conn = newUrl.openConnection();
+                                Bitmap mIcon_val = BitmapFactory.decodeStream(conn.getInputStream());
+                                imgBitmap.add(mIcon_val);
+                            }
+                            catch (Exception err) {
+                                Log.d("Debug", err.getMessage());}
+                        }
+                        posts.get(i).setImgBitmap(imgBitmap);
+                    }
+                    PostAdapter postAdapter = new PostAdapter(main, posts);
+                    binding.newfeelPost.setAdapter(postAdapter);
+                }
+                else {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+                }
             }
-            catch (Exception err) {
-                Log.d("Debug", err.getMessage());}
-        }
-
-        posts.add(new PostRes(new SellerRes(1,"Hoang Quoc Bao", 4.5),
-                1,
-                100000,
-                "Black t-shirt",
-                "This is description",
-                imagePath, dt1, dt1, false
-                ));
-        posts.add(new PostRes(new SellerRes(1,"Hoang Quoc Bao", 4.5),
-                1,
-                100000,
-                "Black t-shirt",
-                "This is description",
-                imagePath, dt1, dt1, false
-        ));
-        posts.add(new PostRes(new SellerRes(1,"Hoang Quoc Bao", 4.5),
-                1,
-                100000,
-                "Black t-shirt",
-                "This is description",
-                imagePath, dt1, dt1, false
-        ));
-        posts.add(new PostRes(new SellerRes(1,"Hoang Quoc Bao", 4.5),
-                1,
-                100000,
-                "Black t-shirt",
-                "This is description",
-                imagePath, dt1, dt1, false
-        ));
-        posts.add(new PostRes(new SellerRes(1,"Hoang Quoc Bao", 4.5),
-                1,
-                100000,
-                "Black t-shirt",
-                "This is description",
-                imagePath, dt1, dt1, false
-        ));
-        posts.add(new PostRes(new SellerRes(1,"Hoang Quoc Bao", 4.5),
-                1,
-                100000,
-                "Black t-shirt",
-                "This is description",
-                imagePath, dt1, dt1, false
-        ));
-        for(int i = 0;i<posts.size();i++){
-            posts.get(i).setImgBitmap(imgBitmap);
-        }
-
-        PostAdapter PostA = new PostAdapter(main, posts);
-        binding.newfeelPost.setAdapter(PostA);
-
+            @Override
+            public void onFailure(Call<List<PostRes>> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+            }
+        });
         return binding.getRoot();
     }
 }

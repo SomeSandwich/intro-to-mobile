@@ -25,7 +25,7 @@ public interface PostService {
     @GET("post/seller/{sellerId}")
     Call<List<PostRes>> GetBySeller(@Path("sellerId") Integer sellerId);
 
-    @GET("/post/newest")
+    @GET("post/newest")
     Call<List<PostRes>> GetNewest(@Query("number") Integer number);
 
     @GET("post/category/{categoryId}")
@@ -44,12 +44,12 @@ public interface PostService {
     @POST("post/{id}/comment")
     Call<String> AddComment(@Path("id") Integer id, @Body CommentPostReq request);
 
-    @PATCH("/post/{id}")
+    @PATCH("post/{id}")
     Call<String> UpdateInfo(@Path("id") Integer id, @Body UpdatePostReq request);
 
-    @PATCH("/post/{id}/toggle-hide")
+    @PATCH("post/{id}/toggle-hide")
     Call<String> HideToggle(@Path("id") Integer id);
 
-    @DELETE("/post/{id}")
+    @DELETE("post/{id}")
     Call<String> Delete(@Path("id") Integer id);
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace API.Types.Objects;
@@ -68,6 +69,8 @@ public class PostRes
     public bool IsSold { get; set; } = false;
 
     public RateRes Rate { get; set; }
+
+    [ForeignKey("User")] public int UserId { get; set; }
 
     public List<int> UserShare { get; set; }
 
