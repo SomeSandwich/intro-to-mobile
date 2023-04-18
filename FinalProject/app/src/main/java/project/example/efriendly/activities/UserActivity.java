@@ -25,6 +25,8 @@ public class UserActivity extends AppCompatActivity{
     HomepageActivity homepage = new HomepageActivity();
     navBarActivity navbar = new navBarActivity();
 
+    NewfeelActivity newFeel = new NewfeelActivity();
+
     NotificationsActivity notification = new NotificationsActivity();
     ActivityUserBinding binding;
 
@@ -63,6 +65,9 @@ public class UserActivity extends AppCompatActivity{
     public void onMsgFromFragToMain(String sender, String strValue) {
         if (sender.equals("nav")) {
             switch (strValue){
+                case "1":
+                    getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, newFeel).commit();
+                    break;
                 case "2":
                     getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, homepage).commit();
                     break;

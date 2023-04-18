@@ -166,15 +166,6 @@ public class HomepageActivity extends Fragment {
         public ActivityHomepageClickHandler(Context context){
             this.context = context;
         }
-
-        private ProgressDialog progressBar(){
-            ProgressDialog mProgress = new ProgressDialog(context);
-            mProgress.setTitle("Processing...");
-            mProgress.setMessage("Please wait...");
-            mProgress.setCancelable(false);
-            mProgress.setIndeterminate(true);
-            return mProgress;
-        }
         public View.OnClickListener CategoryClick(){
             return new View.OnClickListener(){
                 @Override

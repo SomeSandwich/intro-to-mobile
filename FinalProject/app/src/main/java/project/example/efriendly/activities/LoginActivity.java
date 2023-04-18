@@ -17,7 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import project.example.efriendly.R;
+import project.example.efriendly.data.model.Auth.LoginReq;
 import project.example.efriendly.databinding.ActivityLoginBinding;
+import project.example.efriendly.services.AuthService;
 
 public class LoginActivity extends AppCompatActivity {
     @Override
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private LoginActivityClickHandler handlers;
 
+
     @SuppressLint("AppCompatMethod")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         handlers = new LoginActivity.LoginActivityClickHandler(this);
@@ -64,5 +68,4 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(myIntent);
         }
     }
-
 }

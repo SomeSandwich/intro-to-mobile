@@ -45,5 +45,6 @@ public class navBarActivity extends Fragment {
             main.onMsgFromFragToMain("nav", "2");
         }
         public void notificationClick(View view){ main.onMsgFromFragToMain("nav", "3"); }
+        public void newFeelClick(View view ){main.onMsgFromFragToMain("nav", "1");}
     }
 }

@@ -1,30 +1,27 @@
 package project.example.efriendly.data.model.Post;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+
 import org.threeten.bp.LocalDateTime;
 import java.util.List;
+import java.util.Vector;
 
 import lombok.Getter;
 import project.example.efriendly.data.model.Rate.RateRes;
 import project.example.efriendly.data.model.Report.ReportRes;
+import project.example.efriendly.data.model.User.SellerRes;
 
 @Getter
 public class PostRes {
     private SellerRes author;
-
     private Integer id;
-
     private Integer price;
-
     private String caption;
-
     private String description;
-
     private List<String> mediaPath;
-
     private LocalDateTime createdDate;
-
     private LocalDateTime updatedDate;
-
     private Boolean isSold;
 
     private RateRes rate;
@@ -79,5 +76,19 @@ public class PostRes {
 
     public Boolean getSold() {
         return isSold;
+    }
+
+    private int currentIndex = 0;
+
+    private Vector<Bitmap> imgBitmap;
+
+    public int getCurrentIndex(){
+        return currentIndex;
+    }
+    public Vector<Bitmap> getImgBitmap(){return this.imgBitmap;}
+
+    public void setImgBitmap(Vector<Bitmap> imgBitmapInput){this.imgBitmap = imgBitmapInput;}
+    public void setCurrentIndex(int currentIndex){
+        this.currentIndex = currentIndex;
     }
 }
