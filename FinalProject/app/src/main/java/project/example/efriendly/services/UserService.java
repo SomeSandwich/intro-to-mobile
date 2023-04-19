@@ -17,20 +17,20 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserService {
-    @GET("/user/{id}")
+    @GET("user/{id}")
     Call<UserRes> GetById(@Path("id") Integer id);
 
-    @GET("/user/most-legit")
+    @GET("user/most-legit")
     Call<List<SellerRes>> GetMostLegit(@Query("number") Integer number);
 
-    @POST("/user")
+    @POST("user")
     @FormUrlEncoded
     Call CreateUser(@Body CreateUserReq request);
 
-    @POST("/user/{id}/avatar")
+    @POST("user/{id}/avatar")
     @FormUrlEncoded
     Call<String> AddAvatar(@Path("id") Integer id, @Body UserAvatarReq request);
 
-    @DELETE("/user/{id}/avatar")
+    @DELETE("user/{id}/avatar")
     Call<String> RemoveAvatar(@Path("id") Integer id);
 }

@@ -1,27 +1,23 @@
 package project.example.efriendly.adapter;
 
+
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.net.URL;
-import java.net.URLConnection;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import project.example.efriendly.R;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.ShowPostNewfeelAdapterBinding;
-
 
 public class PostAdapter extends BaseAdapter {
     private Activity activity;
@@ -55,19 +51,50 @@ public class PostAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = activity.getLayoutInflater();
         binding = ShowPostNewfeelAdapterBinding.inflate(inflater, viewGroup,false);
-
         PostRes post = posts.get(i);
+        handler = new PostNewFeelClickHandler(viewGroup.getContext(), post, binding);
 
-        binding.sellerName.setText(post.getAuthor().getName());
-        binding.des.setText(post.getDescription());
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            LocalDateTime updatePost = LocalDateTime.parse(post.getUpdatedDate().substring(0,19), formatter);
+            LocalDateTime now = LocalDateTime.now();
 
-        Context main = viewGroup.getContext();
+            long minutes = ChronoUnit.MINUTES.between(updatePost, now);
+            long hour = ChronoUnit.HOURS.between(updatePost, now);
+            long day = ChronoUnit.DAYS.between(updatePost, now);
 
-        handler = new PostNewFeelClickHandler(main, post, binding);
+            String time = String.valueOf(minutes) + "m";
 
-        binding.clothesImgs.setImageBitmap(post.getImgBitmap().get(0));
+            if (day > 7){
+                time = updatePost.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+            else if (hour > 24){
+                minutes -= hour * 60;
+                hour -= day * 24;
+                time = String.valueOf(day)+" days "+String.valueOf(hour) + " hours " + String.valueOf(minutes) + " minutes";
+            }
+            else if (minutes > 60) {
+                minutes -= hour * 60;
+                time = String.valueOf(hour) + " hours " + String.valueOf(minutes) + " minutes";
+            }
+            binding.time.setText(time);
+            if (post.getSellerAvt() != null) binding.sellerAvt.setImageBitmap(post.getSellerAvt());
+            else binding.sellerAvt.setImageResource(R.drawable.user);
 
-        binding.setClickHandler(handler);
+            binding.likeCount.setText(String.valueOf(10));
+
+            binding.CommentsCount.setText(String.valueOf(30) + " comments");
+
+            binding.shareCount.setText(String.valueOf(post.getUserShare().size()) + " shares");
+
+
+
+            binding.processBar.setVisibility(View.INVISIBLE); binding.post.setVisibility(View.VISIBLE);
+            binding.sellerName.setText(post.getUser().getName());
+            binding.des.setText(post.getDescription());
+            binding.clothesImgs.setImageBitmap(post.getImgBitmap().get(0));
+            binding.setClickHandler(handler);
+        }catch (NullPointerException err){binding.processBar.setVisibility(View.VISIBLE); binding.post.setVisibility(View.INVISIBLE);}
 
         return binding.getRoot();
     }

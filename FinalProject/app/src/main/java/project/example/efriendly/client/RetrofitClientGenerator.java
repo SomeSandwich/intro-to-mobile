@@ -2,11 +2,11 @@ package project.example.efriendly.client;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import project.example.efriendly.constants.DatabaseConnection;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClientGenerator {
-    private static final String BASE_URL = "https://mobile.hieucckha.me/api/v1/";
+public class RetrofitClientGenerator implements DatabaseConnection {
 
     public static Retrofit getRetrofit(){
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();

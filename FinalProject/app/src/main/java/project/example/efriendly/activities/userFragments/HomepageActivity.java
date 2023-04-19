@@ -18,19 +18,31 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.UserActivity;
+import project.example.efriendly.client.RetrofitClientGenerator;
+import project.example.efriendly.data.model.Category.CategoryRes;
 import project.example.efriendly.databinding.ActivityHomepageBinding;
+import project.example.efriendly.services.CategoryService;
+import project.example.efriendly.services.PostService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HomepageActivity extends Fragment {
     UserActivity main;
     Context context = null;
     String message = "";
-
     FragmentTransaction ft;
 
     public ActivityHomepageBinding binding;
     private ActivityHomepageClickHandler handlers;
+
+    private CategoryService categoryService;
     String[] des = {
             "Test Description 1 Test Description 1 Test Description 1 Test Description 1 Test Description 1 ", "Test Description 2",
             "Test Description 3", "Test Description 4",
@@ -44,10 +56,6 @@ public class HomepageActivity extends Fragment {
             R.drawable.clothes, R.drawable.clothes,
             R.drawable.clothes, R.drawable.clothes,
             R.drawable.clothes
-    };
-
-    String[] category = {
-            "All", "Men", "Women", "Kid", "Children", "Elder", "Give a way", "Challenge"
     };
 
     @Override
@@ -68,6 +76,9 @@ public class HomepageActivity extends Fragment {
         SearchBarCartChatActivity searchbar = new SearchBarCartChatActivity();
         ft = getParentFragmentManager().beginTransaction();
         ft.replace(R.id.searchBarFragment, searchbar).commit();
+        categoryService = RetrofitClientGenerator.getService(CategoryService.class);
+
+
 
         addCategory();
         addItem();
@@ -150,16 +161,43 @@ public class HomepageActivity extends Fragment {
     private void addCategory(){
         LinearLayout ll = binding.innerLay;
 
-        for (int i=0;i<category.length;i++) {
-            android.widget.Button newCategory = createCategory(i, category[i], R.drawable.likebutton);
+        Call<List<CategoryRes>> categoryServiceCall = categoryService.getAll();
 
-            LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            btnLayout.setMargins(5, 0, 5, 0);
+        categoryServiceCall.enqueue(new Callback<List<CategoryRes>>() {
+            @Override
+            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
+                if (response.isSuccessful()){
+                    try {
+                        List<CategoryRes> category = response.body();
+                        int size = category.size();
+                        for (int i = 0; i < size; i++) {
+                            android.widget.Button newCategory = createCategory(category.get(i).getId(), category.get(i).getDescription(), R.drawable.likebutton);
 
-            ll.addView(newCategory, btnLayout);
-        }
+                            LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT);
+                            btnLayout.setMargins(5, 0, 5, 0);
+
+                            ll.addView(newCategory, btnLayout);
+                        }
+                    }
+                    catch (NullPointerException err){
+                        String message = "An error occurred please try again later ...";
+                        Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
     public class ActivityHomepageClickHandler{
         Context context;

@@ -24,4 +24,36 @@ public class UserRes {
     private String address;
 
     private UserStatus status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAvatarPath() {
+        return AvatarPath;
+    }
+
+    public Double getLegit() {
+        return legit;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
 }
