@@ -1,10 +1,11 @@
 ﻿using System.Security.Claims;
+using API.Services;
 using API.Types.Objects;
 using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Services;
+namespace API.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]
@@ -12,11 +13,13 @@ namespace API.Services;
 public class ChatController : ControllerBase
 {
     private readonly IMessageService _mesSer;
+
     private readonly IMapper _mapper;
 
     public ChatController(IMessageService mesSer, IMapper mapper)
     {
         _mesSer = mesSer;
+
         _mapper = mapper;
     }
 

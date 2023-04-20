@@ -9,10 +9,11 @@ namespace API.Services;
 
 public interface IConversationService
 {
+    Task<ConversationRes?> GetAsync(int id);
+    Task<IEnumerable<ConversationRes>> GetByUserIdAsync(int userId);
+
     Task<int> FindConversation(int userId1, int userId2);
     Task<int> AddAsync(CreateConvArg req);
-
-    Task<ConversationRes?> GetAsync(int id);
 }
 
 public class ConverstationService : IConversationService
@@ -24,6 +25,16 @@ public class ConverstationService : IConversationService
     {
         _context = context;
         _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<ConversationRes>> GetByUserIdAsync(int userId)
+    {
+        var convs = await _context.Conversations
+            .Include(e => e.Participations)
+            .Where(e => e.Participations.Any(e => e.UserId == userId))
+            .ToListAsync();
+
+        return _mapper.Map<List<Conversation>, IEnumerable<ConversationRes>>(convs);
     }
 
     public async Task<int> FindConversation(int userId1, int userId2)
@@ -52,7 +63,7 @@ public class ConverstationService : IConversationService
             await _context.Conversations.AddAsync(conv);
             await _context.SaveChangesAsync();
 
-            List<Participation> listPart = new List<Participation>
+            List<Participation> listPart = new()
             {
                 new Participation { ConversationId = conv.Id, UserId = req.SelfId },
                 new Participation { ConversationId = conv.Id, UserId = req.UserId }
@@ -72,7 +83,7 @@ public class ConverstationService : IConversationService
     public async Task<ConversationRes?> GetAsync(int id)
     {
         var conv = await _context.Conversations
-            .Include(e=>e.Participations)
+            .Include(e => e.Participations)
             .Include(e => e.Messages.OrderByDescending(m => m.CreateAt))
             .FirstOrDefaultAsync(e => e.Id == id);
 
