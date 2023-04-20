@@ -10,4 +10,28 @@ public class CategoryRes {
     private String description;
 
     private String Icon;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getIcon() {
+        return Icon;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setIcon(String icon) {
+        Icon = icon;
+    }
 }

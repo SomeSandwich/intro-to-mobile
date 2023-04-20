@@ -31,7 +31,7 @@ public class NotificationsActivity extends Fragment {
 
         binding = ActivityNotificationsBinding.inflate(inflater, container,false);
 
-        NotificationsAdapter adapter = new NotificationsAdapter(main, R.layout.custom_notification_items, notifications, times, avatars);
+        NotificationsAdapter adapter = new NotificationsAdapter(container.getContext(), R.layout.custom_notification_items, notifications, times, avatars);
         
         binding.NotificationList.setAdapter(adapter);
         binding.NotificationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace API.Types.Objects;
@@ -29,6 +30,11 @@ public class UpdatePostReq
     public ICollection<string>? MediaFilesDelete { get; set; }
 
     public IFormFileCollection? MediaFilesAdd { get; set; }
+}
+
+public class CommentPostReq
+{
+    public string Content { get; set; }
 }
 
 public class UpdatePostArgs
@@ -64,5 +70,9 @@ public class PostRes
 
     public RateRes Rate { get; set; }
 
-    public virtual IEnumerable<ReportRes> Reports { get; set; }
+    [ForeignKey("User")] public int UserId { get; set; }
+
+    public List<int> UserShare { get; set; }
+
+    public IEnumerable<ReportRes> Reports { get; set; }
 }

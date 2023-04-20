@@ -19,6 +19,8 @@ public class User
 
     public string PhoneNumber { get; set; }
 
+    public string? AvatarPath { get; set; }
+
     public string PasswordHash { get; set; }
 
     [Range(-1, 10)] public double Legit { get; set; } = -1;

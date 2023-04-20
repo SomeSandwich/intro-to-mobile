@@ -32,13 +32,15 @@ public class Post
 
     public Rate Rate { get; set; }
 
+    public List<int> UserShare { get; set; }
+
     public virtual ICollection<Report> Reports { get; set; }
 
     public virtual ICollection<Cart> Carts { get; set; }
 
+    public virtual ICollection<Comment> Comments { get; set; }
 
     public virtual OrderDetail OrderDetail { get; set; }
-
 
     [ForeignKey("User")] public int UserId { get; set; }
     public virtual User User { get; set; }

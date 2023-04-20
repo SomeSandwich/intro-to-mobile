@@ -1,10 +1,12 @@
 package project.example.efriendly.data.model.User;
 
+import lombok.Setter;
 import project.example.efriendly.constants.enums.UserStatus;
 
 import lombok.Getter;
 
 @Getter
+@Setter
 public class UserRes {
 
     private Integer id;
@@ -35,17 +37,28 @@ public class UserRes {
     public String getAvatar() {
         return avatar;
     }
+
     public String getName() {
         return name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getEmail() {
+        return email;
     }
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public Double getLegit() {
+        return legit;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public UserStatus getStatus() {
+        return status;
     }
 }

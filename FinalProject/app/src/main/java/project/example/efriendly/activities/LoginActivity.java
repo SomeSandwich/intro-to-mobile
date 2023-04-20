@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginActivityClickHandler handlers;
     private AuthService authService;
 
+
     @SuppressLint("AppCompatMethod")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         handlers = new LoginActivity.LoginActivityClickHandler(this);
@@ -121,5 +123,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 }

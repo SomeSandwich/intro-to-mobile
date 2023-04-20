@@ -1,8 +1,13 @@
 package project.example.efriendly.data.model.Post;
 
+import java.util.List;
+
 import lombok.Getter;
+import lombok.Setter;
+import okhttp3.MultipartBody;
 
 @Getter
+@Setter
 public class UpdatePostReq {
 
     private Integer price;
@@ -11,6 +16,7 @@ public class UpdatePostReq {
 
     private String description;
 
-    // #TODO: MediaFile Add And Delete
-//    private
+    private List<String> mediaFilesDelete;
+
+    private List<MultipartBody.Part> mediaFilesAdd;
 }

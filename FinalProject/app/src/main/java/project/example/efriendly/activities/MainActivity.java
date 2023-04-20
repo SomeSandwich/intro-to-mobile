@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -40,26 +41,15 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        //setContentView(R.layout.activity_anonymous_homepage);
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        Intent myIntent = new Intent(MainActivity.this, UserActivity.class);
 
-        Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(myIntent);
         finish();
-
-//        Call<List<CategoryRes>> allCateCall =  categoryService.getAll();
-//        allCateCall.enqueue(new Callback<List<CategoryRes>>() {
-//            @Override
-//            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
-//                List<CategoryRes> cates = response.body();
-//
-//                ...
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
-//
-//            }
-//        });
     }
 
 

@@ -28,6 +28,7 @@ public class MobileDbContext : DbContext
         new MessageConfiguration().Configure(builder.Entity<Message>());
         new OrderConfiguration().Configure(builder.Entity<Order>());
         new OrderDetailConfiguration().Configure(builder.Entity<OrderDetail>());
+        new CommentConfiguration().Configure(builder.Entity<Comment>());
     }
 
     #region Entities
@@ -43,6 +44,7 @@ public class MobileDbContext : DbContext
     public DbSet<Message> Messages { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     public DbSet<RefreshToken> RefreshTokens { get; set; }
 

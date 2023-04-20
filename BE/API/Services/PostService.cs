@@ -1,3 +1,4 @@
+using System.Reactive;
 using Api.Context;
 using Api.Context.Entities;
 using API.Types.Mapping;
@@ -9,11 +10,16 @@ namespace API.Services;
 
 public interface IPostService
 {
+    Task<bool> Exist(int id);
+
     Task<int> AddAsync(Post post);
 
     Task<PostRes?> GetAsync(int id);
     Task<IEnumerable<PostRes>> GetByShopIdAsync(int shopId);
     Task<IEnumerable<PostRes>> GetLatestAsync(int number);
+
+    Task<bool> AddSharePost(int postId, int userId);
+    Task<bool> RemoveSharePost(int postId, int userId);
 
     Task<bool> UpdateAsync(int id, UpdatePostArgs args);
     Task<bool> ToggleIsHide(int id);
@@ -37,6 +43,13 @@ public class PostService : IPostService
     }
 
     #region Create
+
+    public async Task<bool> Exist(int id)
+    {
+        return await _context.Posts
+            .Where(e => e.IsDeleted != true)
+            .AnyAsync(e => e.Id == id);
+    }
 
     public async Task<int> AddAsync(Post post)
     {
@@ -84,13 +97,46 @@ public class PostService : IPostService
     public async Task<IEnumerable<PostRes>> GetLatestAsync(int number)
     {
         var listPost = _context.Posts
+            .Join(_context.Users, e => e.UserId, p => p.Id, (e, p) => e)
             .Where(e => e.IsDeleted == false && e.IsHide == false)
             .OrderByDescending(e => e.CreatedDate)
             .Take(number)
             .AsEnumerable();
-
-
         return _mapper.Map<IEnumerable<Post>, IEnumerable<PostRes>>(listPost);
+    }
+
+    public async Task<bool> AddSharePost(int postId, int userId)
+    {
+        var post = await _context.Posts
+            .Where(e => e.IsDeleted != true)
+            .FirstOrDefaultAsync(e => e.Id == postId);
+
+        if (post is null)
+            return false;
+
+        post.UserShare.Add(userId);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> RemoveSharePost(int postId, int userId)
+    {
+        var post = await _context.Posts
+            .Where(e => e.IsDeleted != true)
+            .FirstOrDefaultAsync(e => e.Id == postId);
+
+        if (post is null)
+            return false;
+
+        var success = post.UserShare.Remove(userId);
+        if (!success)
+            return false;
+
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
     #endregion
