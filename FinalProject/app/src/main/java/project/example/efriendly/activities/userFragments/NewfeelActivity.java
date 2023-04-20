@@ -20,6 +20,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.LoginActivity;
@@ -69,77 +71,19 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
         postService = RetrofitClientGenerator.getService(PostService.class);
         userService = RetrofitClientGenerator.getService(UserService.class);
 
-        new Thread(new Runnable() {
+        Call<List<PostRes>> postsCallback = postService.GetNewest(10);
+        Thread get = new Thread(new Runnable() {
             @Override
             public void run() {
-                Call<List<PostRes>> postsCallback = postService.GetNewest(10);
                 postsCallback.enqueue(new Callback<List<PostRes>>() {
                     @Override
                     public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
                         if (response.isSuccessful()) {
                             List<PostRes> posts = response.body();
-                            for(int i=0;i<posts.size();i++){
-                                Vector<Bitmap> imgBitmap = new Vector<>();
-                                for(int j = 0;j<posts.get(i).getMediaPath().size();j++){
-                                    try {
-                                        URL newUrl = new URL(IMAGE_URL + posts.get(i).getMediaPath().get(j));
-                                        URLConnection conn = newUrl.openConnection();
-                                        Bitmap mIcon_val = BitmapFactory.decodeStream(conn.getInputStream());
-                                        imgBitmap.add(mIcon_val);
-                                    }
-                                    catch (Exception err) {
-                                        Log.d("Debug", err.getMessage());}
-                                }
-                                posts.get(i).setImgBitmap(imgBitmap);
-                                PostAdapter postAdapter = new PostAdapter(main, posts);
-                                binding.newfeelPost.setAdapter(postAdapter);
+                            binding.processBar.setVisibility(View.INVISIBLE);
 
-                                Call<UserRes> userResCall = userService.GetById(posts.get(i).getUserID());
-
-                                final int postsPosition = i;
-
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        userResCall.enqueue(new Callback<UserRes>() {
-                                            @Override
-                                            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                                                if (response.isSuccessful()) {
-                                                    UserRes user = response.body();
-                                                    posts.get(postsPosition).setUser(user);
-
-                                                } else {
-                                                    String message = "An error occurred please try again later ...";
-                                                    Toast.makeText(container.getContext(), message, Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-                                            @Override
-                                            public void onFailure(Call<UserRes> call, Throwable t) {
-                                                String message = t.getLocalizedMessage();;
-                                                Toast.makeText(container.getContext(), message, Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                    }
-                                }, 1000);
-
-                                Handler handlerAvt = new Handler();
-                                handlerAvt.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            URL newUrl = new URL(IMAGE_URL + posts.get(postsPosition).getUser().getAvatarPath());
-                                            URLConnection conn = newUrl.openConnection();
-                                            Bitmap mIcon_val = BitmapFactory.decodeStream(conn.getInputStream());
-                                            posts.get(postsPosition).setSellerAvt(mIcon_val);
-                                        }
-                                        catch (Exception err) {
-                                            posts.get(postsPosition).setSellerAvt(null);
-                                        }
-
-                                    }
-                                }, 1000);
-                            }
+                            PostAdapter postAdapter = new PostAdapter(main, posts, userService);
+                            binding.newfeelPost.setAdapter(postAdapter);
                         }
                         else {
                             String message = "An error occurred please try again later ...";
@@ -153,8 +97,21 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
                     }
                 });
             }
-        }).start();
+        });
 
+        Thread set = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                binding.processBar.setVisibility(View.VISIBLE);
+            }
+        });
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        try {
+            pool.submit(get).get();
+            pool.submit(set).get();
+        } catch (Exception e) {Log.d("Get name", e.getMessage());}
+
+        pool.shutdown();
         return binding.getRoot();
     }
 }

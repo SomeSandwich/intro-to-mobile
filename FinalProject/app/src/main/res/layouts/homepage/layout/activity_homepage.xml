@@ -42,19 +42,6 @@
                 android:id="@+id/ListItems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
-            <ScrollView
-                android:id="@+id/ItemView"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:fillViewport="true"
-                android:measureAllChildren="false"
-                android:scrollbars="none">
-                <TableLayout
-                    android:id="@+id/ItemList"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"/>
-            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 

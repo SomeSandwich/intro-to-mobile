@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -77,93 +78,22 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         postService = RetrofitClientGenerator.getService(PostService.class);
 
         addCategory();
-        //addItem();
+        addAdapter();
 
         return binding.getRoot();
     }
-    private LinearLayout createNewItem(String des, Bitmap img, String price){
-        LinearLayout result = new LinearLayout(context);
-
-        result.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1.0f));
-        result.setGravity(Gravity.FILL);
-        result.setOrientation(LinearLayout.VERTICAL);
-        result.setBackgroundResource(R.drawable.clothes_frame);
-
-        ImageView clothImg = new ImageView(context);
-
-        clothImg.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        clothImg.setPadding(10, 10, 10, 10);
-        clothImg.setImageBitmap(img);
-        clothImg.setMaxHeight(450);
-        clothImg.setMaxWidth(500);
-        clothImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        clothImg.setAdjustViewBounds(true);
-
-        clothImg.setBackgroundResource(R.drawable.clothes_frame);
-
-        TextView clothDes = new TextView(context);
-        clothDes.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        clothDes.setGravity(Gravity.CENTER);
-        clothDes.setText(des);
-
-        TextView prices = new TextView(context);
-        prices.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        prices.setGravity(Gravity.CENTER);
-        prices.setText(price);
-
-
-        result.addView(clothImg, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        result.addView(clothDes, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        result.addView(prices, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        return result;
-    }
-
-
     private void addAdapter(){
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(10);
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
+
                 if (response.isSuccessful()){
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
                     List<HomepageItemList> postListView = new ArrayList<>();
 
-                    for (int i = 0 ;i<posts.size();i++){
-                        Vector<Bitmap> imgBitmap = new Vector<>();
-                        for (int j = 0; j < posts.get(i).getMediaPath().size(); j++) {
-                            try {
-                                URL newUrl = new URL(IMAGE_URL + posts.get(i).getMediaPath().get(j));
-                                URLConnection conn = newUrl.openConnection();
-                                Bitmap mIcon_val = BitmapFactory.decodeStream(conn.getInputStream());
-                                imgBitmap.add(mIcon_val);
-                            } catch (Exception err) {
-                                Log.d("Debug", err.getMessage());
-                            }
-                        }
-                        posts.get(i).setImgBitmap(imgBitmap);
-                    }
                     for (int i = 0;i<posts.size();i+=2){
                         HomepageItemList pairPost = new HomepageItemList();
                         try{
@@ -173,7 +103,7 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                         catch (IndexOutOfBoundsException err) {Log.d("debug", err.getLocalizedMessage());}
                         postListView.add(pairPost);
                     }
-                    HomepageItemAdapter adapter = new HomepageItemAdapter(main , postListView);
+                    HomepageItemAdapter adapter = new HomepageItemAdapter(main, postListView);
                     binding.ListItems.setAdapter(adapter);
                 }
                 else {
@@ -181,70 +111,15 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                     Toast.makeText(main, message, Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<List<PostRes>> call, Throwable t) {
                 String message = t.getLocalizedMessage();
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
             }
         });
-    }
-    private void addItem(){
-        TableLayout tl = binding.ItemList;
-
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(10);
-        postServiceCall.enqueue(new Callback<List<PostRes>>() {
-            @Override
-            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-                if(response.isSuccessful()) {
-                    List<PostRes> posts = response.body();
-                    TableRow tr = tr = new TableRow(context);
-                    for (int i=0;i<posts.size();i++){
-                        Vector<Bitmap> imgBitmap = new Vector<>();
-                        for (int j = 0; j < posts.get(i).getMediaPath().size(); j++) {
-                            try {
-                                URL newUrl = new URL(IMAGE_URL + posts.get(i).getMediaPath().get(j));
-                                URLConnection conn = newUrl.openConnection();
-                                Bitmap mIcon_val = BitmapFactory.decodeStream(conn.getInputStream());
-                                imgBitmap.add(mIcon_val);
-                            } catch (Exception err) {
-                                Log.d("Debug", err.getMessage());
-                            }
-                        }
-                        posts.get(i).setImgBitmap(imgBitmap);
-
-                        if (i % 2 == 0) tr = new TableRow(context);
-
-                        tr.setLayoutParams(new TableRow.LayoutParams(
-                                TableRow.LayoutParams.MATCH_PARENT,
-                                TableRow.LayoutParams.WRAP_CONTENT));
-                        LinearLayout b = createNewItem(
-                                posts.get(i).getCaption(), posts.get(i).getImgBitmap().get(0), posts.get(i).getPrice().toString() + "VND");
-                        tr.addView(b);
-                        if (i%2==1)
-                            tl.addView(tr, new TableLayout.LayoutParams(
-                                    TableLayout.LayoutParams.MATCH_PARENT,
-                                    TableLayout.LayoutParams.WRAP_CONTENT));
-                    }
-
-                    if (posts.size() % 2 == 1) tl.addView(tr, new TableLayout.LayoutParams(
-                            TableLayout.LayoutParams.MATCH_PARENT,
-                            TableLayout.LayoutParams.WRAP_CONTENT));
-                }
-                else{
-                    String message = "An error occurred please try again later ...";
-                    Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<PostRes>> call, Throwable t) {
-                String message = "An error occurred please try again later ...";
-                Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-            }
-        });
 
     }
+
     private android.widget.Button createCategory(int id, String name, Integer img ){
         android.widget.Button btn = new android.widget.Button(context);
 

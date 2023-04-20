@@ -1,5 +1,7 @@
 package project.example.efriendly.data.model.User;
 
+import android.graphics.Bitmap;
+
 import lombok.Setter;
 import project.example.efriendly.constants.enums.UserStatus;
 
@@ -24,6 +26,8 @@ public class UserRes {
     private String address;
 
     private UserStatus status;
+
+    private Bitmap avtBitmap;
 
     public Integer getId() {
         return id;
@@ -55,5 +59,13 @@ public class UserRes {
 
     public UserStatus getStatus() {
         return status;
+    }
+
+    public Bitmap getAvtBitmap() {
+        return avtBitmap;
+    }
+
+    public void setAvtBitmap(Bitmap avtBitmap) {
+        this.avtBitmap = avtBitmap;
     }
 }
