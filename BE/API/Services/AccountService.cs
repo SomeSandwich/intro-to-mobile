@@ -73,7 +73,7 @@ public class AccountService : IAccountService
         var key = Encoding.ASCII.GetBytes(secretKey);
         var authClaims = new List<Claim>
         {
-            new(ClaimTypes.Name, user.Id.ToString()),
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
         };
