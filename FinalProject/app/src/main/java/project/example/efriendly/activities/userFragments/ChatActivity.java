@@ -2,6 +2,9 @@ package project.example.efriendly.activities.userFragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,21 +13,21 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 import project.example.efriendly.R;
-import project.example.efriendly.databinding.ActivityChatBinding;
 import project.example.efriendly.adapter.ChatAdapter;
+import project.example.efriendly.data.model.User.UserRes;
+import project.example.efriendly.databinding.ActivityChatBinding;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
-    Integer[] avatars = {R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user,
-            R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user};
-    String[] name = {"Truong Trong Khanh", "Hoang Quoc Bao", "Kha Vinh Dat", "Nguyen Quoc Su", "Tran Minh Truong", "Nguyen Tan Hieu", "Nguyen Ho Hu Bang", "Phan Thanh Sang", "Do Nguyen Hung", "Tran Hong Quan",
-            "Truong Trong Khanh", "Hoang Quoc Bao", "Kha Vinh Dat", "Nguyen Quoc Su", "Tran Minh Truong", "Nguyen Tan Hieu", "Nguyen Ho Hu Bang", "Phan Thanh Sang", "Do Nguyen Hung", "Tran Hong Quan"};
-    String[] message = {"hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello",
-            "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello", "hello"};
+    private RecyclerView recyclerView;
+    private ChatAdapter adapter;
+    private ArrayList<UserRes> userArrayList;
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
         View view = getCurrentFocus();
@@ -48,13 +51,25 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
-        ChatAdapter adapter = new ChatAdapter(this, R.layout.custom_chat_items, name, message, avatars);
-        binding.ChatList.setAdapter(adapter);
-        binding.ChatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("hehe");
-            }
-        });
+
+        userArrayList = new ArrayList<>();
+        userArrayList.add(new UserRes(1, "Truong Trong Khanh", "FinalProject/app/src/main/res/drawable/user.jpg"));
+        userArrayList.add(new UserRes(2, "Hoang Quoc Bao", "FinalProject/app/src/main/res/drawable/user.jpg"));
+        userArrayList.add(new UserRes(3, "Nguyen Tan Hieu", "FinalProject/app/src/main/res/drawable/user.jpg"));
+        userArrayList.add(new UserRes(4, "Kha Vinh Dat", "FinalProject/app/src/main/res/drawable/user.jpg"));
+        userArrayList.add(new UserRes(5, "Nguyen Quoc Su", "FinalProject/app/src/main/res/drawable/user.jpg"));
+        userArrayList.add(new UserRes(6, "Tran Minh Truong", "FinalProject/app/src/main/res/drawable/user.jpg"));
+        userArrayList.add(new UserRes(7, "Nguyen Ho Huu Bang", "FinalProject/app/src/main/res/drawable/user.jpg"));
+
+        recyclerView = binding.recyclerview;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ChatAdapter(ChatActivity.this, userArrayList);
+        recyclerView.setAdapter(adapter);
+
+        DividerItemDecoration dividerHorizontal =
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+
+        recyclerView.addItemDecoration(dividerHorizontal);
+
     }//onCreate
 }

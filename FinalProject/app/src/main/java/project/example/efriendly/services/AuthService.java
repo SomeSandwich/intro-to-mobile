@@ -15,6 +15,6 @@ public interface AuthService {
     //@FormUrlEncoded
     Call<LoginRes> Login(@Body LoginReq request);
 
-    @POST("refresh-token")
+    @POST("auth/refresh-token")
     Call<LoginRes> RefreshToken(@Query("token") String token);
 }
