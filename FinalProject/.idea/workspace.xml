@@ -10,10 +10,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c50d7788-963b-4fc8-bae4-c1e52125789d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/HomepageAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/NewfeelAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/holder/NewfeelPostHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/holder/PostHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layouts/homepage/layout/post.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/showPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/showPost.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/NewfeelActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/NewfeelActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/HomepageItemAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/PostAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Post/PostRes.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Post/PostRes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/homepage/layout/activity_homepage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/homepage/layout/activity_homepage.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/homepage/layout/homepage_item_adapter.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/newfeel/layout/fragment_newfeel_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/newfeel/layout/fragment_newfeel_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/newfeel/layout/show_post_newfeel_adapter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/newfeel/layout/show_post_newfeel_adapter.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/showpost/layout/activity_show_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/showpost/layout/activity_show_post.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +49,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -47,6 +66,8 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="showVisibilityIcons" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
@@ -54,7 +75,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Android Studio/test/test&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Android Studio/GithubFinalProject/intro-to-mobile/FinalProject&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
