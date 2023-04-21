@@ -13,6 +13,8 @@ public class Message
 
     public string Content { get; set; }
 
+    public DateTime CreateAt { get; set; }
+
     [ForeignKey("Conversation")] public int ConversationId { get; set; }
 
     [ForeignKey("User")] public int UserId { get; set; }

@@ -26,6 +26,8 @@ import java.util.Base64;
 import project.example.efriendly.R;
 import project.example.efriendly.activities.userFragments.ChatActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
+import project.example.efriendly.constants.DatabaseConnection;
+import project.example.efriendly.constants.StorageHelper;
 import project.example.efriendly.data.model.Auth.LoginReq;
 import project.example.efriendly.data.model.Auth.LoginRes;
 import project.example.efriendly.databinding.ActivityLoginBinding;
@@ -107,7 +109,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginRes> call, Response<LoginRes> response) {
                 if (response.isSuccessful()) {
                     LoginRes loginRes = response.body();
-
+                    
+                    StorageHelper.Token = loginRes.getToken();
+                    
                     startActivity(new Intent(LoginActivity.this, ChatActivity.class).putExtra("data", loginRes));
                     finish();
                 } else {

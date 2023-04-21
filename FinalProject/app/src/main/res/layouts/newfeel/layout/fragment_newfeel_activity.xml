@@ -7,60 +7,80 @@
     <data>
 
     </data>
-    <LinearLayout
-        android:background="@color/gray"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <FrameLayout
-            android:id="@+id/searchBarFragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
         <LinearLayout
-            android:background="@color/white"
-            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/gray"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:paddingHorizontal="32dp"
-            android:layout_weight="1.2"
-            android:gravity="center"
-            android:layout_height="0dp">
-            <androidx.cardview.widget.CardView
-                android:id="@+id/avt"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:cardCornerRadius="20dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9">
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:id="@+id/searchBarFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="32dp"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:layout_height="0dp">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/avt"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="20dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9">
+                    <ImageView
+                        android:contentDescription="@string/image"
+                        android:scaleType="fitCenter"
+                        android:layout_width="match_parent"
+                        android:id="@+id/sellerAvt"
+                        android:src="@drawable/avatar"
+                        android:layout_height="match_parent"/>
+                </androidx.cardview.widget.CardView>
+                <EditText
+                    android:inputType="text"
+                    android:autofillHints="@string/image"
+                    android:layout_marginStart="17dp"
+                    android:hint="@string/newpostHint"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"/>
                 <ImageView
                     android:contentDescription="@string/image"
-                    android:scaleType="fitCenter"
-                    android:layout_width="match_parent"
-                    android:id="@+id/sellerAvt"
-                    android:src="@drawable/avatar"
-                    android:layout_height="match_parent"/>
-            </androidx.cardview.widget.CardView>
-            <EditText
-                android:inputType="text"
-                android:autofillHints="@string/image"
-                android:layout_marginStart="17dp"
-                android:hint="@string/newpostHint"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"/>
-            <ImageView
-                android:contentDescription="@string/image"
-                android:src="@drawable/add_image_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                    android:src="@drawable/add_image_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-        <ListView
-            android:layout_marginTop="10dp"
-            android:layout_weight="9"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            android:id="@+id/newfeelPost"/>
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:layout_weight="9"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/newfeelPost"/>
+        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/processBar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ProgressBar>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
