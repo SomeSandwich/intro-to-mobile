@@ -2,32 +2,50 @@ package project.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.userFragments.HomepageActivity;
+import project.example.efriendly.activities.userFragments.SearchBarCartLoginActivity;
+import project.example.efriendly.adapter.AnonymousHomepageAdapter;
+import project.example.efriendly.adapter.HomepageAdapter;
+import project.example.efriendly.client.RetrofitClientGenerator;
+import project.example.efriendly.data.model.Category.CategoryRes;
+import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.ActivityAnonymousHomepageBinding;
+import project.example.efriendly.databinding.ActivityUserBinding;
+import project.example.efriendly.services.CategoryService;
+import project.example.efriendly.services.PostService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AnonymousHomepageActivity extends AppCompatActivity {
+    ActivityAnonymousHomepageBinding binding;
+    FragmentTransaction ft;
+    SearchBarCartLoginActivity searchBar = new SearchBarCartLoginActivity();
+    private CategoryService categoryService;
+    private PostService postService;
+    AnonymousHomepageActivity.ClickListener listener = new AnonymousHomepageActivity.ClickListener();
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
         View view = getCurrentFocus();
@@ -41,26 +59,6 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
-    public ActivityAnonymousHomepageBinding binding;
-    private AnonymousHomepageActivityClickHandler handlers;
-    String[] des = {
-            "Test Description 1", "Test Description 2",
-            "Test Description 3", "Test Description 4",
-            "Test Description 5", "Test Description 6",
-            "Test Description 7", "Test Description 8",
-            "Test Description 9"
-    };
-    Integer[] img = {
-            R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes
-    };
-
-    String[] category = {
-            "All", "Men", "Women", "Kid", "Children", "Elder", "Give a way", "Challenge"
-    };
 
     @SuppressLint("AppCompatMethod")
     @Override
@@ -71,70 +69,56 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_anonymous_homepage);
-        handlers = new AnonymousHomepageActivityClickHandler(this);
-        binding.setClickHandler(handlers);
+        binding = ActivityAnonymousHomepageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        binding.processBar.setVisibility(View.VISIBLE);
+
+        categoryService = RetrofitClientGenerator.getService(CategoryService.class);
+        postService = RetrofitClientGenerator.getService(PostService.class);
+
+        ft=getSupportFragmentManager().beginTransaction();
+        ft.replace(binding.searchBarFragment.getId(), searchBar).commit();
 
         addCategory();
-        addItem();
+        addAdapter();
+
+        binding.processBar.setVisibility(View.INVISIBLE);
+
     }
-    private LinearLayout createNewItem(String des, Integer img){
-        LinearLayout result = new LinearLayout(this);
 
-        result.setLayoutParams(new TableRow.LayoutParams(
-                0,
-                TableRow.LayoutParams.WRAP_CONTENT, 1.0f));
-        result.setGravity(Gravity.FILL);
-        result.setOrientation(LinearLayout.VERTICAL);
-        result.setBackgroundResource(R.drawable.clothes_frame);
+    private void addAdapter(){
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
+        postServiceCall.enqueue(new Callback<List<PostRes>>() {
+            @Override
+            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
 
-        ImageView clothImg = new ImageView(this);
+                if (response.isSuccessful()){
+                    List<PostRes> posts = new ArrayList<>();
+                    posts = response.body();
 
-        clothImg.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+                    AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
+                    binding.ListItems.setAdapter(adapter);
 
-        clothImg.setPadding(10, 10, 10, 10);
-        clothImg.setImageResource(img);
-        clothImg.setBackgroundResource(R.drawable.clothes_frame);
+                    binding.ListItems.setLayoutManager(
+                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                }
+                else {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<PostRes>> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
 
-        TextView clothDes = new TextView(this);
-        clothDes.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        clothDes.setGravity(Gravity.CENTER);
-        clothDes.setText(des);
-        result.addView(clothImg, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        result.addView(clothDes, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        return result;
     }
-    private void addItem(){
-        TableLayout tl = binding.ItemList;
-        TableRow tr = tr = new TableRow(this);
 
-        for (int i=0;i<des.length;i++){
-            if (i % 2 == 0) tr = new TableRow(this);
-            tr.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            LinearLayout b = createNewItem(des[i], img[i]);
-            tr.addView(b);
-            if (i%2==1)
-                tl.addView(tr, new TableLayout.LayoutParams(
-                    TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.WRAP_CONTENT));
-        }
-
-        if (des.length % 2 == 1) tl.addView(tr, new TableLayout.LayoutParams(
-                TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT));
-    }
     private android.widget.Button createCategory(int id, String name, Integer img ){
-        android.widget.Button btn = new android.widget.Button(this);
+        Context context = getApplicationContext();
+        android.widget.Button btn = new android.widget.Button(context);
 
         LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -142,7 +126,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         btnLayout.setMargins(30, 30, 30, 30);
         btn.setLayoutParams(btnLayout);
         btn.setId(id);
-        btn.setOnClickListener(handlers.CategoryClick());
+        //btn.setOnClickListener(handlers.CategoryClick());
 
         Drawable top = ResourcesCompat.getDrawable(getResources(), R.drawable.likebutton, null);
         btn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, top, null, null);
@@ -155,49 +139,49 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
     private void addCategory(){
         LinearLayout ll = binding.innerLay;
 
-        for (int i=0;i<category.length;i++) {
-            android.widget.Button newCategory = createCategory(i, category[i], R.drawable.likebutton);
+        Call<List<CategoryRes>> categoryServiceCall = categoryService.getAll();
+        categoryServiceCall.enqueue(new Callback<List<CategoryRes>>() {
+            @Override
+            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
+                if (response.isSuccessful()){
+                    try {
+                        List<CategoryRes> category = response.body();
+                        int size = category.size();
+                        for (int i = 0; i < size; i++) {
+                            android.widget.Button newCategory = createCategory(category.get(i).getId(), category.get(i).getDescription(), R.drawable.likebutton);
 
-            LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            btnLayout.setMargins(5, 0, 5, 0);
+                            LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT);
+                            btnLayout.setMargins(5, 0, 5, 0);
 
-            ll.addView(newCategory, btnLayout);
-        }
-    }
-
-    public class AnonymousHomepageActivityClickHandler{
-        Context context;
-        public AnonymousHomepageActivityClickHandler(Context context){
-            this.context = context;
-        }
-
-        private ProgressDialog progressBar(){
-            ProgressDialog mProgress = new ProgressDialog(context);
-            mProgress.setTitle("Processing...");
-            mProgress.setMessage("Please wait...");
-            mProgress.setCancelable(false);
-            mProgress.setIndeterminate(true);
-            return mProgress;
-        }
-
-        public void LoginClick(View view){
-            ProgressDialog mProgress = progressBar();
-            mProgress.show();
-            Intent myIntent = new Intent(AnonymousHomepageActivity.this, LoginActivity.class);
-            startActivity(myIntent);
-            mProgress.dismiss();
-        }
-
-        public View.OnClickListener CategoryClick(){
-            return new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    int id = view.getId();
-                    Log.d("Debug", "Click id category " + Integer.toString(id));
+                            ll.addView(newCategory, btnLayout);
+                        }
+                    }
+                    catch (NullPointerException err){
+                        String message = "An error occurred please try again later ...";
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
                 }
-            };
+                else {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    public class ClickListener{
+        public void Click(PostRes post){
+            Intent myIntent = new Intent(AnonymousHomepageActivity.this, UserActivity.class);
+
+            startActivity(myIntent);
+            finish();
         }
     }
 }

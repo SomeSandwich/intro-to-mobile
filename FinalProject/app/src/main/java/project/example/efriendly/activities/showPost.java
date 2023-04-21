@@ -1,7 +1,6 @@
 package project.example.efriendly.activities;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,10 +22,8 @@ import android.widget.ViewSwitcher;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.List;
 
 import project.example.efriendly.R;
-import project.example.efriendly.adapter.NewfeelAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Post.PostRes;
@@ -40,7 +37,6 @@ import retrofit2.Response;
 
 public class showPost extends Fragment implements DatabaseConnection {
     ActivityShowPostBinding binding;
-    UserActivity main;
     Context context = null;
     UserService userService;
     PostRes post;
@@ -56,7 +52,6 @@ public class showPost extends Fragment implements DatabaseConnection {
         super.onCreate(savedInstanceState);
         try{
             context = getActivity();
-            main = (UserActivity) getActivity();
         }
         catch (IllegalStateException err){
             throw new IllegalStateException("MainActivity must implement callbacks");
@@ -95,10 +90,10 @@ public class showPost extends Fragment implements DatabaseConnection {
 
         Drawable drawable = new BitmapDrawable(getResources(), post.getImgBitmap().get(0));
         show.setImageDrawable(drawable);
-        show.setOnTouchListener(new OnSwipeTouchListener(main) {
+        show.setOnTouchListener(new OnSwipeTouchListener(context) {
             public void onSwipeRight() {
-                show.setInAnimation(main,R.anim.from_left);
-                show.setOutAnimation(main,R.anim.to_right);
+                show.setInAnimation(context,R.anim.from_left);
+                show.setOutAnimation(context,R.anim.to_right);
                 currentIndex++;
                 if(currentIndex == (post.getImgBitmap().size()))
                     currentIndex=0;
@@ -107,8 +102,8 @@ public class showPost extends Fragment implements DatabaseConnection {
                 show.setImageDrawable(drawable);
             }
             public void onSwipeLeft() {
-                show.setInAnimation(main,R.anim.from_right);
-                show.setOutAnimation(main,R.anim.to_left);
+                show.setInAnimation(context,R.anim.from_right);
+                show.setOutAnimation(context,R.anim.to_left);
                 --currentIndex;
                 if(currentIndex<0)
                     currentIndex=post.getImgBitmap().size() - 1;
@@ -146,10 +141,10 @@ public class showPost extends Fragment implements DatabaseConnection {
                     });
                     binding.prices.setText(String.valueOf(post.getPrice() + "VND"));
 
-                    if (post.getUser().getAvatarPath() == null) binding.sellerAvt.setImageResource(R.drawable.user);
+                    if (post.getUser().getAvatar() == null) binding.sellerAvt.setImageResource(R.drawable.user);
                     else{
                         try{
-                            InputStream newUrl = new URL(IMAGE_URL + post.getUser().getAvatarPath()).openStream();
+                            InputStream newUrl = new URL(IMAGE_URL + post.getUser().getAvatar()).openStream();
                             Bitmap image = BitmapFactory.decodeStream(newUrl);
                             binding.sellerAvt.post(new Runnable() {
                                 @Override
@@ -165,14 +160,14 @@ public class showPost extends Fragment implements DatabaseConnection {
                 }
                 else {
                     String message = "An error occurred please try again later ...";
-                    Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<UserRes> call, Throwable t) {
                 String message = t.getLocalizedMessage();
-                Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
             }
         });
 

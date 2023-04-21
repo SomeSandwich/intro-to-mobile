@@ -104,7 +104,7 @@ public class NewfeelAdapter extends  RecyclerView.Adapter<NewfeelPostHolder> imp
 
         try {
             holder.name.setText(post.getUser().getName());
-            if (post.getUser().getAvatarPath() != null) holder.avt.setImageBitmap(post.getUser().getAvtBitmap());
+            if (post.getUser().getAvatar() != null) holder.avt.setImageBitmap(post.getUser().getAvtBitmap());
             else holder.avt.setImageResource(R.drawable.user);
             holder.post.setVisibility(View.VISIBLE);
         }
@@ -116,9 +116,9 @@ public class NewfeelAdapter extends  RecyclerView.Adapter<NewfeelPostHolder> imp
                     if (response.isSuccessful()) {
                         UserRes user = response.body();
                         post.setUser(user);
-                        if (post.getUser().getAvatarPath() != null) {
+                        if (post.getUser().getAvatar() != null) {
                             try {
-                                InputStream newUrl = new URL(IMAGE_URL + post.getUser().getAvatarPath()).openStream();
+                                InputStream newUrl = new URL(IMAGE_URL + post.getUser().getAvatar()).openStream();
                                 Bitmap image = BitmapFactory.decodeStream(newUrl);
                                 holder.avt.post(new Runnable() {
                                     @Override

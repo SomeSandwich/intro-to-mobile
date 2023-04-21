@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         public RegisterActivityClickHandler(Context context) {this.context = context;}
 
         public void backClick(View view){
-            Intent myIntent = new Intent(RegisterActivity.this, AnonymousHomepageActivity.class);
+            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(myIntent);
         }
 

@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.userFragments.CreatePost;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.activities.userFragments.NewfeelActivity;
 import project.example.efriendly.activities.userFragments.NotificationsActivity;
@@ -27,6 +28,7 @@ public class UserActivity extends AppCompatActivity{
     navBarActivity navbar = new navBarActivity();
 
     NewfeelActivity newFeel = new NewfeelActivity();
+    CreatePost createPost = new CreatePost();
 
     NotificationsActivity notification = new NotificationsActivity();
     ActivityUserBinding binding;
@@ -58,10 +60,10 @@ public class UserActivity extends AppCompatActivity{
         setContentView(binding.getRoot());
 
         ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.userFragment, homepage).commit();
+        ft.replace(binding.userFragment.getId(), createPost).commit();
 
         ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navBarFragment, navbar).commit();
+        ft.replace(binding.navBarFragment.getId(), navbar).commit();
     }
 
     public void onMsgFromFragToMain(String sender, String strValue) {
@@ -79,6 +81,9 @@ public class UserActivity extends AppCompatActivity{
                 default:
                     break;
             }
+        }
+        else if (sender.equals("newFeel")){
+            if (strValue.equals("CreatePost")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, createPost).commit();
         }
     }
     public void onMsgFromFragToMain(PostRes post){

@@ -37,7 +37,12 @@
     <string name="size">Size</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="newpostHint">what\'s on your mind?</string>
+    <string name="newpostHint">Sell your old clothes to protect environment!!</string>
     <string name="detail"><b><font size="35">Detail</font></b></string>
     <string name="Like"><font color="#FFFFFF">Like</font></string>
+    <string name="CreatePost"><font color="#000000"><b>Create Post</b></font></string>
+    <string name="post">post</string>
+    <string name="PhotoView"><font color="#000000">Photo/View</font></string>
+    <string name="location"><font color="#000000">Location</font></string>
+    <string name="caption">Caption</string>
 </resources>
