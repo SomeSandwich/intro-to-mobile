@@ -21,7 +21,7 @@ public interface UserService {
     @GET("user/{id}")
     Call<UserRes> GetById(@Path("id") Integer id);
 
-    @GET
+    @GET("user/self")
     Call<UserRes> GetSelf();
 
     @GET("user/most-legit")

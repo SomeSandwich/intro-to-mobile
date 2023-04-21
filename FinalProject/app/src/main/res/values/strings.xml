@@ -42,7 +42,9 @@
     <string name="Like"><font color="#FFFFFF">Like</font></string>
     <string name="CreatePost"><font color="#000000"><b>Create Post</b></font></string>
     <string name="post">post</string>
-    <string name="PhotoView"><font color="#000000">Photo/View</font></string>
+    <string name="PhotoView"><font color="#000000">Photo/View (required)</font></string>
     <string name="location"><font color="#000000">Location</font></string>
-    <string name="caption">Caption</string>
+    <string name="caption">Caption(required)</string>
+    <string name="prices">Price(required)</string>
+    <string name="hintCategory"> Select category</string>
 </resources>
