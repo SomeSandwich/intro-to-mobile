@@ -11,8 +11,10 @@ public interface IConversationService
 {
     Task<ConversationRes?> GetAsync(int id);
     Task<IEnumerable<ConversationRes>> GetByUserIdAsync(int userId);
+    Task<IEnumerable<UserRes>> GetUserAsync(int selfId);
 
     Task<int> FindConversation(int userId1, int userId2);
+
     Task<int> AddAsync(CreateConvArg req);
 }
 
@@ -78,6 +80,19 @@ public class ConverstationService : IConversationService
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    public async Task<IEnumerable<UserRes>> GetUserAsync(int selfId)
+    {
+        var query = from part in _context.Participations
+            join part2 in _context.Participations
+                on part.ConversationId equals part2.ConversationId
+            where part.UserId == selfId && part2.UserId != selfId
+            select part2.User;
+
+        var users = await query.ToListAsync();
+
+        return _mapper.Map<List<User>, IEnumerable<UserRes>>(users);
     }
 
     public async Task<ConversationRes?> GetAsync(int id)
