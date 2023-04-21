@@ -10,17 +10,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c50d7788-963b-4fc8-bae4-c1e52125789d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/client/interceptor/SetTokenInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/client/interceptor/TokenAuthenticator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/constants/StorageHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Conversation/ConversationRes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Message/CreateMessageReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Message/MessageRes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Participation/ParticipationRes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/CartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/ChatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/ConversationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BE/API/Context/GenerateData/FakerGenerating.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../BE/API/Context/GenerateData/FakerGenerating.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BE/API/Migrations/20230415223856_InitDB_V2.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BE/API/Migrations/20230415223856_InitDB_V2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BE/API/Migrations/20230420023109_AddCreateAtToMesssage.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BE/API/Migrations/20230420023109_AddCreateAtToMesssage.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BE/API/Migrations/MobileDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/client/RetrofitClientGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/client/RetrofitClientGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Admin\.android\avd\Pixel_2_API_33.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/hieucckha/.android/avd/Pixel_4_API_28.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -29,8 +50,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -44,23 +65,27 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2NgxgrXDnVBvVCQICniJbVSuE44" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Android Studio/test/test&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "D:/Android Studio/test/test",
+    "memory.settings.postsync.last.time.stamp": "1682036212252",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="android.template.-1573087273">
       <recent name="project.example.efriendly" />

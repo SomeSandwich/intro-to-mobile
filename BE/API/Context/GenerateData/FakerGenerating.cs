@@ -18,6 +18,16 @@ public static class FakerGenerating
         new Category { Id = 5, Description = "Mũ", Icon = "icons/" }
     };
 
+    private static List<string> Avatars { get; set; } = new List<string>()
+    {
+        "D7aD6H8Cvc3SUU",
+        "F6eByvDeQ5MlVr",
+        "ha50CMvp9KlVrc",
+        "RzKj4nt5aX_tfe",
+        "UkmH7xfQ7o-3tY",
+        "yH_rHI5emLoaxj"
+    };
+
     private static int s_rateId = 1;
     public static List<Rate> Rates { get; set; } = new();
 
@@ -43,6 +53,7 @@ public static class FakerGenerating
                 Id = s_userId,
                 Name = (s_userId == 1) ? "Hiếu Nguyễn" : f.Name.FullName(),
                 Email = (s_userId == 1) ? "hieucckha@gmail.com" : f.Internet.Email(),
+                AvatarPath = f.PickRandom(Avatars),
                 PhoneNumber = f.Phone.PhoneNumber("##########"),
                 PasswordHash = "123".HashPassword(),
                 Address = f.Address.FullAddress()
@@ -108,6 +119,7 @@ public static class FakerGenerating
         {
             Id = s_rateId++,
             RatingAt = DateTime.Now,
+            Rating = f.Random.Number(1, 10),
             Comment = f.Lorem.Sentences(2, " "),
             UserId = ratingUserId,
             PostId = postId
