@@ -6,7 +6,7 @@
     <data>
         <variable
             name="clickHandler"
-            type="project.example.efriendly.adapter.PostAdapter.PostNewFeelClickHandler" />
+            type="project.example.efriendly.adapter.NewfeelAdapter.PostNewFeelClickHandler" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -91,7 +91,6 @@
                     android:src="@drawable/baseline_arrow_forward_ios_24"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"/>
-
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="15dp"

@@ -15,9 +15,6 @@ import project.example.efriendly.data.model.User.UserRes;
 @Getter
 public class PostRes {
     private int userId;
-
-    private Bitmap sellerAvt;
-
     private UserRes user;
     private Integer id;
     private Integer price;
@@ -73,7 +70,7 @@ public class PostRes {
 
     private int currentIndex = 0;
 
-    private Vector<Bitmap> imgBitmap;
+    private Vector<Bitmap> imgBitmap = new Vector<>();
 
     public int getCurrentIndex(){
         return currentIndex;
@@ -89,18 +86,6 @@ public class PostRes {
     }
     public void setUser(UserRes user) {
         this.user = user;
-    }
-
-    public Bitmap getSellerAvt() {
-        return sellerAvt;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public void setSellerAvt(Bitmap sellerAvt) {
-        this.sellerAvt = sellerAvt;
     }
 
     public void setId(Integer id) {

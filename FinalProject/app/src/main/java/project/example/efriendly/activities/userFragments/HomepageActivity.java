@@ -3,32 +3,24 @@ package project.example.efriendly.activities.userFragments;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-import lombok.NonNull;
 import project.example.efriendly.R;
 import project.example.efriendly.activities.UserActivity;
+import project.example.efriendly.adapter.HomepageAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Category.CategoryRes;
@@ -52,6 +44,8 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
 
     private PostService postService;
 
+    ClickListener listener = new ClickListener();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,121 +68,40 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         postService = RetrofitClientGenerator.getService(PostService.class);
 
         addCategory();
-        addItem();
+        addAdapter();
+
         return binding.getRoot();
     }
-    private LinearLayout createNewItem(String des, Bitmap img, String price){
-        LinearLayout result = new LinearLayout(context);
-
-        result.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1.0f));
-        result.setGravity(Gravity.FILL);
-        result.setOrientation(LinearLayout.VERTICAL);
-        result.setBackgroundResource(R.drawable.clothes_frame);
-
-        ImageView clothImg = new ImageView(context);
-
-        clothImg.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        clothImg.setPadding(10, 10, 10, 10);
-        clothImg.setImageBitmap(img);
-        clothImg.setMaxHeight(450);
-        clothImg.setMaxWidth(500);
-        clothImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        clothImg.setAdjustViewBounds(true);
-
-        clothImg.setBackgroundResource(R.drawable.clothes_frame);
-
-        TextView clothDes = new TextView(context);
-        clothDes.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        clothDes.setGravity(Gravity.CENTER);
-        clothDes.setText(des);
-
-        TextView prices = new TextView(context);
-        prices.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        prices.setGravity(Gravity.CENTER);
-        prices.setText(price);
-
-
-        result.addView(clothImg, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        result.addView(clothDes, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        result.addView(prices, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        return result;
-    }
-    private void addItem(){
-        TableLayout tl = binding.ItemList;
-
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(10);
+    private void addAdapter(){
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-                if(response.isSuccessful()) {
-                    List<PostRes> posts = response.body();
-                    TableRow tr = tr = new TableRow(context);
-                    for (int i=0;i<posts.size();i++){
-                        Vector<Bitmap> imgBitmap = new Vector<>();
-                        for (int j = 0; j < posts.get(i).getMediaPath().size(); j++) {
-                            try {
-                                URL newUrl = new URL(IMAGE_URL + posts.get(i).getMediaPath().get(j));
-                                URLConnection conn = newUrl.openConnection();
-                                Bitmap mIcon_val = BitmapFactory.decodeStream(conn.getInputStream());
-                                imgBitmap.add(mIcon_val);
-                            } catch (Exception err) {
-                                Log.d("Debug", err.getMessage());
-                            }
-                        }
-                        posts.get(i).setImgBitmap(imgBitmap);
 
-                        if (i % 2 == 0) tr = new TableRow(context);
+                if (response.isSuccessful()){
+                    List<PostRes> posts = new ArrayList<>();
+                    posts = response.body();
 
-                        tr.setLayoutParams(new TableRow.LayoutParams(
-                                TableRow.LayoutParams.MATCH_PARENT,
-                                TableRow.LayoutParams.WRAP_CONTENT));
-                        LinearLayout b = createNewItem(
-                                posts.get(i).getCaption(), posts.get(i).getImgBitmap().get(0), posts.get(i).getPrice().toString() + "VND");
-                        tr.addView(b);
-                        if (i%2==1)
-                            tl.addView(tr, new TableLayout.LayoutParams(
-                                    TableLayout.LayoutParams.MATCH_PARENT,
-                                    TableLayout.LayoutParams.WRAP_CONTENT));
-                    }
+                    HomepageAdapter adapter = new HomepageAdapter(posts, main, listener);
+                    binding.ListItems.setAdapter(adapter);
 
-                    if (posts.size() % 2 == 1) tl.addView(tr, new TableLayout.LayoutParams(
-                            TableLayout.LayoutParams.MATCH_PARENT,
-                            TableLayout.LayoutParams.WRAP_CONTENT));
+                    binding.ListItems.setLayoutManager(
+                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                 }
-                else{
+                else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(main, message, Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<List<PostRes>> call, Throwable t) {
-                String message = "An error occurred please try again later ...";
+                String message = t.getLocalizedMessage();
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
             }
         });
 
     }
+
     private android.widget.Button createCategory(int id, String name, Integer img ){
         android.widget.Button btn = new android.widget.Button(context);
 
@@ -261,6 +174,11 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                     Log.d("Debug", "Click id category " + Integer.toString(id));
                 }
             };
+        }
+    }
+    public class ClickListener{
+        public void Click(PostRes post){
+            main.onMsgFromFragToMain(post);
         }
     }
 }
