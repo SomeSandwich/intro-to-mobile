@@ -3,6 +3,7 @@ package project.example.efriendly.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,23 +71,25 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         public void signUp(View view){
-            if(TextUtils.isEmpty(binding.nameInput.getText().toString())
-                || TextUtils.isEmpty(binding.emailInput.getText().toString())
-                || TextUtils.isEmpty(binding.passInput.getText().toString())
-                || TextUtils.isEmpty(binding.passConfirmInput.getText().toString())
-                || TextUtils.isEmpty(binding.phone.getText().toString())
-                || TextUtils.isEmpty(binding.address.getText().toString()))
+            String name = binding.nameInput.getText().toString();
+            String email = binding.emailInput.getText().toString();
+            String password = binding.passInput.getText().toString();
+            String passwordConfirm = binding.passConfirmInput.getText().toString();
+            String phone = binding.phone.getText().toString();
+            String address = binding.address.getText().toString();
+
+            if(TextUtils.isEmpty(name)
+                || TextUtils.isEmpty(email)
+                || TextUtils.isEmpty(password)
+                || TextUtils.isEmpty(passwordConfirm)
+                || TextUtils.isEmpty(phone)
+                || TextUtils.isEmpty(address))
             {
                 String message = "All inputs required ..";
                 Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-
-            else if(!binding.passInput.getText().toString().equals(binding.passConfirmInput.getText().toString())) {
-                String message = "Passwords does not match ..";
-                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-
-            else {
+            } else if(!password.equals(passwordConfirm)) {
+                binding.passConfirmInput.setError("The Password Does Not Match");
+            } else {
                 CreateUserReq userReq = new CreateUserReq(binding.nameInput.getText().toString(),
                         binding.emailInput.getText().toString(),
                         binding.passInput.getText().toString(),

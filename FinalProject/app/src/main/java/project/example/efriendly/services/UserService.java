@@ -1,5 +1,6 @@
 package project.example.efriendly.services;
 
+import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.User.CreateUserReq;
 import project.example.efriendly.data.model.User.SellerRes;
 

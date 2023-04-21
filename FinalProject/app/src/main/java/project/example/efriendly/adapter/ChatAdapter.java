@@ -1,46 +1,71 @@
 package project.example.efriendly.adapter;
 
-import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import project.example.efriendly.databinding.CustomChatItemsBinding;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 
-public class ChatAdapter extends ArrayAdapter<String> {
-    private LayoutInflater inflater;
-    Context context;
-    Integer[] avatars;
-    String[] name;
-    String[] message;
+import java.util.ArrayList;
 
-    public ChatAdapter( Context context, int layoutToBeInflated, String[] name, String[] message, Integer[] avatars) {
-        super(context, layoutToBeInflated, name);
-        this.context = context;
-        this.name = name;
-        this.message = message;
-        this.avatars = avatars;
+import project.example.efriendly.R;
+import project.example.efriendly.activities.MessageActivity;
+import project.example.efriendly.activities.userFragments.ChatActivity;
+import project.example.efriendly.data.model.User.UserRes;
+
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.viewHolder> {
+    ChatActivity chatActivity;
+    ArrayList<UserRes> userArrayList;
+
+    public ChatAdapter(ChatActivity chatActivity, ArrayList<UserRes> usersArrayList) {
+        this.chatActivity = chatActivity;
+        this.userArrayList = usersArrayList;
+    }
+
+    @NonNull
+    @Override
+    public ChatAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(chatActivity).inflate(R.layout.custom_chat_items, parent, false);
+        return new viewHolder(view);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View result = convertView;
-        CustomChatItemsBinding binding;
+    public void onBindViewHolder(@NonNull ChatAdapter.viewHolder holder, int position) {
+        UserRes user = userArrayList.get(position);
 
-        if (result == null){
-            if (inflater == null)
-                inflater = (LayoutInflater) parent.getContext().getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            binding = CustomChatItemsBinding.inflate(inflater, parent, false);
-            result = binding.getRoot();
-            result.setTag(binding);
+        holder.name.setText(user.getName());
+        Picasso.get().load(user.getAvatar()).into(holder.avatar);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(chatActivity, MessageActivity.class);
+                intent.putExtra("id", user.getId());
+                intent.putExtra("name", user.getName());
+                intent.putExtra("avatar", user.getAvatar());
+                chatActivity.startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return userArrayList.size();
+    }
+
+    public class viewHolder extends RecyclerView.ViewHolder {
+        ImageView avatar;
+        TextView name;
+        public viewHolder(@NonNull View itemView) {
+            super(itemView);
+            avatar = itemView.findViewById(R.id.ivAvatar);
+            name = itemView.findViewById(R.id.txtName);
         }
-        else binding = (CustomChatItemsBinding) result.getTag();
-
-        binding.txtName.setText(name[position]);
-        binding.txtMessage.setText(message[position]);
-        binding.ivAvatar.setImageResource(avatars[position]);
-        return (result);
     }
 }

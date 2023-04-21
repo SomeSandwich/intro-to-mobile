@@ -7,17 +7,15 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="20dp">
 
             <ImageView
                 android:id="@+id/back_arrow"
@@ -35,36 +33,31 @@
                 android:text="@string/Chat"
                 android:textAlignment="center"
                 android:textColor="#BC6C25"
-                android:textSize="22sp"
-                android:layout_marginStart="-60dp"
-                tools:layout_editor_absoluteX="165dp"
-                tools:layout_editor_absoluteY="34dp" />
-        </LinearLayout>
+                android:textSize="22sp" />
+        </RelativeLayout>
 
         <SearchView
             android:id="@+id/SearchBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
+            android:layout_below="@id/layout"
             android:background="@drawable/search_bar_frame_2"
             android:labelFor="@id/SearchBar"
             android:inputType="textFilter"
             android:paddingHorizontal="10dp"
             />
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ListView
-                android:id="@+id/ChatList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/listview_border">
-            </ListView>
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_below="@id/SearchBar"
+            android:id="@+id/recyclerview"
+            android:background="@drawable/listview_border">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
 </layout>

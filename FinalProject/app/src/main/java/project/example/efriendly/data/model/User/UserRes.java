@@ -19,7 +19,7 @@ public class UserRes {
 
     private String phoneNumber;
 
-    private String AvatarPath;
+    private String avatar;
 
     private Double legit;
 
@@ -27,10 +27,18 @@ public class UserRes {
 
     private UserStatus status;
 
+    public UserRes(Integer id, String name, String avatar) {
+        this.id = id;
+        this.name = name;
+        this.avatar = avatar;
+    }
     private Bitmap avtBitmap;
 
     public Integer getId() {
         return id;
+    }
+    public String getAvatar() {
+        return avatar;
     }
 
     public String getName() {
@@ -43,10 +51,6 @@ public class UserRes {
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public String getAvatarPath() {
-        return AvatarPath;
     }
 
     public Double getLegit() {

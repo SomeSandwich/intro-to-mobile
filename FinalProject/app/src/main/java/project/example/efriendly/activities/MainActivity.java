@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
         Intent myIntent = new Intent(MainActivity.this, UserActivity.class);
+
         startActivity(myIntent);
         finish();
     }

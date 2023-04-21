@@ -10,23 +10,28 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.util.Base64;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.userFragments.ChatActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
+import project.example.efriendly.constants.DatabaseConnection;
+import project.example.efriendly.constants.StorageHelper;
 import project.example.efriendly.data.model.Auth.LoginReq;
 import project.example.efriendly.data.model.Auth.LoginRes;
 import project.example.efriendly.databinding.ActivityLoginBinding;
 import project.example.efriendly.services.AuthService;
-import project.example.efriendly.services.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,8 +81,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         public void login(View view){
-            if(TextUtils.isEmpty(binding.emailInput.getText().toString())
-                    || TextUtils.isEmpty(binding.passInput.getText().toString()))
+            String email = binding.emailInput.getText().toString();
+            String password = binding.passInput.getText().toString();
+
+            if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password))
             {
                 String message = "All inputs required ..";
                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
@@ -90,6 +97,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private static String decode(String encodedString) {
+        return new String(Base64.getUrlDecoder().decode(encodedString));
+    }
+
     public void loginUser(LoginReq loginReq) {
         authService = RetrofitClientGenerator.getService(AuthService.class);
         Call<LoginRes> loginResCall = authService.Login(loginReq);
@@ -98,6 +109,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginRes> call, Response<LoginRes> response) {
                 if (response.isSuccessful()) {
                     LoginRes loginRes = response.body();
+                    
+                    StorageHelper.Token = loginRes.getToken();
+                    
                     startActivity(new Intent(LoginActivity.this, ChatActivity.class).putExtra("data", loginRes));
                     finish();
                 } else {
