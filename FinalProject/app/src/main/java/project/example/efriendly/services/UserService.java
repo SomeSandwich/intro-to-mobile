@@ -21,6 +21,9 @@ public interface UserService {
     @GET("user/{id}")
     Call<UserRes> GetById(@Path("id") Integer id);
 
+    @GET
+    Call<UserRes> GetSelf();
+
     @GET("user/most-legit")
     Call<List<SellerRes>> GetMostLegit(@Query("number") Integer number);
 
