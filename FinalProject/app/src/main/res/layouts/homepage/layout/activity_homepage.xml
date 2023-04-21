@@ -38,7 +38,9 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
                 android:id="@+id/ListItems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

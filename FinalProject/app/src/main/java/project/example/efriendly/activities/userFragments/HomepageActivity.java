@@ -3,35 +3,24 @@ package project.example.efriendly.activities.userFragments;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-import lombok.NonNull;
 import project.example.efriendly.R;
 import project.example.efriendly.activities.UserActivity;
-import project.example.efriendly.adapter.HomepageItemAdapter;
+import project.example.efriendly.adapter.HomepageAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Category.CategoryRes;
@@ -39,7 +28,6 @@ import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.ActivityHomepageBinding;
 import project.example.efriendly.services.CategoryService;
 import project.example.efriendly.services.PostService;
-import project.example.efriendly.ultilities.HomepageItemList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,6 +43,8 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
     private CategoryService categoryService;
 
     private PostService postService;
+
+    ClickListener listener = new ClickListener();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,19 +82,11 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
-                    List<HomepageItemList> postListView = new ArrayList<>();
-
-                    for (int i = 0;i<posts.size();i+=2){
-                        HomepageItemList pairPost = new HomepageItemList();
-                        try{
-                            pairPost.setLeftItem(posts.get(i));
-                            pairPost.setRightItem(posts.get(i+1));
-                        }
-                        catch (IndexOutOfBoundsException err) {Log.d("debug", err.getLocalizedMessage());}
-                        postListView.add(pairPost);
-                    }
-                    HomepageItemAdapter adapter = new HomepageItemAdapter(main, postListView);
+                    HomepageAdapter adapter = new HomepageAdapter(posts, main, listener);
                     binding.ListItems.setAdapter(adapter);
+
+                    binding.ListItems.setLayoutManager(
+                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                 }
                 else {
                     String message = "An error occurred please try again later ...";
@@ -192,6 +174,11 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                     Log.d("Debug", "Click id category " + Integer.toString(id));
                 }
             };
+        }
+    }
+    public class ClickListener{
+        public void Click(PostRes post){
+            main.onMsgFromFragToMain(post);
         }
     }
 }

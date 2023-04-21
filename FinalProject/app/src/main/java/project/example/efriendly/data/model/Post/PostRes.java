@@ -70,7 +70,7 @@ public class PostRes {
 
     private int currentIndex = 0;
 
-    private Vector<Bitmap> imgBitmap;
+    private Vector<Bitmap> imgBitmap = new Vector<>();
 
     public int getCurrentIndex(){
         return currentIndex;

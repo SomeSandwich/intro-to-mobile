@@ -1,37 +1,26 @@
 package project.example.efriendly.activities.userFragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import project.example.efriendly.R;
-import project.example.efriendly.activities.LoginActivity;
 import project.example.efriendly.activities.UserActivity;
-import project.example.efriendly.adapter.PostAdapter;
+import project.example.efriendly.adapter.NewfeelAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
-import project.example.efriendly.data.model.Auth.LoginRes;
 import project.example.efriendly.data.model.Post.PostRes;
-import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.FragmentNewfeelActivityBinding;
 import project.example.efriendly.services.PostService;
 import project.example.efriendly.services.UserService;
@@ -45,8 +34,8 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
     Context context = null;
     private UserService userService;
     FragmentNewfeelActivityBinding binding;
-
     PostService postService;
+    ClickListener listener;
 
     public NewfeelActivity() {}
 
@@ -56,12 +45,12 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
         try{
             context = getActivity();
             main = (UserActivity) getActivity();
+            listener = new ClickListener();
         }
         catch (IllegalStateException err){
             throw new IllegalStateException("MainActivity must implement callbacks");
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentNewfeelActivityBinding.inflate(inflater, container,false);
@@ -71,47 +60,44 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
         postService = RetrofitClientGenerator.getService(PostService.class);
         userService = RetrofitClientGenerator.getService(UserService.class);
 
-        Call<List<PostRes>> postsCallback = postService.GetNewest(10);
-        Thread get = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                postsCallback.enqueue(new Callback<List<PostRes>>() {
-                    @Override
-                    public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-                        if (response.isSuccessful()) {
-                            List<PostRes> posts = response.body();
-                            binding.processBar.setVisibility(View.INVISIBLE);
+        binding.processBar.setVisibility(View.VISIBLE);
 
-                            PostAdapter postAdapter = new PostAdapter(main, posts, userService);
-                            binding.newfeelPost.setAdapter(postAdapter);
-                        }
-                        else {
-                            String message = "An error occurred please try again later ...";
-                            Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<List<PostRes>> call, Throwable t) {
-                        String message = t.getLocalizedMessage();
-                        Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
+        addPost();
 
-        Thread set = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                binding.processBar.setVisibility(View.VISIBLE);
-            }
-        });
-        ExecutorService pool = Executors.newFixedThreadPool(2);
-        try {
-            pool.submit(get).get();
-            pool.submit(set).get();
-        } catch (Exception e) {Log.d("Get name", e.getMessage());}
+        binding.processBar.setVisibility(View.INVISIBLE);
 
-        pool.shutdown();
+
         return binding.getRoot();
+    }
+    void addPost(){
+        Call<List<PostRes>> postsCallback = postService.GetNewest(10);
+        postsCallback.enqueue(new Callback<List<PostRes>>() {
+            @Override
+            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
+                if (response.isSuccessful()) {
+                    List<PostRes> posts = response.body();
+                    NewfeelAdapter adapter = new NewfeelAdapter(posts, main, listener);
+                    binding.newfeelPost.setAdapter(adapter);
+                    binding.newfeelPost.setLayoutManager(new LinearLayoutManager(main));
+
+                    binding.processBar.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<PostRes>> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public class ClickListener{
+        public void click(PostRes postRes){
+            main.onMsgFromFragToMain(postRes);
+        };
     }
 }
