@@ -95,6 +95,12 @@ public class CreatePost extends Fragment implements DatabaseConnection {
 
         categoryService = RetrofitClientGenerator.getService(CategoryService.class);
 
+        addInfo();
+
+        return binding.getRoot();
+    }
+
+    void addInfo(){
         Call<UserRes> userResCall = userService.GetSelf();
         userResCall.enqueue(new Callback<UserRes>() {
             @Override
@@ -163,9 +169,6 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
             }
         });
-
-
-        return binding.getRoot();
     }
 
     public class CreatePostClickHandler{
