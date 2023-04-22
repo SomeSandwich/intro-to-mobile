@@ -21,7 +21,10 @@ public class CreatePostReq {
 
     private String description;
 
-    public CreatePostReq(@NotNull Integer categoryId, @NotNull Integer price, @NotNull String caption, String description) {
+    private List<MultipartBody.Part> mediaFiles;
+
+    public CreatePostReq(@NotNull Integer categoryId, @NotNull Integer price, @NotNull String caption, String description, List<MultipartBody.Part> mediaPart) {
+        this.mediaFiles = mediaPart;
         this.categoryId = categoryId;
         this.price = price;
         this.caption = caption;

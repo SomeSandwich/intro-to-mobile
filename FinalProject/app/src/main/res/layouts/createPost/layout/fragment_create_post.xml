@@ -10,9 +10,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/createPostLayout"
             app:layout_constraintTop_toTopOf="parent"
@@ -155,7 +152,6 @@
                     android:layout_marginHorizontal="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-                +
                 <Button
                     android:onClick="@{clickHandler::addImageClick}"
                     android:layout_marginTop="15dp"
@@ -174,7 +170,6 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
-        </ScrollView>
         <ProgressBar
             android:visibility="invisible"
             app:layout_constraintTop_toTopOf="parent"

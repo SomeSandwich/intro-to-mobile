@@ -201,14 +201,14 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                         categoryID,
                         Integer.parseInt(binding.prices.getText().toString()),
                         binding.caption.getText().toString(),
-                        binding.des.getText().toString());
+                        binding.des.getText().toString(), sendList);
                 System.out.println(categoryID + "\n" +
                         Integer.parseInt(binding.prices.getText().toString()) + "\n" +
                         binding.caption.getText().toString() + "\n" +
                         binding.des.getText().toString() + "\n" +
                         sendList.size());
                 postService = RetrofitClientGenerator.getService(PostService.class);
-                Call<String> postCall = postService.Create(req, sendList);
+                Call<String> postCall = postService.Create(req);
                 postCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

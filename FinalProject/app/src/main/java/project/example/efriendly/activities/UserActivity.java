@@ -60,7 +60,7 @@ public class UserActivity extends AppCompatActivity{
         setContentView(binding.getRoot());
 
         ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(binding.userFragment.getId(), createPost).commit();
+        ft.replace(binding.userFragment.getId(), homepage).commit();
 
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(binding.navBarFragment.getId(), navbar).commit();

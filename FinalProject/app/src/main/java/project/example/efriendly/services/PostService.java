@@ -38,7 +38,7 @@ public interface PostService {
     @Multipart
     @POST("post")
     @FormUrlEncoded
-    Call<String> Create(@Part CreatePostReq request, @Part List<MultipartBody.Part> image);
+    Call<String> Create(@Part CreatePostReq request);
 
     @POST("post/{postId}/share-by/{userId}")
     Call<String> AddShareBy(@Path("postId") Integer postId, @Path("userId") Integer userId);
