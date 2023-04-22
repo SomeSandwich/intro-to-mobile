@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.userFragments.SearchBarCartChatActivity">
     <data>
-
+        <variable
+            name="clickHandler"
+            type="project.example.efriendly.activities.userFragments.SearchBarCartChatActivity.SearchBarClickHandler" />
     </data>
     <RelativeLayout
         android:background="@color/white"
@@ -33,6 +35,7 @@
             android:background="@color/white"
             app:srcCompat="@drawable/cart_icon" />
         <ImageButton
+            android:onClick="@{clickHandler::chatClick}"
             android:id="@+id/chatPic"
             android:layout_marginTop="30dp"
             android:layout_marginStart="20dp"

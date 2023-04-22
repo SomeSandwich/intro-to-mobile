@@ -67,9 +67,12 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         ft.replace(R.id.searchBarFragment, searchbar).commit();
         categoryService = RetrofitClientGenerator.getService(CategoryService.class);
         postService = RetrofitClientGenerator.getService(PostService.class);
+        binding.processBar.setVisibility(View.VISIBLE);
 
         addCategory();
         addAdapter();
+
+        binding.processBar.setVisibility(View.INVISIBLE);
 
         return binding.getRoot();
     }
