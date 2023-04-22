@@ -55,7 +55,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
             float x = ev.getRawX() + view.getLeft() - scrcoords[0];
             float y = ev.getRawY() + view.getTop() - scrcoords[1];
             if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
-                ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+                ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -66,7 +66,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Hide Title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
         binding = ActivityAnonymousHomepageBinding.inflate(getLayoutInflater());
@@ -76,7 +76,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         categoryService = RetrofitClientGenerator.getService(CategoryService.class);
         postService = RetrofitClientGenerator.getService(PostService.class);
 
-        ft=getSupportFragmentManager().beginTransaction();
+        ft = getSupportFragmentManager().beginTransaction();
         ft.replace(binding.searchBarFragment.getId(), searchBar).commit();
 
         addCategory();
@@ -86,13 +86,13 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
 
     }
 
-    private void addAdapter(){
+    private void addAdapter() {
         Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
@@ -101,12 +101,12 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
 
                     binding.ListItems.setLayoutManager(
                             new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-                }
-                else {
+                } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<PostRes>> call, Throwable t) {
                 String message = t.getLocalizedMessage();
@@ -116,7 +116,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
 
     }
 
-    private android.widget.Button createCategory(int id, String name, Integer img ){
+    private android.widget.Button createCategory(int id, String name, Integer img) {
         Context context = getApplicationContext();
         android.widget.Button btn = new android.widget.Button(context);
 
@@ -131,19 +131,20 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         Drawable top = ResourcesCompat.getDrawable(getResources(), R.drawable.likebutton, null);
         btn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, top, null, null);
 
-        btn.setPadding(0, 30, 0,0);
+        btn.setPadding(0, 30, 0, 0);
         btn.setBackgroundResource(R.drawable.category_frame);
         btn.setText(name);
         return btn;
     }
-    private void addCategory(){
+
+    private void addCategory() {
         LinearLayout ll = binding.innerLay;
 
         Call<List<CategoryRes>> categoryServiceCall = categoryService.getAll();
         categoryServiceCall.enqueue(new Callback<List<CategoryRes>>() {
             @Override
             public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         List<CategoryRes> category = response.body();
                         int size = category.size();
@@ -157,13 +158,11 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
 
                             ll.addView(newCategory, btnLayout);
                         }
-                    }
-                    catch (NullPointerException err){
+                    } catch (NullPointerException err) {
                         String message = "An error occurred please try again later ...";
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
-                }
-                else {
+                } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
@@ -176,12 +175,9 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
             }
         });
     }
-    public class ClickListener{
-        public void Click(PostRes post){
-            Intent myIntent = new Intent(AnonymousHomepageActivity.this, UserActivity.class);
 
-            startActivity(myIntent);
-            finish();
+    public class ClickListener {
+        public void Click(PostRes post) {
         }
     }
 }

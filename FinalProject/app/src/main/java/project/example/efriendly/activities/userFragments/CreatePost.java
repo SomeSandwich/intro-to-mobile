@@ -67,18 +67,17 @@ public class CreatePost extends Fragment implements DatabaseConnection {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try{
+        try {
             context = getActivity();
             main = (UserActivity) getActivity();
-        }
-        catch (IllegalStateException err){
+        } catch (IllegalStateException err) {
             throw new IllegalStateException("MainActivity must implement callbacks");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentCreatePostBinding.inflate(inflater, container,false);
+        binding = FragmentCreatePostBinding.inflate(inflater, container, false);
         PostService postService = RetrofitClientGenerator.getService(PostService.class);
         clickHandler = new CreatePostClickHandler(context);
         binding.setClickHandler(clickHandler);
@@ -100,16 +99,16 @@ public class CreatePost extends Fragment implements DatabaseConnection {
         return binding.getRoot();
     }
 
-    void addInfo(){
+    void addInfo() {
         Call<UserRes> userResCall = userService.GetSelf();
         userResCall.enqueue(new Callback<UserRes>() {
             @Override
             public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     UserRes user = response.body();
                     binding.userName.setText(user.getName());
-                    if (user.getAvatar() != null){
-                        try{
+                    if (user.getAvatar() != null) {
+                        try {
                             InputStream newUrl = new URL(IMAGE_URL + user.getAvatar()).openStream();
                             Bitmap image = BitmapFactory.decodeStream(newUrl);
                             binding.userAvt.post(new Runnable() {
@@ -119,29 +118,26 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                                     user.setAvtBitmap(image);
                                 }
                             });
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             Log.d("Debug", e.getMessage());
                         }
-                    }
-                    else binding.userAvt.setImageResource(R.drawable.user);
+                    } else binding.userAvt.setImageResource(R.drawable.user);
 
                     Call<List<CategoryRes>> categoryServiceAll = categoryService.getAll();
                     categoryServiceAll.enqueue(new Callback<List<CategoryRes>>() {
                         @Override
                         public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
-                            if (response.isSuccessful()){
+                            if (response.isSuccessful()) {
                                 categoryList = response.body();
                                 String[] categoriesName = new String[categoryList.size()];
-                                for (int i=0;i<categoryList.size();i++){
+                                for (int i = 0; i < categoryList.size(); i++) {
                                     categoriesName[i] = categoryList.get(i).getDescription();
                                 }
-                                ArrayAdapter adapter = new ArrayAdapter<String>(main,R.layout.category_item,categoriesName);
+                                ArrayAdapter adapter = new ArrayAdapter<String>(main, R.layout.category_item, categoriesName);
                                 adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
                                 binding.CategoryBar.setAdapter(adapter);
 
-                            }
-                            else {
+                            } else {
                                 String message = "An error occurred please try again later ...";
                                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
                             }
@@ -156,8 +152,7 @@ public class CreatePost extends Fragment implements DatabaseConnection {
 
                     binding.processBar.setVisibility(View.INVISIBLE);
                     binding.createPostLayout.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(main, message, Toast.LENGTH_LONG).show();
                 }
@@ -171,51 +166,64 @@ public class CreatePost extends Fragment implements DatabaseConnection {
         });
     }
 
-    public class CreatePostClickHandler{
+    public class CreatePostClickHandler {
         Context context;
-        public CreatePostClickHandler(Context context){
+
+        public CreatePostClickHandler(Context context) {
             this.context = context;
         }
-        public void addImageClick(View view){
+
+        public void addImageClick(View view) {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, 3);
         }
-        public void closeClick(View view){
+
+        public void closeClick(View view) {
             main.onMsgFromFragToMain("createPost", "close");
         }
-        public void postClick(View view){
-            if (binding.caption.getText().toString().matches("")){
+
+        public void postClick(View view) {
+            if (binding.caption.getText().toString().matches("")) {
                 String message = "Can't post without caption";
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-            }
-            else if (sendList.size() == 0){
+            } else if (sendList.size() == 0) {
                 String message = "Can't post without image";
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
+
                 String categoryName = binding.CategoryBar.getSelectedItem().toString();
+
                 Integer categoryID = 0;
-                for (int i = 0; i < categoryList.size();i++)
-                    if (categoryName.equals(categoryList.get(i).getDescription())) categoryID = categoryList.get(i).getId();
-                CreatePostReq req = new CreatePostReq(
-                        categoryID,
-                        Integer.parseInt(binding.prices.getText().toString()),
-                        binding.caption.getText().toString(),
-                        binding.des.getText().toString(), sendList);
-                System.out.println(categoryID + "\n" +
-                        Integer.parseInt(binding.prices.getText().toString()) + "\n" +
-                        binding.caption.getText().toString() + "\n" +
-                        binding.des.getText().toString() + "\n" +
-                        sendList.size());
+
+                for (int i = 0; i < categoryList.size(); i++)
+                    if (categoryName.equals(categoryList.get(i).getDescription()))
+                        categoryID = categoryList.get(i).getId();
+//                CreatePostReq req = new CreatePostReq(
+//                        categoryID,
+//                        Integer.parseInt(binding.prices.getText().toString()),
+//                        binding.caption.getText().toString(),
+//                        binding.des.getText().toString(), sendList);
+
+//                System.out.println(categoryID + "\n" +
+//                        Integer.parseInt(binding.prices.getText().toString()) + "\n" +
+//                        binding.caption.getText().toString() + "\n" +
+//                        binding.des.getText().toString() + "\n" +
+//                        sendList.size());
+
                 postService = RetrofitClientGenerator.getService(PostService.class);
-                Call<String> postCall = postService.Create(req);
+                Call<String> postCall = postService.Create(
+                        RequestBody.create(MediaType.parse("multipart/form-data"), categoryID.toString()),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), binding.prices.getText().toString()),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), binding.caption.getText().toString()),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), binding.des.getText().toString()),
+                        sendList);
                 postCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             Toast.makeText(main, response.body(), Toast.LENGTH_SHORT).show();
-                        }
-                        else Toast.makeText(main, "An error occurred please try again later ...", Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(main, "An error occurred please try again later ...", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -227,13 +235,14 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             }
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && data != null){
+        if (resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
             imgsList.add(selectedImage);
-            adapter.notifyItemInserted(imgsList.size()-1);
+            adapter.notifyItemInserted(imgsList.size() - 1);
 
             File file = new File(selectedImage.getPath());
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
