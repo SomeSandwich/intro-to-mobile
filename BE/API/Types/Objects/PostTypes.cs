@@ -16,7 +16,7 @@ public class CreatePostReq
 
     public string? Description { get; set; }
 
-    public IFormFileCollection MediaFiles { get; set; }
+    public IFormFileCollection? MediaFiles { get; set; }
 }
 
 public class UpdatePostReq
