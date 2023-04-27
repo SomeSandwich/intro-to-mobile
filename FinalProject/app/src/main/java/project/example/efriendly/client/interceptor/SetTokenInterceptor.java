@@ -16,6 +16,8 @@ public class SetTokenInterceptor implements Interceptor {
 
         String token = StorageHelper.Token;
 
+        System.out.println("DebugToken: " + token);
+
         if (token != null) {
             Request newRequest = chain.request().newBuilder()
                     .addHeader("Authorization", "Bearer " + StorageHelper.Token)

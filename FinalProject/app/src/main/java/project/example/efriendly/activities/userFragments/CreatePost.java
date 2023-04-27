@@ -1,15 +1,23 @@
 package project.example.efriendly.activities.userFragments;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
+import static androidx.core.content.PermissionChecker.checkSelfPermission;
+
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -34,6 +42,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import project.example.efriendly.R;
 import project.example.efriendly.activities.LoginActivity;
+import project.example.efriendly.activities.MainActivity;
 import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.adapter.CreatePostAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
@@ -46,19 +55,25 @@ import project.example.efriendly.databinding.FragmentNewfeelActivityBinding;
 import project.example.efriendly.services.CategoryService;
 import project.example.efriendly.services.PostService;
 import project.example.efriendly.services.UserService;
+import project.example.efriendly.ultilities.RealPathUtil;
 import project.example.efriendly.ultilities.SpacingItemDecorator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CreatePost extends Fragment implements DatabaseConnection {
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
     UserActivity main;
     CreatePostAdapter adapter;
     Context context = null;
     FragmentCreatePostBinding binding;
     CreatePostClickHandler clickHandler;
     List<Uri> imgsList = new ArrayList<>();
-    List<MultipartBody.Part> sendList = new ArrayList<>();
+    List<File> sendList = new ArrayList<>();
     List<CategoryRes> categoryList = new ArrayList<>();
     UserService userService;
     PostService postService;
@@ -66,10 +81,22 @@ public class CreatePost extends Fragment implements DatabaseConnection {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         try {
             context = getActivity();
             main = (UserActivity) getActivity();
+            // Check if we have write permission
+            int permission = ActivityCompat.checkSelfPermission(main, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                        main,
+                        PERMISSIONS_STORAGE,
+                        REQUEST_EXTERNAL_STORAGE
+                );
+            }
         } catch (IllegalStateException err) {
             throw new IllegalStateException("MainActivity must implement callbacks");
         }
@@ -198,25 +225,16 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                 for (int i = 0; i < categoryList.size(); i++)
                     if (categoryName.equals(categoryList.get(i).getDescription()))
                         categoryID = categoryList.get(i).getId();
-//                CreatePostReq req = new CreatePostReq(
-//                        categoryID,
-//                        Integer.parseInt(binding.prices.getText().toString()),
-//                        binding.caption.getText().toString(),
-//                        binding.des.getText().toString(), sendList);
-
-//                System.out.println(categoryID + "\n" +
-//                        Integer.parseInt(binding.prices.getText().toString()) + "\n" +
-//                        binding.caption.getText().toString() + "\n" +
-//                        binding.des.getText().toString() + "\n" +
-//                        sendList.size());
 
                 postService = RetrofitClientGenerator.getService(PostService.class);
+                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), sendList.get(0));
+                MultipartBody.Part body = MultipartBody.Part.createFormData("image", sendList.get(0).getName(), requestFile);
+
                 Call<String> postCall = postService.Create(
                         RequestBody.create(MediaType.parse("multipart/form-data"), categoryID.toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.prices.getText().toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.caption.getText().toString()),
-                        RequestBody.create(MediaType.parse("multipart/form-data"), binding.des.getText().toString()),
-                        sendList);
+                        RequestBody.create(MediaType.parse("multipart/form-data"), binding.des.getText().toString()));
                 postCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -228,6 +246,7 @@ public class CreatePost extends Fragment implements DatabaseConnection {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        Log.d("Debug", t.getLocalizedMessage());
                         Toast.makeText(main, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
@@ -235,6 +254,7 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             }
         }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -244,10 +264,9 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             imgsList.add(selectedImage);
             adapter.notifyItemInserted(imgsList.size() - 1);
 
-            File file = new File(selectedImage.getPath());
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-            sendList.add(body);
+            File file = new File(RealPathUtil.getRealPath(context, selectedImage));
+
+            sendList.add(file);
         }
     }
 }
