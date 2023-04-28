@@ -141,6 +141,7 @@ public class PostController : ControllerBase
             {
                 opt.AfterMap((src, des) =>
                 {
+                    des.UserId = userId;
                     des.MediaPath = keysSuccess.ToArray();
                     des.CreatedDate = now;
                     des.UpdatedDate = now;
