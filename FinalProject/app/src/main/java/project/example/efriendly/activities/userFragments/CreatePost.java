@@ -34,6 +34,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -228,20 +229,23 @@ public class CreatePost extends Fragment implements DatabaseConnection {
 
                 postService = RetrofitClientGenerator.getService(PostService.class);
                 RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), sendList.get(0));
-                MultipartBody.Part body = MultipartBody.Part.createFormData("image", sendList.get(0).getName(), requestFile);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("MediaFiles", sendList.get(0).getName(), requestFile);
 
                 Call<String> postCall = postService.Create(
                         RequestBody.create(MediaType.parse("multipart/form-data"), categoryID.toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.prices.getText().toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.caption.getText().toString()),
-                        RequestBody.create(MediaType.parse("multipart/form-data"), binding.des.getText().toString()));
+                        RequestBody.create(MediaType.parse("multipart/form-data"), binding.des.getText().toString()),
+                        body);
                 postCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(main, response.body(), Toast.LENGTH_SHORT).show();
-                        } else
+                        } else {
                             Toast.makeText(main, "An error occurred please try again later ...", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                     @Override
