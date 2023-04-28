@@ -24,15 +24,15 @@ public class Post
 
     public DateTime UpdatedDate { get; set; }
 
-    public bool IsSold { get; set; } = false;
+    public bool IsSold { get; set; }
 
-    public bool IsHide { get; set; } = false;
+    public bool IsHide { get; set; }
 
-    public bool IsDeleted { get; set; } = false;
+    public bool IsDeleted { get; set; }
 
     public Rate Rate { get; set; }
 
-    public List<int> UserShare { get; set; }
+    public List<int> UserShare { get; set; } = new();
 
     public virtual ICollection<Report> Reports { get; set; }
 
