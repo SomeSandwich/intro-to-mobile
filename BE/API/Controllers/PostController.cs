@@ -92,6 +92,14 @@ public class PostController : ControllerBase
             return Unauthorized();
         }
 
+        Console.WriteLine(request.UserId);
+        Console.WriteLine(request.CategoryId);
+        Console.WriteLine(request.Price);
+        Console.WriteLine(request.Caption);
+        Console.WriteLine(request.Description);
+        Console.WriteLine(request.MediaFiles?.Count);
+
+
         // Todo: Check file if upload if failed
         var keysSuccess = new List<string>();
         var listFileFail = new List<string>();
