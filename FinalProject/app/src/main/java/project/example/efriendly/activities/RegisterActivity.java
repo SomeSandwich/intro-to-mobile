@@ -99,6 +99,11 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser(userReq);
             }
         }
+
+        public void login(View view){
+            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+        }
     }
 
     public void registerUser(CreateUserReq userReq) {

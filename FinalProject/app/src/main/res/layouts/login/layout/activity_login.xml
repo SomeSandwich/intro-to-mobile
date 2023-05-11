@@ -112,9 +112,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:textAlignment="center"
+                android:onClick="@{clickHandler::register}"
                 android:text="@string/dontHaveAccount"
-                android:onClick="@{clickHandler::register}"/>
+                android:textSize="16sp"
+                android:textAlignment="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,6 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
+                    android:textSize="15sp"
                     android:text="Or Login With" />
 
                 <View

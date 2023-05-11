@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
-                    android:text="Hi,\nPlease Login"
+                    android:text="Create\nAccount"
                     android:layout_marginStart="32dp"
                     android:textSize="30sp"
                     android:textStyle="bold"
@@ -202,9 +202,11 @@
 
                 <TextView
                     android:id="@+id/haveAccount"
+                    android:onClick="@{clickHandler::login}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    android:textSize="16sp"
                     android:text="@string/haveAccount"
                     android:textAlignment="center" />
 
@@ -224,5 +226,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 </layout>
