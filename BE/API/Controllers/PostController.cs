@@ -83,7 +83,7 @@ public class PostController : ControllerBase
         if (identity is null)
             return Unauthorized();
 
-        var selfIdStr = identity.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Name)?.Value;
+        var selfIdStr = identity.Claims.FirstOrDefault(e => e.Type == ClaimTypes.NameIdentifier)?.Value;
         if (selfIdStr is null)
             return Unauthorized();
 
@@ -92,7 +92,13 @@ public class PostController : ControllerBase
             return Unauthorized();
         }
 
-        request.UserId = userId;
+        Console.WriteLine(request.UserId);
+        Console.WriteLine(request.CategoryId);
+        Console.WriteLine(request.Price);
+        Console.WriteLine(request.Caption);
+        Console.WriteLine(request.Description);
+        Console.WriteLine(request.MediaFiles?.Count);
+
 
         // Todo: Check file if upload if failed
         var keysSuccess = new List<string>();
@@ -135,6 +141,7 @@ public class PostController : ControllerBase
             {
                 opt.AfterMap((src, des) =>
                 {
+                    des.UserId = userId;
                     des.MediaPath = keysSuccess.ToArray();
                     des.CreatedDate = now;
                     des.UpdatedDate = now;
@@ -188,7 +195,7 @@ public class PostController : ControllerBase
         if (identity is null)
             return Unauthorized();
 
-        var selfIdStr = identity.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Name)?.Value;
+        var selfIdStr = identity.Claims.FirstOrDefault(e => e.Type == ClaimTypes.NameIdentifier)?.Value;
         if (selfIdStr is null)
             return Unauthorized();
 

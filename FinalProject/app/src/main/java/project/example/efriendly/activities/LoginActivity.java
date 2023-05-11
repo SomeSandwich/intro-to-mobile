@@ -25,6 +25,7 @@ import java.util.Base64;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.userFragments.ChatActivity;
+import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.constants.StorageHelper;
@@ -89,8 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 String message = "All inputs required ..";
                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
             } else {
-                LoginReq loginReq = new LoginReq(binding.emailInput.getText().toString(),
-                        binding.passInput.getText().toString());
+                LoginReq loginReq = new LoginReq(binding.emailInput.getText().toString(), binding.passInput.getText().toString());
 
                 loginUser(loginReq);
             }
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                     
                     StorageHelper.Token = loginRes.getToken();
                     
-                    startActivity(new Intent(LoginActivity.this, ChatActivity.class).putExtra("data", loginRes));
+                    startActivity(new Intent(LoginActivity.this, UserActivity.class).putExtra("data", loginRes));
                     finish();
                 } else {
                     String message = "An error occurred please try again later ...";

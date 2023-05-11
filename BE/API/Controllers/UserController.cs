@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Web;
 using API.Services;
 using API.Types.Objects;
@@ -41,6 +42,20 @@ public class UserController : ControllerBase
         var list = await _userSer.GetMostLegit(number);
 
         return Ok(list);
+    }
+
+    [HttpGet]
+    [Route("self")]
+    public async Task<ActionResult<UserRes>> GetSelf()
+    {
+        var selfIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (selfIdString is null)
+            return Unauthorized(new FailureRes { Message = "Not login!" });
+        int.TryParse(selfIdString, out int selfId);
+
+        var user = await _userSer.Get(selfId);
+
+        return Ok(user);
     }
 
     [HttpPost]

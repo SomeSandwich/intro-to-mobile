@@ -21,15 +21,18 @@ public interface UserService {
     @GET("user/{id}")
     Call<UserRes> GetById(@Path("id") Integer id);
 
+    @GET("user/self")
+    Call<UserRes> GetSelf();
+
     @GET("user/most-legit")
     Call<List<SellerRes>> GetMostLegit(@Query("number") Integer number);
 
     @POST("user")
-    @FormUrlEncoded
-    Call CreateUser(@Body CreateUserReq request);
+    //@FormUrlEncoded
+    Call<UserRes> CreateUser(@Body CreateUserReq request);
 
     @POST("user/{id}/avatar")
-    @FormUrlEncoded
+    //@FormUrlEncoded
     Call<String> AddAvatar(@Path("id") Integer id, @Body UserAvatarReq request);
 
     @DELETE("user/{id}/avatar")

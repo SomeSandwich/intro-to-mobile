@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.userFragments.NewfeelActivity">
     <data>
-
+        <variable
+            name="clickHandler"
+            type="project.example.efriendly.activities.userFragments.NewfeelActivity.NewfeelClickHandler" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,19 +38,19 @@
                     android:id="@+id/avt"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:cardCornerRadius="20dp"
+                    app:cardCornerRadius="24dp"
                     android:shape="ring"
                     android:thicknessRatio="1.9">
                     <ImageView
                         android:contentDescription="@string/image"
                         android:scaleType="fitCenter"
                         android:layout_width="match_parent"
-                        android:id="@+id/sellerAvt"
-                        android:src="@drawable/avatar"
+                        android:id="@+id/userAvt"
+                        android:src="@drawable/user"
                         android:layout_height="match_parent"/>
                 </androidx.cardview.widget.CardView>
-                <EditText
-                    android:inputType="text"
+                <TextView
+                    android:gravity="center"
                     android:autofillHints="@string/image"
                     android:layout_marginStart="17dp"
                     android:hint="@string/newpostHint"
@@ -56,6 +58,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"/>
                 <ImageView
+                    android:onClick="@{clickHandler::addPostClick}"
                     android:contentDescription="@string/image"
                     android:src="@drawable/add_image_icon"
                     android:layout_width="wrap_content"
@@ -72,6 +75,7 @@
                 android:id="@+id/newfeelPost"/>
         </LinearLayout>
         <ProgressBar
+            android:visibility="invisible"
             android:id="@+id/processBar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"

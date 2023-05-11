@@ -46,6 +46,20 @@ public class ConversationController : ControllerBase
         return Ok(convs);
     }
 
+    [HttpGet]
+    [Route("self/user/all")]
+    public async Task<ActionResult<IEnumerable<UserRes>>> GetUser()
+    {
+        var selfIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (selfIdString is null)
+            return Unauthorized(new FailureRes { Message = "Not login!" });
+        int.TryParse(selfIdString, out int selfId);
+
+        var convs = await _convSer.GetUserAsync(selfId);
+
+        return Ok(convs);
+    }
+
     [HttpPost]
     [Route("{userId:int}")]
     public async Task<ActionResult<string>> Create([FromRoute] int userId)

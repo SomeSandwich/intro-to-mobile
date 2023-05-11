@@ -4,6 +4,9 @@
     tools:context=".activities.userFragments.ChatActivity">
 
     <data>
+        <variable
+            name="clickHandler"
+            type="project.example.efriendly.activities.userFragments.ChatActivity.ChatClickHandler" />
 
     </data>
 
@@ -18,6 +21,7 @@
             android:layout_marginTop="20dp">
 
             <ImageView
+                android:onClick="@{clickHandler::backClick}"
                 android:id="@+id/back_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

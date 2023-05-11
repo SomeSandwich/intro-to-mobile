@@ -20,7 +20,6 @@ public class TokenAuthenticator implements Authenticator {
     @Override
     public Request authenticate(@Nullable Route route, @NonNull Response response) throws IOException {
         String token = StorageHelper.Token;
-
         return null;
     }
 

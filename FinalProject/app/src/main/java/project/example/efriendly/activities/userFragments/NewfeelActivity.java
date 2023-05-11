@@ -33,6 +33,8 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
     UserActivity main;
     Context context = null;
     private UserService userService;
+
+    NewfeelClickHandler clickHandler;
     FragmentNewfeelActivityBinding binding;
     PostService postService;
     ClickListener listener;
@@ -59,6 +61,7 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
 
         postService = RetrofitClientGenerator.getService(PostService.class);
         userService = RetrofitClientGenerator.getService(UserService.class);
+        binding.setClickHandler(new NewfeelClickHandler(context));
 
         binding.processBar.setVisibility(View.VISIBLE);
 
@@ -99,5 +102,14 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
         public void click(PostRes postRes){
             main.onMsgFromFragToMain(postRes);
         };
+    }
+    public class NewfeelClickHandler{
+        Context context;
+        public NewfeelClickHandler(Context context){
+            this.context = context;
+        }
+        public void addPostClick(View view){
+            main.onMsgFromFragToMain("newFeel", "CreatePost");
+        }
     }
 }

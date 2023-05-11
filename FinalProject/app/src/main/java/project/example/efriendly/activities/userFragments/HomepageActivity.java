@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.AnonymousHomepageActivity;
 import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.adapter.HomepageAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
@@ -66,9 +67,12 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         ft.replace(R.id.searchBarFragment, searchbar).commit();
         categoryService = RetrofitClientGenerator.getService(CategoryService.class);
         postService = RetrofitClientGenerator.getService(PostService.class);
+        binding.processBar.setVisibility(View.VISIBLE);
 
         addCategory();
         addAdapter();
+
+        binding.processBar.setVisibility(View.INVISIBLE);
 
         return binding.getRoot();
     }
@@ -101,7 +105,6 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         });
 
     }
-
     private android.widget.Button createCategory(int id, String name, Integer img ){
         android.widget.Button btn = new android.widget.Button(context);
 
@@ -111,7 +114,6 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         btnLayout.setMargins(30, 30, 30, 30);
         btn.setLayoutParams(btnLayout);
         btn.setId(id);
-        btn.setOnClickListener(handlers.CategoryClick());
 
         Drawable top = ResourcesCompat.getDrawable(getResources(), R.drawable.likebutton, null);
         btn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, top, null, null);
@@ -165,15 +167,6 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         Context context;
         public ActivityHomepageClickHandler(Context context){
             this.context = context;
-        }
-        public View.OnClickListener CategoryClick(){
-            return new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    int id = view.getId();
-                    Log.d("Debug", "Click id category " + Integer.toString(id));
-                }
-            };
         }
     }
     public class ClickListener{

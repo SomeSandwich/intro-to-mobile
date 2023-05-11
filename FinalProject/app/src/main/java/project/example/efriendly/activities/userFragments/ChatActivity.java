@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.adapter.ChatAdapter;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityChatBinding;
@@ -27,6 +29,8 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ChatAdapter adapter;
     private ArrayList<UserRes> userArrayList;
+
+    private ChatClickHandler handler;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
@@ -71,5 +75,19 @@ public class ChatActivity extends AppCompatActivity {
 
         recyclerView.addItemDecoration(dividerHorizontal);
 
-    }//onCreate
+        handler = new ChatClickHandler(this);
+        binding.setClickHandler(handler);
+
+    }
+
+    public class ChatClickHandler{
+        Context context;
+        public ChatClickHandler(Context context){
+            this.context = context;
+        }
+        public void backClick(View view){
+            Intent myIntent = new Intent(ChatActivity.this, UserActivity.class);
+            startActivity(myIntent);
+        }
+    }
 }
