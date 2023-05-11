@@ -37,6 +37,7 @@
     <string name="size">Size</string>
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
+    <string name="splashText">Wish you have the best experience when using the application</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

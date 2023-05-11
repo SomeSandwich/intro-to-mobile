@@ -73,7 +73,7 @@
                     android:text="@string/name"
                     android:labelFor="@id/nameInput"
                     android:textColor="#000000"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -96,7 +96,7 @@
                     android:text="@string/email"
                     android:labelFor="@id/emailInput"
                     android:textColor="#000000"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -118,7 +118,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/passWord"
                     android:textColor="#000000"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -140,7 +140,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/passConfirm"
                     android:textColor="#000000"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -162,7 +162,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/address"
                     android:textColor="#000000"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -184,7 +184,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/phone"
                     android:textColor="#000000"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
