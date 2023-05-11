@@ -95,6 +95,11 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(loginReq);
             }
         }
+
+        public void register(View view){
+            Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(myIntent);
+        }
     }
 
     private static String decode(String encodedString) {
