@@ -1,4 +1,4 @@
-package project.example.efriendly;
+package project.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import project.example.efriendly.activities.LoginActivity;
-import project.example.efriendly.activities.MainActivity;
+import project.example.efriendly.R;
 
 public class SplashActivity extends AppCompatActivity {
 
