@@ -17,7 +17,7 @@
         android:theme="@style/Theme.EFriendly"
         tools:targetApi="31">
         <activity
-            android:name=".ProfileActivity"
+            android:name=".activities.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SplashActivity"
@@ -40,8 +40,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
+            android:exported="false"/>
         <activity
             android:name=".activities.showPost"
             android:exported="false" />
