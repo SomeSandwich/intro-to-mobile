@@ -9,7 +9,7 @@ public class CategoryRes {
 
     private String description;
 
-    private String Icon;
+    private String icon;
 
     public Integer getId() {
         return id;
@@ -20,7 +20,7 @@ public class CategoryRes {
     }
 
     public String getIcon() {
-        return Icon;
+        return icon;
     }
 
     public void setId(Integer id) {
@@ -32,6 +32,6 @@ public class CategoryRes {
     }
 
     public void setIcon(String icon) {
-        Icon = icon;
+        this.icon = icon;
     }
 }

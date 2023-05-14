@@ -3,7 +3,6 @@ package project.example.efriendly.services;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import project.example.efriendly.data.model.Post.CommentPostReq;
-import project.example.efriendly.data.model.Post.CreatePostReq;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.Post.UpdatePostReq;
 
@@ -12,9 +11,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -33,7 +30,7 @@ public interface PostService {
     Call<List<PostRes>> GetNewest(@Query("number") Integer number);
 
     @GET("post/category/{categoryId}")
-    Call<List<PostRes>> GetBySellerId(@Query("categoryId") Integer categoryId);
+    Call<List<PostRes>> GetByCateId(@Path("categoryId") Integer categoryId);
 
     @POST("post")
     @Multipart

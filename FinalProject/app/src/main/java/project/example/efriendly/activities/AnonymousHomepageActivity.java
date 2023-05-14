@@ -1,13 +1,9 @@
 package project.example.efriendly.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import static project.example.efriendly.constants.DatabaseConnection.IMAGE_URL;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -19,19 +15,26 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import project.example.efriendly.R;
-import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.activities.userFragments.SearchBarCartLoginActivity;
 import project.example.efriendly.adapter.AnonymousHomepageAdapter;
-import project.example.efriendly.adapter.HomepageAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.data.model.Category.CategoryRes;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.ActivityAnonymousHomepageBinding;
-import project.example.efriendly.databinding.ActivityUserBinding;
 import project.example.efriendly.services.CategoryService;
 import project.example.efriendly.services.PostService;
 import retrofit2.Call;
@@ -116,7 +119,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
 
     }
 
-    private android.widget.Button createCategory(int id, String name, Integer img) {
+    private android.widget.Button createCategory(CategoryRes categoryRes) {
         Context context = getApplicationContext();
         android.widget.Button btn = new android.widget.Button(context);
 
@@ -125,15 +128,53 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         btnLayout.setMargins(30, 30, 30, 30);
         btn.setLayoutParams(btnLayout);
-        btn.setId(id);
-        //btn.setOnClickListener(handlers.CategoryClick());
+        btn.setId(categoryRes.getId());
 
-        Drawable top = ResourcesCompat.getDrawable(getResources(), R.drawable.likebutton, null);
-        btn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, top, null, null);
+        btn.setOnClickListener(e -> {
+            Integer cateId = categoryRes.getId();
+            Call<List<PostRes>> postCateCall = postService.GetByCateId(cateId);
+
+            postCateCall.enqueue(new Callback<List<PostRes>>() {
+                @Override
+                public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
+                    List<PostRes> postsHehe = response.body();
+
+                    System.out.println(postsHehe.size());
+
+                    AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(postsHehe, getApplicationContext(), listener);
+
+                    binding.ListItems.setAdapter(adapter);
+                    binding.ListItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                }
+
+                @Override
+                public void onFailure(Call<List<PostRes>> call, Throwable t) {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
+            });
+        });
+
+        Glide.with(context)
+                .asDrawable()
+                .load(IMAGE_URL + categoryRes.getIcon())
+                .placeholder(R.drawable.likebutton)
+                .into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        btn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, resource, null, null);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
 
         btn.setPadding(0, 30, 0, 0);
         btn.setBackgroundResource(R.drawable.category_frame);
-        btn.setText(name);
+        btn.setText(categoryRes.getDescription());
+
         return btn;
     }
 
@@ -149,7 +190,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                         List<CategoryRes> category = response.body();
                         int size = category.size();
                         for (int i = 0; i < size; i++) {
-                            android.widget.Button newCategory = createCategory(category.get(i).getId(), category.get(i).getDescription(), R.drawable.likebutton);
+                            android.widget.Button newCategory = createCategory(category.get(i));
 
                             LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
