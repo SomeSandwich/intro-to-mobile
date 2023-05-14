@@ -244,21 +244,17 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                         } else {
                             Toast.makeText(main, "An error occurred please try again later ...", Toast.LENGTH_SHORT).show();
                         }
-
                     }
-
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
                         Log.d("Debug", t.getLocalizedMessage());
                         Toast.makeText(main, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-
+                main.onMsgFromFragToMain("createPost", "close");
             }
         }
     }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

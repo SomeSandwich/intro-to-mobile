@@ -86,6 +86,7 @@ public class UserActivity extends AppCompatActivity{
             if (strValue.equals("CreatePost")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, createPost).commit();
         }
         else if (sender.equals("createPost")){
+            newFeel = new NewfeelActivity();
             if (strValue.equals("close")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, newFeel).commit();
         }
     }

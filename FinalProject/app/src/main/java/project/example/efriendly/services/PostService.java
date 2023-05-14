@@ -41,7 +41,7 @@ public interface PostService {
             @Part("CategoryId") RequestBody categoryId,
             @Part("Price") RequestBody price,
             @Part("Caption") RequestBody caption,
-            @Part("Caption") RequestBody description,
+            @Part("Description") RequestBody description,
             @Part List<MultipartBody.Part> mediaFiles);
 
     @POST("post/{postId}/share-by/{userId}")

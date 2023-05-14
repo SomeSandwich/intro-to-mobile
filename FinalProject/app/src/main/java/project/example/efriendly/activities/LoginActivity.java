@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                     
                     StorageHelper.Token = loginRes.getToken();
                     
-                    startActivity(new Intent(LoginActivity.this, ProfileActivity.class).putExtra("data", loginRes));
+                    startActivity(new Intent(LoginActivity.this, UserActivity.class).putExtra("data", loginRes));
                     finish();
                 } else {
                     String message = "An error occurred please try again later ...";
