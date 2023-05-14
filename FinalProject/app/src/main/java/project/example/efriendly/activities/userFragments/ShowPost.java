@@ -41,6 +41,7 @@ import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityShowPostBinding;
 import project.example.efriendly.services.CartService;
+import project.example.efriendly.services.ConversationService;
 import project.example.efriendly.services.UserService;
 import project.example.efriendly.ultilities.OnSwipeTouchListener;
 import retrofit2.Call;
@@ -51,8 +52,8 @@ public class ShowPost extends Fragment implements DatabaseConnection {
     ActivityShowPostBinding binding;
     Context context = null;
     UserService userService;
-
     CartService cartService;
+    ConversationService conversationService;
     PostRes post;
     int currentIndex = 0;
     ShowPostClickHandler handlers;
@@ -77,6 +78,10 @@ public class ShowPost extends Fragment implements DatabaseConnection {
         binding = ActivityShowPostBinding.inflate(inflater, container, false);
         handlers = new ShowPost.ShowPostClickHandler(context);
         binding.setClickHandler(handlers);
+
+        userService = RetrofitClientGenerator.getService(UserService.class);
+        cartService = RetrofitClientGenerator.getService(CartService.class);
+        conversationService = RetrofitClientGenerator.getService(ConversationService.class);
 
         currentIndex = 0;
 
@@ -151,8 +156,7 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                         }).into((ImageView) show.getCurrentView());
             }
         });
-        userService = RetrofitClientGenerator.getService(UserService.class);
-        cartService = RetrofitClientGenerator.getService(CartService.class);
+
 
         Call<UserRes> userResCall = userService.GetById(post.getUserID());
         userResCall.enqueue(new Callback<UserRes>() {
@@ -240,7 +244,6 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                                 }
                             }
-
                             @Override
                             public void onFailure(Call<String> call, Throwable t) {
                                 String message = t.getLocalizedMessage();
@@ -261,7 +264,24 @@ public class ShowPost extends Fragment implements DatabaseConnection {
             });
         }
         public void contactClick(View view){
+            conversationService.Create(post.getUserID()).enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(context, "Create conversation successfully", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        String message = "An error occurred please try again later ...";
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    String message = t.getLocalizedMessage();
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }

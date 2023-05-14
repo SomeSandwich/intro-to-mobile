@@ -78,9 +78,6 @@ public class NewfeelAdapter extends RecyclerView.Adapter<NewfeelPostHolder> impl
             public void onClick(View view) {
                 posts.get(index).setCurrentIndex( posts.get(index).getCurrentIndex() - 1);
                 if ( posts.get(index).getCurrentIndex() < 0)  posts.get(index).setCurrentIndex( posts.get(index).getMediaPath().size() - 1);
-
-                Log.d("Debug",  posts.get(index).getUser().getName() + " Post: " +  posts.get(index).getDescription() + " MediaPathSize: " +  posts.get(index).getMediaPath().size());
-
                 holder.progressBar.setVisibility(View.VISIBLE);
                 Glide.with(context)
                         .load(IMAGE_URL +  posts.get(index).getMediaPath().get( posts.get(index).getCurrentIndex()))

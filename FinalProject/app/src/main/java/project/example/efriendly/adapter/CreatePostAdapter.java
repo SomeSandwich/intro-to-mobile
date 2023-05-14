@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Collections;
 import java.util.List;
 
+import project.example.efriendly.activities.userFragments.CreatePost;
 import project.example.efriendly.databinding.AddImageBinding;
 import project.example.efriendly.holder.AddImageHolder;
 
 public class CreatePostAdapter extends RecyclerView.Adapter<AddImageHolder>{
     public List<Uri> imgsList = Collections.emptyList();
     Context context;
+    CreatePost.ClickListener listener;
 
-    public CreatePostAdapter(Context context, List<Uri> imgsList){
+    public CreatePostAdapter(Context context, List<Uri> imgsList, CreatePost.ClickListener listener){
         this.context = context;
         this.imgsList = imgsList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,7 +33,7 @@ public class CreatePostAdapter extends RecyclerView.Adapter<AddImageHolder>{
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         AddImageBinding binding = AddImageBinding.inflate(inflater, parent, false);
-        AddImageHolder addImageHolder = new AddImageHolder(binding, this);
+        AddImageHolder addImageHolder = new AddImageHolder(binding, this, listener);
         return addImageHolder;
     }
 

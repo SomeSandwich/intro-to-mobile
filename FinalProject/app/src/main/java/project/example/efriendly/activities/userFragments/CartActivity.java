@@ -2,20 +2,28 @@ package project.example.efriendly.activities.userFragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import project.example.efriendly.R;
 import project.example.efriendly.client.RetrofitClientGenerator;
+import project.example.efriendly.data.model.Cart.CartRes;
+import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityCartBinding;
 import project.example.efriendly.adapter.CartAdapter;
@@ -28,23 +36,10 @@ import retrofit2.Response;
 
 public class CartActivity extends AppCompatActivity {
     private ActivityCartBinding binding;
-    private PostService postService;
-    private UserService userService;
-
     private CartService cartService;
-
-    Integer[] product = {R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes,
-            R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes};
-
-    String[] productName = {"Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt",
-            "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt", "Black plain T-Shirt"};
-
-    String[] price = {"50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ",
-            "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ", "50.000đ"};
-
-    String[] seller = {"Truong Trong Khanh", "Hoang Quoc Bao", "Kha Vinh Dat", "Nguyen Quoc Su", "Tran Minh Truong", "Nguyen Tan Hieu", "Nguyen Ho Hu Bang", "Phan Thanh Sang", "Do Nguyen Hung", "Tran Hong Quan",
-            "Truong Trong Khanh", "Hoang Quoc Bao", "Kha Vinh Dat", "Nguyen Quoc Su", "Tran Minh Truong", "Nguyen Tan Hieu", "Nguyen Ho Hu Bang", "Phan Thanh Sang", "Do Nguyen Hung", "Tran Hong Quan"};
-
+    private ClickListener listener;
+    private CartActivityClickHandler clickHandler;
+    public CartAdapter adapter;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
@@ -70,35 +65,77 @@ public class CartActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cart);
-        postService = RetrofitClientGenerator.getService(PostService.class);
-        userService = RetrofitClientGenerator.getService(UserService.class);
+        clickHandler = new CartActivityClickHandler(context);
+        binding.setClickHandler(clickHandler);
+        listener = new ClickListener();
         cartService = RetrofitClientGenerator.getService(CartService.class);
 
-        userService.GetSelf().enqueue(new Callback<UserRes>() {
+        cartService.GetSelfCart().enqueue(new Callback<List<CartRes>>() {
             @Override
-            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                if (response.isSuccessful()){
+            public void onResponse(Call<List<CartRes>> call, Response<List<CartRes>> response) {
+                if(response.isSuccessful()){
+                    List<Boolean> checkList = new ArrayList<Boolean>(response.body().size());
+                    for (int i = 0; i < response.body().size(); i++) checkList.add(Boolean.FALSE);
+                    listener.setCheckList(checkList);
+                    adapter = new CartAdapter(context, response.body(), listener);
+                    binding.CartList.setAdapter(adapter);
+                    binding.CartList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 }
                 else {
                     String message = "An error occurred please try again later ...";
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<UserRes> call, Throwable t) {
-                String message = t.getLocalizedMessage();
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            public void onFailure(Call<List<CartRes>> call, Throwable t) {
+                String message = "An error occurred please try again later ...";
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
+    }
+    public class CartActivityClickHandler{
+        Context context;
+        public CartActivityClickHandler(Context context){
+            this.context = context;
+        }
+        public void back(View view){
+            finish();
+        }
+        public void allCheck(CompoundButton compoundButton, boolean b){
+            for (int i = 0; i < listener.checkList.size();i++) listener.checkList.set(i, binding.cbAll.isChecked());
+            adapter.notifyDataSetChanged();
+        }
 
-        /*CartAdapter adapter = new CartAdapter(this, R.layout.custom_cart_items, productName, price, seller, );
-        binding.ChatList.setAdapter(adapter);
-        binding.ChatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("hehe");
+        public void DeleteClick(View view){
+            for (int i = 0;i< listener.checkList.size();i++) {
+                if (listener.checkList.get(i).equals(Boolean.TRUE)){
+                    final int position = i;
+                    cartService.RemovePostFromSelfCart(position).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.isSuccessful()){
+                                adapter.notifyItemRemoved(position);
+                            }
+                            else {
+                                String message = "An error occurred please try again later ...";
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            String message = "An error occurred please try again later ...";
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
-        });*/
-    }//onCreate
+        }
+    }
+    public class ClickListener{
+        public List<Boolean> checkList = new ArrayList<Boolean>();
+        public void setCheckList(List<Boolean> checkList) {this.checkList = checkList;}
+
+    }
 }

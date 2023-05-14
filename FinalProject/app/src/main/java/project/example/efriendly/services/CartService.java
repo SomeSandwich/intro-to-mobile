@@ -14,7 +14,6 @@ public interface CartService {
 
     @GET("cart")
     Call<List<CartRes>> GetSelfCart();
-
     @POST("cart/{postId}")
     Call<String> AddPostToSelfCart(@Path("postId") Integer postId);
 

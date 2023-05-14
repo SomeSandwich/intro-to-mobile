@@ -50,6 +50,7 @@ import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Category.CategoryRes;
 import project.example.efriendly.data.model.Post.CreatePostReq;
+import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.FragmentCreatePostBinding;
 import project.example.efriendly.databinding.FragmentNewfeelActivityBinding;
@@ -80,6 +81,8 @@ public class CreatePost extends Fragment implements DatabaseConnection {
     PostService postService;
     CategoryService categoryService;
 
+    ClickListener clickListener;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -109,7 +112,8 @@ public class CreatePost extends Fragment implements DatabaseConnection {
         PostService postService = RetrofitClientGenerator.getService(PostService.class);
         clickHandler = new CreatePostClickHandler(context);
         binding.setClickHandler(clickHandler);
-        adapter = new CreatePostAdapter(context, imgsList);
+        clickListener = new ClickListener();
+        adapter = new CreatePostAdapter(context, imgsList, clickListener);
         binding.imageReview.setAdapter(adapter);
         SpacingItemDecorator itemDecorator = new SpacingItemDecorator(10);
         binding.imageReview.addItemDecoration(itemDecorator);
@@ -194,6 +198,12 @@ public class CreatePost extends Fragment implements DatabaseConnection {
         });
     }
 
+    public class ClickListener{
+        public void RemoveImageClick(int position){
+            imgsList.remove(position);
+        };
+    }
+
     public class CreatePostClickHandler {
         Context context;
         public CreatePostClickHandler(Context context) {
@@ -205,7 +215,17 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             startActivityForResult(intent, 3);
         }
 
+        public void finish(){
+            int size = imgsList.size();
+            imgsList.clear();
+            adapter.notifyItemRangeRemoved(0, size);
+            binding.caption.setText("");
+            binding.des.setText("");
+            binding.prices.setText("");
+        }
+
         public void closeClick(View view) {
+            finish();
             main.onMsgFromFragToMain("createPost", "close");
         }
 
@@ -250,6 +270,7 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                         Toast.makeText(main, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+                finish();
                 main.onMsgFromFragToMain("createPost", "close");
             }
         }

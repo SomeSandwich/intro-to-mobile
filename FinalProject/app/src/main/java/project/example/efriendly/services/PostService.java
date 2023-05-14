@@ -21,7 +21,7 @@ import retrofit2.http.Query;
 
 public interface PostService {
     @GET("post/{id}")
-    Call<List<PostRes>> GetById(@Path("id") Integer id);
+    Call<PostRes> GetById(@Path("id") Integer id);
 
     @GET("post/seller/{sellerId}")
     Call<List<PostRes>> GetBySeller(@Path("sellerId") Integer sellerId);

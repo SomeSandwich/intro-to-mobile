@@ -24,7 +24,6 @@ public class PostRes {
     private String createdDate;
     private String updatedDate;
     private Boolean isSold;
-
     private RateRes rate;
 
     private List<Integer> userShare;

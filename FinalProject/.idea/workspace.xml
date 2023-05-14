@@ -27,7 +27,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/hieucckha/.android/avd/Pixel_6_API_29.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Admin\.android\avd\Pixel_6_API_29.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -103,7 +103,7 @@
     "cidr.known.project.marker": "true",
     "ignore.preview.features.used": "true",
     "last_directory_selection": "C:/Users/A3 GIA KHANH/Desktop/intro-to-mobile/FinalProject/app/src/main/res/drawable",
-    "last_opened_file_path": "C:/Users/A3 GIA KHANH/Desktop/intro-to-mobile/FinalProject/app/src/main/res/drawable-xxxhdpi",
+    "last_opened_file_path": "D:/Android Studio/Github FinalProject/intro-to-mobile/FinalProject",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",

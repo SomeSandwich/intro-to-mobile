@@ -1,6 +1,7 @@
 package project.example.efriendly.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
@@ -84,16 +85,28 @@ public class UserActivity extends AppCompatActivity{
         }
         else if (sender.equals("newFeel")){
             if (strValue.equals("CreatePost")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, createPost).commit();
+
         }
         else if (sender.equals("createPost")){
             newFeel = new NewfeelActivity();
-            if (strValue.equals("close")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, newFeel).commit();
+            if (strValue.equals("close")) {
+                refresh(R.id.userFragment);
+                getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, newFeel).commit();
+            }
         }
         else if(sender.equals("showPost")){
-            if (strValue.equals("close")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, homepage).commit();
+            if (strValue.equals("close")) {
+                refresh(R.id.userFragment);
+                getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, homepage).commit();
+            }
         }
     }
     public void onMsgFromFragToMain(PostRes post){
         getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, new ShowPost(post)).commit();
+    }
+    public void refresh(int FragmentId){
+        Fragment fragment = this.getSupportFragmentManager().findFragmentById(FragmentId);
+        this.getSupportFragmentManager().beginTransaction().detach(fragment).commit();
+        this.getSupportFragmentManager().beginTransaction().attach(fragment).commit();
     }
 }

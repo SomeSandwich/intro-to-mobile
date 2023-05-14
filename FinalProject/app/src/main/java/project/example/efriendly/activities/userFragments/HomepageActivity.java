@@ -203,9 +203,8 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         });
     }
 
-    public class ActivityHomepageClickHandler {
+    static public class ActivityHomepageClickHandler {
         Context context;
-
         public ActivityHomepageClickHandler(Context context) {
             this.context = context;
         }
