@@ -112,8 +112,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="25dp"
                         android:backgroundTint="@color/button_background_while"
-                        android:textColor="#DDA15E"
-                        android:text="@string/Delete" />
+                        android:text="@string/Delete"
+                        android:textColor="#DDA15E" />
                 </LinearLayout>
 
                 <Button

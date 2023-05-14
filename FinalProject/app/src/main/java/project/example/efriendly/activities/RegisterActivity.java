@@ -75,8 +75,8 @@ public class RegisterActivity extends AppCompatActivity {
             String email = binding.emailInput.getText().toString();
             String password = binding.passInput.getText().toString();
             String passwordConfirm = binding.passConfirmInput.getText().toString();
-            String phone = binding.phone.getText().toString();
-            String address = binding.address.getText().toString();
+            String phone = binding.phoneInput.getText().toString();
+            String address = binding.addressInput.getText().toString();
 
             if(TextUtils.isEmpty(name)
                 || TextUtils.isEmpty(email)
@@ -93,11 +93,16 @@ public class RegisterActivity extends AppCompatActivity {
                 CreateUserReq userReq = new CreateUserReq(binding.nameInput.getText().toString(),
                         binding.emailInput.getText().toString(),
                         binding.passInput.getText().toString(),
-                        binding.phone.getText().toString(),
-                        binding.address.getText().toString());
+                        binding.phoneInput.getText().toString(),
+                        binding.addressInput.getText().toString());
 
                 registerUser(userReq);
             }
+        }
+
+        public void login(View view){
+            Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(myIntent);
         }
     }
 
