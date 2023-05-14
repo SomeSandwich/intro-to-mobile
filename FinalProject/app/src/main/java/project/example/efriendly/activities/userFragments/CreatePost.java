@@ -196,7 +196,6 @@ public class CreatePost extends Fragment implements DatabaseConnection {
 
     public class CreatePostClickHandler {
         Context context;
-
         public CreatePostClickHandler(Context context) {
             this.context = context;
         }
@@ -218,18 +217,12 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                 String message = "Can't post without image";
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
             } else {
-
                 String categoryName = binding.CategoryBar.getSelectedItem().toString();
-
                 Integer categoryID = 0;
-
                 for (int i = 0; i < categoryList.size(); i++)
                     if (categoryName.equals(categoryList.get(i).getDescription()))
                         categoryID = categoryList.get(i).getId();
-
                 postService = RetrofitClientGenerator.getService(PostService.class);
-
-
                 Call<String> postCall = postService.Create(
                         RequestBody.create(MediaType.parse("multipart/form-data"), categoryID.toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.prices.getText().toString()),

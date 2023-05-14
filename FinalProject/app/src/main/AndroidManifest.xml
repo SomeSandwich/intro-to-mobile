@@ -40,9 +40,6 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".activities.showPost"
             android:exported="false" />
         <activity
             android:name=".activities.userFragments.SearchBarCartChatActivity"
@@ -68,12 +65,10 @@
         <activity
             android:name=".activities.userFragments.CreatePost"
             android:exported="false" />
+        <activity android:name=".activities.userFragments.ShowPost" android:exported="false"/>
         <activity
             android:name=".activities.MainActivity"
-            android:exported="false">
-
-        </activity>
-
+            android:exported="false" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

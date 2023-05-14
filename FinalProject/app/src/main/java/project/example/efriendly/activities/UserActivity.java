@@ -18,7 +18,7 @@ import project.example.efriendly.activities.userFragments.CreatePost;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.activities.userFragments.NewfeelActivity;
 import project.example.efriendly.activities.userFragments.NotificationsActivity;
-import project.example.efriendly.activities.userFragments.SearchBarCartChatActivity;
+import project.example.efriendly.activities.userFragments.ShowPost;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.ActivityUserBinding;
 
@@ -89,8 +89,11 @@ public class UserActivity extends AppCompatActivity{
             newFeel = new NewfeelActivity();
             if (strValue.equals("close")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, newFeel).commit();
         }
+        else if(sender.equals("showPost")){
+            if (strValue.equals("close")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, homepage).commit();
+        }
     }
     public void onMsgFromFragToMain(PostRes post){
-        getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, new showPost(post)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, new ShowPost(post)).commit();
     }
 }

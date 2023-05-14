@@ -1,4 +1,4 @@
-package project.example.efriendly.activities;
+package project.example.efriendly.activities.userFragments;
 
 import androidx.fragment.app.Fragment;
 
@@ -24,26 +24,31 @@ import java.io.InputStream;
 import java.net.URL;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityShowPostBinding;
+import project.example.efriendly.services.CartService;
 import project.example.efriendly.services.UserService;
 import project.example.efriendly.ultilities.OnSwipeTouchListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class showPost extends Fragment implements DatabaseConnection {
+public class ShowPost extends Fragment implements DatabaseConnection {
     ActivityShowPostBinding binding;
     Context context = null;
     UserService userService;
+
+    CartService cartService;
     PostRes post;
-
     int currentIndex=0;
+    ShowPostClickHandler handlers;
+    UserActivity main;
 
-    public showPost(PostRes post){
+    public ShowPost(PostRes post){
         this.post = post;
     }
 
@@ -52,6 +57,7 @@ public class showPost extends Fragment implements DatabaseConnection {
         super.onCreate(savedInstanceState);
         try{
             context = getActivity();
+            main = (UserActivity) getActivity();
         }
         catch (IllegalStateException err){
             throw new IllegalStateException("MainActivity must implement callbacks");
@@ -61,7 +67,8 @@ public class showPost extends Fragment implements DatabaseConnection {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = ActivityShowPostBinding.inflate(inflater, container,false);
-
+        handlers = new ShowPost.ShowPostClickHandler(context);
+        binding.setClickHandler(handlers);
         try{
             for (int i=0;i<post.getMediaPath().size();i++){
                 InputStream newUrl = new URL(IMAGE_URL + post.getMediaPath().get(i)).openStream();
@@ -112,8 +119,8 @@ public class showPost extends Fragment implements DatabaseConnection {
                 show.setImageDrawable(drawable);
             }
         });
-
         userService = RetrofitClientGenerator.getService(UserService.class);
+        cartService = RetrofitClientGenerator.getService(CartService.class);
 
         Call<UserRes> userResCall = userService.GetById(post.getUserID());
         userResCall.enqueue(new Callback<UserRes>() {
@@ -172,5 +179,51 @@ public class showPost extends Fragment implements DatabaseConnection {
         });
 
         return binding.getRoot();
+    }
+
+    public class ShowPostClickHandler{
+        Context context;
+        public ShowPostClickHandler(Context context) {
+            this.context = context;
+        }
+        public void addToCartClick(View view){
+            int postId = post.getId();
+            Call<UserRes> userResCall = userService.GetSelf();
+            userResCall.enqueue(new Callback<UserRes>() {
+                @Override
+                public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                    if (response.isSuccessful()) {
+                        cartService.addToCart(response.body().getId(), post.getId()).enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                if (response.isSuccessful()){
+                                    Toast.makeText(context, response.body(), Toast.LENGTH_LONG).show();
+                                    main.onMsgFromFragToMain("showPost", "close");
+                                }
+                                else{
+                                    String message = "An error occurred please try again later ...";
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                String message = t.getLocalizedMessage();
+                                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    else {
+                        String message = "An error occurred please try again later ...";
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserRes> call, Throwable t) {
+                    String message = t.getLocalizedMessage();
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 }
