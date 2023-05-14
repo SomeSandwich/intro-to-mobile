@@ -30,12 +30,9 @@ public class PostRes {
     private List<Integer> userShare;
 
     private List<ReportRes> reports;
-
-
     public Integer getUserID() {
         return userId;
     }
-
     public Integer getId() {
         return id;
     }
@@ -43,15 +40,12 @@ public class PostRes {
     public Integer getPrice() {
         return price;
     }
-
     public String getCaption() {
         return caption;
     }
-
     public String getDescription() {
         return description;
     }
-
     public List<String> getMediaPath() {
         return mediaPath;
     }
@@ -59,7 +53,6 @@ public class PostRes {
     public String getCreatedDate() {
         return createdDate;
     }
-
     public String getUpdatedDate() {
         return updatedDate;
     }
@@ -67,16 +60,10 @@ public class PostRes {
     public Boolean getSold() {
         return isSold;
     }
-
     private int currentIndex = 0;
-
-    private Vector<Bitmap> imgBitmap = new Vector<>();
-
     public int getCurrentIndex(){
         return currentIndex;
     }
-    public Vector<Bitmap> getImgBitmap(){return this.imgBitmap;}
-    public void setImgBitmap(Vector<Bitmap> imgBitmapInput){this.imgBitmap = imgBitmapInput;}
     public void setCurrentIndex(int currentIndex){
         this.currentIndex = currentIndex;
     }
@@ -134,7 +121,6 @@ public class PostRes {
     public RateRes getRate() {
         return rate;
     }
-
     public List<Integer> getUserShare() {
         return userShare;
     }

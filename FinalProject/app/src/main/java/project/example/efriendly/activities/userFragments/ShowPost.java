@@ -1,9 +1,11 @@
 package project.example.efriendly.activities.userFragments;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,10 +22,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+
 import java.io.InputStream;
 import java.net.URL;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.AnonymousHomepageActivity;
+import project.example.efriendly.activities.MainActivity;
 import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
@@ -47,11 +57,9 @@ public class ShowPost extends Fragment implements DatabaseConnection {
     int currentIndex=0;
     ShowPostClickHandler handlers;
     UserActivity main;
-
     public ShowPost(PostRes post){
         this.post = post;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,16 +77,6 @@ public class ShowPost extends Fragment implements DatabaseConnection {
         binding = ActivityShowPostBinding.inflate(inflater, container,false);
         handlers = new ShowPost.ShowPostClickHandler(context);
         binding.setClickHandler(handlers);
-        try{
-            for (int i=0;i<post.getMediaPath().size();i++){
-                InputStream newUrl = new URL(IMAGE_URL + post.getMediaPath().get(i)).openStream();
-                Bitmap image = BitmapFactory.decodeStream(newUrl);
-                post.getImgBitmap().add(image);
-            }
-        }
-        catch (Exception e){
-            Log.d("ShowPostGetImage", e.getMessage());
-        }
         currentIndex = 0;
 
         ImageSwitcher show = binding.clothesImgs;
@@ -94,29 +92,61 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                 return imageView;
             }
         });
+        Glide.with(context)
+                .load(IMAGE_URL + post.getMediaPath().get(0))
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        show.setImageDrawable(resource);
+                        return true;
+                    }
+                }).into((ImageView) show.getCurrentView());
 
-        Drawable drawable = new BitmapDrawable(getResources(), post.getImgBitmap().get(0));
-        show.setImageDrawable(drawable);
+
         show.setOnTouchListener(new OnSwipeTouchListener(context) {
             public void onSwipeRight() {
-                show.setInAnimation(context,R.anim.from_left);
-                show.setOutAnimation(context,R.anim.to_right);
                 currentIndex++;
-                if(currentIndex == (post.getImgBitmap().size()))
+                if(currentIndex == (post.getMediaPath().size()))
                     currentIndex=0;
-
-                Drawable drawable = new BitmapDrawable(getResources(), post.getImgBitmap().get(currentIndex));
-                show.setImageDrawable(drawable);
+                Glide.with(context)
+                        .load(IMAGE_URL + post.getMediaPath().get(currentIndex))
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                return false;
+                            }
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                show.setInAnimation(context,R.anim.from_left);
+                                show.setOutAnimation(context,R.anim.to_right);
+                                show.setImageDrawable(resource);
+                                return true;
+                            }
+                        }).into((ImageView) show.getCurrentView());
             }
             public void onSwipeLeft() {
-                show.setInAnimation(context,R.anim.from_right);
-                show.setOutAnimation(context,R.anim.to_left);
                 --currentIndex;
                 if(currentIndex<0)
-                    currentIndex=post.getImgBitmap().size() - 1;
-
-                Drawable drawable = new BitmapDrawable(getResources(), post.getImgBitmap().get(currentIndex));
-                show.setImageDrawable(drawable);
+                    currentIndex=post.getMediaPath().size() - 1;
+                Glide.with(context)
+                        .load(IMAGE_URL + post.getMediaPath().get(currentIndex))
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                return false;
+                            }
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                show.setInAnimation(context,R.anim.from_right);
+                                show.setOutAnimation(context,R.anim.to_left);
+                                show.setImageDrawable(resource);
+                                return true;
+                            }
+                        }).into((ImageView) show.getCurrentView());
             }
         });
         userService = RetrofitClientGenerator.getService(UserService.class);
@@ -180,7 +210,6 @@ public class ShowPost extends Fragment implements DatabaseConnection {
 
         return binding.getRoot();
     }
-
     public class ShowPostClickHandler{
         Context context;
         public ShowPostClickHandler(Context context) {
@@ -224,6 +253,9 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 }
             });
+        }
+        public void contactClick(View view){
+
         }
     }
 }

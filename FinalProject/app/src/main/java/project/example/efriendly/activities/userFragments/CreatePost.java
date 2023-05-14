@@ -213,7 +213,7 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             if (binding.caption.getText().toString().matches("")) {
                 String message = "Can't post without caption";
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-            } else if (sendList.size() == 0) {
+            } else if (imgsList.size() == 0) {
                 String message = "Can't post without image";
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
             } else {
@@ -222,6 +222,12 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                 for (int i = 0; i < categoryList.size(); i++)
                     if (categoryName.equals(categoryList.get(i).getDescription()))
                         categoryID = categoryList.get(i).getId();
+                for (int i = 0; i<imgsList.size();i++){
+                    File file = new File(RealPathUtil.getRealPath(context, imgsList.get(i)));
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("MediaFiles", file.getName(), requestFile);
+                    sendList.add(body);
+                }
                 postService = RetrofitClientGenerator.getService(PostService.class);
                 Call<String> postCall = postService.Create(
                         RequestBody.create(MediaType.parse("multipart/form-data"), categoryID.toString()),
@@ -233,9 +239,9 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(main, response.body(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(main, "Success", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(main, "An error occurred please try again later ...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(main, "An error occurred please try again later...", Toast.LENGTH_SHORT).show();
                         }
                     }
                     @Override
@@ -255,11 +261,6 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             Uri selectedImage = data.getData();
             imgsList.add(selectedImage);
             adapter.notifyItemInserted(imgsList.size() - 1);
-
-            File file = new File(RealPathUtil.getRealPath(context, selectedImage));
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("MediaFiles", file.getName(), requestFile);
-            sendList.add(body);
         }
     }
 }

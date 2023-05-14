@@ -3,6 +3,7 @@ package project.example.efriendly.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,7 @@ import project.example.efriendly.databinding.AddImageBinding;
 import project.example.efriendly.holder.AddImageHolder;
 
 public class CreatePostAdapter extends RecyclerView.Adapter<AddImageHolder>{
-    List<Uri> imgsList = Collections.emptyList();
+    public List<Uri> imgsList = Collections.emptyList();
     Context context;
 
     public CreatePostAdapter(Context context, List<Uri> imgsList){
@@ -29,7 +30,7 @@ public class CreatePostAdapter extends RecyclerView.Adapter<AddImageHolder>{
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         AddImageBinding binding = AddImageBinding.inflate(inflater, parent, false);
-        AddImageHolder addImageHolder = new AddImageHolder(binding);
+        AddImageHolder addImageHolder = new AddImageHolder(binding, this);
         return addImageHolder;
     }
 

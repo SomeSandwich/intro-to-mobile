@@ -6,18 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.databinding.CustomCartItemsBinding;
 
 
-public class CartAdapter extends ArrayAdapter<String> {
+public class CartAdapter extends ArrayAdapter<String> implements DatabaseConnection {
     private LayoutInflater inflater;
     Context context;
-    Integer[] product;
+    String[] product;
     String[] productName;
     String[] price;
     String[] seller;
 
-    public CartAdapter( Context context, int layoutToBeInflated, String[] productName, String[] price, String[] seller, Integer[] product) {
+    public CartAdapter( Context context, int layoutToBeInflated, String[] productName, String[] price, String[] seller, String[] product) {
         super(context, layoutToBeInflated, productName);
         this.context = context;
         this.productName = productName;
@@ -43,7 +44,10 @@ public class CartAdapter extends ArrayAdapter<String> {
         binding.txtProductName.setText(productName[position]);
         binding.txtPrice.setText(price[position]);
         binding.txtSeller.setText(seller[position]);
-        binding.ivProduct.setImageResource(product[position]);
+
+
+
+        //binding.ivProduct.setImageResource(product[position]);
         return (result);
     }
 }

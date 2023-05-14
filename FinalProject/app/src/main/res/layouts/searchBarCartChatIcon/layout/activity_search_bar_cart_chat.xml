@@ -24,6 +24,7 @@
             android:inputType="textFilter"
             android:paddingHorizontal="10dp" />
         <ImageButton
+            android:onClick="@{clickHandler::cartClick}"
             android:id="@+id/CartPic"
             android:layout_width="50dp"
             android:layout_height="50dp"

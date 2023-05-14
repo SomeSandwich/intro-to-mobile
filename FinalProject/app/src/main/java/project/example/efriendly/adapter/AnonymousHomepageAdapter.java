@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Vector;
 
 
+import project.example.efriendly.R;
 import project.example.efriendly.activities.AnonymousHomepageActivity;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.constants.DatabaseConnection;
@@ -60,28 +63,10 @@ public class AnonymousHomepageAdapter extends RecyclerView.Adapter<PostHolder> i
         holder.price.setText(String.valueOf(posts.get(index).getPrice() + "VND"));
         holder.progressBar.setVisibility(View.VISIBLE);
 
-        if (posts.get(index).getImgBitmap().size() == 0) {
-            posts.get(index).setImgBitmap(new Vector<>());
-            try {
-                InputStream newUrl = new URL(IMAGE_URL + posts.get(index).getMediaPath().get(0)).openStream();
-                Bitmap image = BitmapFactory.decodeStream(newUrl);
-                holder.image.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        posts.get(index).getImgBitmap().add(image);
-                        holder.image.setImageBitmap(image);
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                    }
-                });
-
-            } catch (Exception e) {
-                Log.d("Debug", e.getMessage());
-            }
-        }
-        else{
-            holder.image.setImageBitmap(posts.get(index).getImgBitmap().get(0));
-            holder.progressBar.setVisibility(View.INVISIBLE);
-        }
+        Glide.with(context)
+                .load(IMAGE_URL + posts.get(index).getMediaPath().get(0)).placeholder(R.drawable.placeholder)
+                .into(holder.image);
+        holder.progressBar.setVisibility(View.INVISIBLE);
     }
     @Override
     public int getItemCount() {

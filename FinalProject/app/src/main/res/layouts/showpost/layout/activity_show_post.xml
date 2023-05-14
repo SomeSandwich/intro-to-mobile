@@ -138,8 +138,9 @@
                         android:layout_width="0dp"
                         android:layout_height="50dp"/>
                     <Button
+                        android:onClick="@{clickHandler::contactClick}"
                         android:backgroundTint="@color/green"
-                        android:text="@string/share"
+                        android:text="@string/Contact"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="50dp"/>
