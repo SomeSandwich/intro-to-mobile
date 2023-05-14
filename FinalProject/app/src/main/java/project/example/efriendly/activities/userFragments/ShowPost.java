@@ -44,39 +44,38 @@ public class ShowPost extends Fragment implements DatabaseConnection {
 
     CartService cartService;
     PostRes post;
-    int currentIndex=0;
+    int currentIndex = 0;
     ShowPostClickHandler handlers;
     UserActivity main;
 
-    public ShowPost(PostRes post){
+    public ShowPost(PostRes post) {
         this.post = post;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try{
+        try {
             context = getActivity();
             main = (UserActivity) getActivity();
-        }
-        catch (IllegalStateException err){
+        } catch (IllegalStateException err) {
             throw new IllegalStateException("MainActivity must implement callbacks");
         }
     }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = ActivityShowPostBinding.inflate(inflater, container,false);
+        binding = ActivityShowPostBinding.inflate(inflater, container, false);
         handlers = new ShowPost.ShowPostClickHandler(context);
         binding.setClickHandler(handlers);
-        try{
-            for (int i=0;i<post.getMediaPath().size();i++){
+        try {
+            for (int i = 0; i < post.getMediaPath().size(); i++) {
                 InputStream newUrl = new URL(IMAGE_URL + post.getMediaPath().get(i)).openStream();
                 Bitmap image = BitmapFactory.decodeStream(newUrl);
                 post.getImgBitmap().add(image);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             Log.d("ShowPostGetImage", e.getMessage());
         }
         currentIndex = 0;
@@ -85,11 +84,11 @@ public class ShowPost extends Fragment implements DatabaseConnection {
         show.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
-                ImageView imageView= new ImageView(context);
+                ImageView imageView = new ImageView(context);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setLayoutParams(new FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.MATCH_PARENT
-                        ,FrameLayout.LayoutParams.MATCH_PARENT
+                        , FrameLayout.LayoutParams.MATCH_PARENT
                 ));
                 return imageView;
             }
@@ -99,21 +98,22 @@ public class ShowPost extends Fragment implements DatabaseConnection {
         show.setImageDrawable(drawable);
         show.setOnTouchListener(new OnSwipeTouchListener(context) {
             public void onSwipeRight() {
-                show.setInAnimation(context,R.anim.from_left);
-                show.setOutAnimation(context,R.anim.to_right);
+                show.setInAnimation(context, R.anim.from_left);
+                show.setOutAnimation(context, R.anim.to_right);
                 currentIndex++;
-                if(currentIndex == (post.getImgBitmap().size()))
-                    currentIndex=0;
+                if (currentIndex == (post.getImgBitmap().size()))
+                    currentIndex = 0;
 
                 Drawable drawable = new BitmapDrawable(getResources(), post.getImgBitmap().get(currentIndex));
                 show.setImageDrawable(drawable);
             }
+
             public void onSwipeLeft() {
-                show.setInAnimation(context,R.anim.from_right);
-                show.setOutAnimation(context,R.anim.to_left);
+                show.setInAnimation(context, R.anim.from_right);
+                show.setOutAnimation(context, R.anim.to_left);
                 --currentIndex;
-                if(currentIndex<0)
-                    currentIndex=post.getImgBitmap().size() - 1;
+                if (currentIndex < 0)
+                    currentIndex = post.getImgBitmap().size() - 1;
 
                 Drawable drawable = new BitmapDrawable(getResources(), post.getImgBitmap().get(currentIndex));
                 show.setImageDrawable(drawable);
@@ -134,7 +134,8 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                     binding.ClothesDes.setText(post.getDescription());
                     binding.name.setText(post.getUser().getName());
                     binding.size.setText("M");
-                    if (post.getUser().getLegit() != -1) binding.legitPoint.setText(String.valueOf(post.getUser().getLegit()));
+                    if (post.getUser().getLegit() != -1)
+                        binding.legitPoint.setText(String.valueOf(post.getUser().getLegit()));
                     else binding.legitPoint.setText("0");
 
                     binding.rating.setOnTouchListener(new View.OnTouchListener() {
@@ -148,9 +149,10 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                     });
                     binding.prices.setText(String.valueOf(post.getPrice() + "VND"));
 
-                    if (post.getUser().getAvatar() == null) binding.sellerAvt.setImageResource(R.drawable.user);
-                    else{
-                        try{
+                    if (post.getUser().getAvatar() == null)
+                        binding.sellerAvt.setImageResource(R.drawable.user);
+                    else {
+                        try {
                             InputStream newUrl = new URL(IMAGE_URL + post.getUser().getAvatar()).openStream();
                             Bitmap image = BitmapFactory.decodeStream(newUrl);
                             binding.sellerAvt.post(new Runnable() {
@@ -160,12 +162,12 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                                 }
                             });
                             post.getUser().setAvtBitmap(image);
+                        } catch (Exception e) {
+                            Log.d("AvatarDownload", e.getMessage());
                         }
-                        catch (Exception e){Log.d("AvatarDownload", e.getMessage());}
                     }
 
-                }
-                else {
+                } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 }
@@ -181,38 +183,39 @@ public class ShowPost extends Fragment implements DatabaseConnection {
         return binding.getRoot();
     }
 
-    public class ShowPostClickHandler{
+    public class ShowPostClickHandler {
         Context context;
+
         public ShowPostClickHandler(Context context) {
             this.context = context;
         }
-        public void addToCartClick(View view){
+
+        public void addToCartClick(View view) {
             int postId = post.getId();
             Call<UserRes> userResCall = userService.GetSelf();
             userResCall.enqueue(new Callback<UserRes>() {
                 @Override
                 public void onResponse(Call<UserRes> call, Response<UserRes> response) {
                     if (response.isSuccessful()) {
-                        cartService.addToCart(response.body().getId(), post.getId()).enqueue(new Callback<String>() {
+                        cartService.AddPostToSelfCart(post.getId()).enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
-                                if (response.isSuccessful()){
+                                if (response.isSuccessful()) {
                                     Toast.makeText(context, response.body(), Toast.LENGTH_LONG).show();
                                     main.onMsgFromFragToMain("showPost", "close");
-                                }
-                                else{
+                                } else {
                                     String message = "An error occurred please try again later ...";
                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<String> call, Throwable t) {
                                 String message = t.getLocalizedMessage();
                                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                             }
                         });
-                    }
-                    else {
+                    } else {
                         String message = "An error occurred please try again later ...";
                         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
