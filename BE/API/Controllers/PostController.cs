@@ -77,6 +77,7 @@ public class PostController : ControllerBase
 
     [HttpPost]
     [Route("")]
+    [DisableRequestSizeLimit]
     public async Task<ActionResult<string>> Create([FromForm] CreatePostReq request)
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;

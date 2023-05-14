@@ -34,11 +34,13 @@ public class AnonymousHomepageAdapter extends RecyclerView.Adapter<PostHolder> i
     List<PostRes> posts = Collections.emptyList();
     AnonymousHomepageActivity.ClickListener listener;
     Context context;
-    public AnonymousHomepageAdapter(List<PostRes> posts, Context context, AnonymousHomepageActivity.ClickListener listener){
+
+    public AnonymousHomepageAdapter(List<PostRes> posts, Context context, AnonymousHomepageActivity.ClickListener listener) {
         this.posts = posts;
         this.context = context;
         this.listener = listener;
     }
+
     @NonNull
     @Override
     public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +50,7 @@ public class AnonymousHomepageAdapter extends RecyclerView.Adapter<PostHolder> i
         PostHolder postHolder = new PostHolder(binding);
         return postHolder;
     }
+
     @Override
     public void onBindViewHolder(@NonNull PostHolder holder, int position) {
         final int index = holder.getAdapterPosition();
@@ -68,6 +71,7 @@ public class AnonymousHomepageAdapter extends RecyclerView.Adapter<PostHolder> i
                 .into(holder.image);
         holder.progressBar.setVisibility(View.INVISIBLE);
     }
+
     @Override
     public int getItemCount() {
         return posts.size();

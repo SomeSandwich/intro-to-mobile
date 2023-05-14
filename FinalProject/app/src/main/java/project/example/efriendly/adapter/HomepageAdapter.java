@@ -33,11 +33,13 @@ public class HomepageAdapter extends RecyclerView.Adapter<PostHolder> implements
     List<PostRes> posts = Collections.emptyList();
     HomepageActivity.ClickListener listener;
     Context context;
-    public HomepageAdapter(List<PostRes> posts, Context context, HomepageActivity.ClickListener listener){
+
+    public HomepageAdapter(List<PostRes> posts, Context context, HomepageActivity.ClickListener listener) {
         this.posts = posts;
         this.context = context;
         this.listener = listener;
     }
+
     @NonNull
     @Override
     public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,6 +49,7 @@ public class HomepageAdapter extends RecyclerView.Adapter<PostHolder> implements
         PostHolder postHolder = new PostHolder(binding);
         return postHolder;
     }
+
     @Override
     public void onBindViewHolder(@NonNull PostHolder holder, int position) {
         final int index = holder.getAdapterPosition();
@@ -67,6 +70,7 @@ public class HomepageAdapter extends RecyclerView.Adapter<PostHolder> implements
                 .into(holder.image);
         holder.progressBar.setVisibility(View.INVISIBLE);
     }
+
     @Override
     public int getItemCount() {
         return posts.size();
