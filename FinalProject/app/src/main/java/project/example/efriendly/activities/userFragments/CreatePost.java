@@ -74,7 +74,7 @@ public class CreatePost extends Fragment implements DatabaseConnection {
     FragmentCreatePostBinding binding;
     CreatePostClickHandler clickHandler;
     List<Uri> imgsList = new ArrayList<>();
-    List<File> sendList = new ArrayList<>();
+    List<MultipartBody.Part> sendList = new ArrayList<>();
     List<CategoryRes> categoryList = new ArrayList<>();
     UserService userService;
     PostService postService;
@@ -228,15 +228,14 @@ public class CreatePost extends Fragment implements DatabaseConnection {
                         categoryID = categoryList.get(i).getId();
 
                 postService = RetrofitClientGenerator.getService(PostService.class);
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), sendList.get(0));
-                MultipartBody.Part body = MultipartBody.Part.createFormData("MediaFiles", sendList.get(0).getName(), requestFile);
+
 
                 Call<String> postCall = postService.Create(
                         RequestBody.create(MediaType.parse("multipart/form-data"), categoryID.toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.prices.getText().toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.caption.getText().toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.des.getText().toString()),
-                        body);
+                        sendList);
                 postCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -269,8 +268,9 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             adapter.notifyItemInserted(imgsList.size() - 1);
 
             File file = new File(RealPathUtil.getRealPath(context, selectedImage));
-
-            sendList.add(file);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("MediaFiles", file.getName(), requestFile);
+            sendList.add(body);
         }
     }
 }

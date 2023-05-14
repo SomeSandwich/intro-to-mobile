@@ -42,7 +42,7 @@ public interface PostService {
             @Part("Price") RequestBody price,
             @Part("Caption") RequestBody caption,
             @Part("Caption") RequestBody description,
-            @Part MultipartBody.Part mediaFiles);
+            @Part List<MultipartBody.Part> mediaFiles);
 
     @POST("post/{postId}/share-by/{userId}")
     Call<String> AddShareBy(@Path("postId") Integer postId, @Path("userId") Integer userId);
