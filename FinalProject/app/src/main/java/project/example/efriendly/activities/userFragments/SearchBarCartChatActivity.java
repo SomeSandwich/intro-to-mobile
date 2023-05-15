@@ -51,6 +51,7 @@ public class SearchBarCartChatActivity extends Fragment {
         public void chatClick(View view){
             Intent myIntent = new Intent(context, ChatActivity.class);
             startActivity(myIntent);
+            main.onMsgFromFragToMain("SearchBar", "Hello");
         }
         public void cartClick(View view){
             Intent intent = new Intent(context, CartActivity.class);

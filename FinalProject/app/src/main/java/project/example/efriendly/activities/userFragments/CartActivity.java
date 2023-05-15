@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import project.example.efriendly.R;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.data.model.Cart.CartRes;
 import project.example.efriendly.data.model.Post.PostRes;
+import project.example.efriendly.data.model.SuccessRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityCartBinding;
 import project.example.efriendly.adapter.CartAdapter;
@@ -37,9 +39,11 @@ import retrofit2.Response;
 public class CartActivity extends AppCompatActivity {
     private ActivityCartBinding binding;
     private CartService cartService;
+    private PostService postService;
     private ClickListener listener;
     private CartActivityClickHandler clickHandler;
     public CartAdapter adapter;
+    public List<CartRes> cartList;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
@@ -69,13 +73,35 @@ public class CartActivity extends AppCompatActivity {
         binding.setClickHandler(clickHandler);
         listener = new ClickListener();
         cartService = RetrofitClientGenerator.getService(CartService.class);
+        postService = RetrofitClientGenerator.getService(PostService.class);
 
         cartService.GetSelfCart().enqueue(new Callback<List<CartRes>>() {
             @Override
             public void onResponse(Call<List<CartRes>> call, Response<List<CartRes>> response) {
                 if(response.isSuccessful()){
+                    long totalPrices = 0;
+                    if (response.body().size() == 0) return;
                     List<Boolean> checkList = new ArrayList<Boolean>(response.body().size());
-                    for (int i = 0; i < response.body().size(); i++) checkList.add(Boolean.FALSE);
+                    for (int i = 0; i < response.body().size(); i++) {
+                        checkList.add(Boolean.FALSE);
+                        try{
+                            Response<PostRes> res = postService.GetById(response.body().get(i).getPostId()).execute();
+                            if (res.isSuccessful()){
+                                totalPrices += res.body().getPrice();
+                            }
+                            else {
+                                String message = "An error occurred please try again later ...";
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                        catch (IOException exception){
+                            String message = "An error occurred please try again later ...";
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    binding.Prices.setText(String.valueOf(totalPrices) + "đ");
+                    cartList = response.body();
                     listener.setCheckList(checkList);
                     adapter = new CartAdapter(context, response.body(), listener);
                     binding.CartList.setAdapter(adapter);
@@ -106,29 +132,40 @@ public class CartActivity extends AppCompatActivity {
             for (int i = 0; i < listener.checkList.size();i++) listener.checkList.set(i, binding.cbAll.isChecked());
             adapter.notifyDataSetChanged();
         }
-
         public void DeleteClick(View view){
-            for (int i = 0;i< listener.checkList.size();i++) {
+            for (int i = 0;i<listener.checkList.size();i++){
                 if (listener.checkList.get(i).equals(Boolean.TRUE)){
-                    final int position = i;
-                    cartService.RemovePostFromSelfCart(position).enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            if (response.isSuccessful()){
-                                adapter.notifyItemRemoved(position);
+                    try {
+                        Response<SuccessRes> res = cartService.RemovePostFromSelfCart(cartList.get(i).getPostId()).execute();
+                        if (res.isSuccessful()){
+                            Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
+                            Response<PostRes> post = postService.GetById(cartList.get(i).getPostId()).execute();
+                            if (post.isSuccessful()){
+                                long updatePrices =
+                                        Long.parseLong(binding.Prices.getText().toString().substring(0, binding.Prices.getText().toString().length() - 1))
+                                                - post.body().getPrice();
+                                binding.Prices.setText(String.valueOf(updatePrices) + "đ");
                             }
                             else {
-                                String message = "An error occurred please try again later ...";
+                                String message = "Can't update total price.";
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            String message = "An error occurred please try again later ...";
+                            listener.checkList.remove(i);
+                            cartList.remove(i);
+                            adapter.notifyItemRemoved(i);
+
+                            i--;
+                        }
+                        else {
+                            String message = "There is an error when deleting.";
                             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                         }
-                    });
+                    }
+                    catch (IOException exception){
+                        String message = "There is an error when deleting.";
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }

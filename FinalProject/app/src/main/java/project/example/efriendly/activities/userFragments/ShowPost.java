@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,12 +31,12 @@ import java.io.InputStream;
 import java.net.URL;
 
 import project.example.efriendly.R;
-import project.example.efriendly.activities.AnonymousHomepageActivity;
-import project.example.efriendly.activities.MainActivity;
+import project.example.efriendly.activities.MessageActivity;
 import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Post.PostRes;
+import project.example.efriendly.data.model.SuccessRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityShowPostBinding;
 import project.example.efriendly.services.CartService;
@@ -185,22 +184,13 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                     });
                     binding.prices.setText(String.valueOf(post.getPrice() + "VND"));
 
-                    if (post.getUser().getAvatar() == null)
+                    if (post.getUser().getAvatarPath() == null)
                         binding.sellerAvt.setImageResource(R.drawable.user);
                     else {
-                        try {
-                            InputStream newUrl = new URL(IMAGE_URL + post.getUser().getAvatar()).openStream();
-                            Bitmap image = BitmapFactory.decodeStream(newUrl);
-                            binding.sellerAvt.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    binding.sellerAvt.setImageBitmap(image);
-                                }
-                            });
-                            post.getUser().setAvtBitmap(image);
-                        } catch (Exception e) {
-                            Log.d("AvatarDownload", e.getMessage());
-                        }
+                        Glide.with(context)
+                                .load(IMAGE_URL + post.getUser().getAvatarPath())
+                                .placeholder(R.drawable.placeholder)
+                                .into(binding.sellerAvt);
                     }
 
                 } else {
@@ -233,11 +223,11 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                 @Override
                 public void onResponse(Call<UserRes> call, Response<UserRes> response) {
                     if (response.isSuccessful()) {
-                        cartService.AddPostToSelfCart(post.getId()).enqueue(new Callback<String>() {
+                        cartService.AddPostToSelfCart(post.getId()).enqueue(new Callback<SuccessRes>() {
                             @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
+                            public void onResponse(Call<SuccessRes> call, Response<SuccessRes> response) {
                                 if (response.isSuccessful()) {
-                                    Toast.makeText(context, response.body(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                                     main.onMsgFromFragToMain("showPost", "close");
                                 } else {
                                     String message = "An error occurred please try again later ...";
@@ -245,7 +235,7 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                                 }
                             }
                             @Override
-                            public void onFailure(Call<String> call, Throwable t) {
+                            public void onFailure(Call<SuccessRes> call, Throwable t) {
                                 String message = t.getLocalizedMessage();
                                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                             }
@@ -269,10 +259,12 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(context, "Create conversation successfully", Toast.LENGTH_LONG).show();
+                        Intent myIntent = new Intent(main, MessageActivity.class);
+                        myIntent.putExtra("conversation_id", response.body());
+                        startActivity(myIntent);
                     }
                     else{
-                        String message = "An error occurred please try again later ...";
-                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Can't create conversation with yourself!", Toast.LENGTH_LONG).show();
                     }
                 }
 

@@ -95,9 +95,9 @@
                     android:layout_marginStart="-270dp"
                     android:textSize="15sp"/>
                 <TextView
+                    android:id="@+id/Prices"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50.000đ"
                     android:textColor="#BC6C25"
                     android:textSize="17sp"
                     android:layout_marginStart="10dp"/>

@@ -100,6 +100,9 @@ public class UserActivity extends AppCompatActivity{
                 getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, homepage).commit();
             }
         }
+        else if (sender.equals("searchBar")){
+            homepage.fromUserActivityToRecyclerView(strValue);
+        }
     }
     public void onMsgFromFragToMain(PostRes post){
         getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, new ShowPost(post)).commit();

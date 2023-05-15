@@ -4,6 +4,7 @@
     <shared>
       <config>
         <device id="pixel_4" />
+        <target>android-33-ext5</target>
       </config>
     </shared>
   </component>
@@ -103,7 +104,7 @@
     "cidr.known.project.marker": "true",
     "ignore.preview.features.used": "true",
     "last_directory_selection": "C:/Users/A3 GIA KHANH/Desktop/intro-to-mobile/FinalProject/app/src/main/res/drawable",
-    "last_opened_file_path": "D:/Android Studio/Github FinalProject/intro-to-mobile/FinalProject",
+    "last_opened_file_path": "D:/Android Studio/Github FinalProject/intro-to-mobile/FinalProject/app/src/main/res/layouts/newfeel/layout",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
@@ -123,16 +124,17 @@
       <recent name="project.example.efriendly.activities" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\newfeel\layout" />
       <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-xxxhdpi" />
       <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-xxhdpi" />
       <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-xhdpi" />
       <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-mdpi" />
-      <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-ldpi" />
     </key>
     <key name="android.template.1576116413">
       <recent name="project.example.efriendly" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\chat\layout" />
       <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\showpost\layout" />
       <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\createPost\drawable" />
       <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\homepage\layout" />
@@ -248,5 +250,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/MessageActivity.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
