@@ -18,6 +18,10 @@ public class MessageRes {
         this.createAt = createAt;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getContent() {
         return content;
     }
