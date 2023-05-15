@@ -39,8 +39,6 @@ public class ChatServices extends Service {
                             try{
                                 wait(futureTime-System.currentTimeMillis());
                                 Log.i(TAG, "Services is running");
-
-
                             }
                             catch (Exception exception) {}
                         }

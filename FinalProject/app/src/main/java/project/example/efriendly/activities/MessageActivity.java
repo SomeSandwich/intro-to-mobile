@@ -129,7 +129,7 @@ public class MessageActivity extends AppCompatActivity implements DatabaseConnec
             LocalDateTime SendTime = LocalDateTime.now();
             String mess = binding.getMessage.getText().toString();
             adapter.messages.add(new MessageRes(0, mess, sender.getId(), SendTime.toString()));
-            adapter.notifyItemInserted(0);
+            adapter.notifyItemInserted(adapter.messages.size() - 1);
             try {
                 Response<Integer> res = chatService.Create(conversationId, new CreateMessageReq(mess)).execute();
                 if (res.isSuccessful()){
