@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using Api.Context;
 using Api.Context.Entities;
 using API.Types.Objects;
@@ -99,10 +100,19 @@ public class ConverstationService : IConversationService
     {
         var conv = await _context.Conversations
             .Include(e => e.Participations)
-            .Include(e => e.Messages.OrderByDescending(m => m.CreateAt))
+            .Include(e => e.Messages.OrderBy(m => m.CreateAt))
             .FirstOrDefaultAsync(e => e.Id == id);
 
-        var result = conv is null ? null : _mapper.Map<Conversation, ConversationRes>(conv);
+        var result = conv is null
+            ? null
+            : _mapper.Map<Conversation, ConversationRes>(conv,
+                opt => opt.AfterMap((src, des) =>
+                {
+                    foreach (var message in des.Messages)
+                    {
+                        message.CreateAt = message.CreateAt.AddHours(7);
+                    }
+                }));
 
         return result;
     }
