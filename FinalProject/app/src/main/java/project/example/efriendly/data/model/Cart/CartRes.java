@@ -1,9 +1,7 @@
 package project.example.efriendly.data.model.Cart;
 
 public class CartRes {
-
     private Integer postId;
-
     private Integer userId;
 
     public Integer getPostId() {

@@ -43,6 +43,7 @@
             app:srcCompat="@drawable/noti_nav"
             />
         <ImageButton
+            android:onClick="@{clickHandler::profileClick}"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/green"

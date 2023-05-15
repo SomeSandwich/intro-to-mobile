@@ -12,15 +12,12 @@ import androidx.fragment.app.Fragment;
 
 import project.example.efriendly.activities.AnonymousHomepageActivity;
 import project.example.efriendly.activities.LoginActivity;
-import project.example.efriendly.activities.UserActivity;
-import project.example.efriendly.databinding.ActivitySearchBarCartChatBinding;
-import project.example.efriendly.databinding.ActivitySearchBarCartLoginBinding;
+import project.example.efriendly.databinding.ActivitySearchBarLoginBinding;
 
 public class SearchBarCartLoginActivity extends Fragment {
-    ActivitySearchBarCartLoginBinding binding;
+    ActivitySearchBarLoginBinding binding;
     Context context = null;
     AnonymousHomepageActivity main;
-
     SearchBarClickHandler clickHandler;
 
     @Override
@@ -37,7 +34,7 @@ public class SearchBarCartLoginActivity extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = ActivitySearchBarCartLoginBinding.inflate(inflater, container,false);
+        binding = ActivitySearchBarLoginBinding.inflate(inflater, container,false);
         binding.setClickHandler(clickHandler);
         return binding.getRoot();
     }

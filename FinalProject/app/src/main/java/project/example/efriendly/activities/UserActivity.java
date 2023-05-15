@@ -19,6 +19,7 @@ import project.example.efriendly.activities.userFragments.CreatePost;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.activities.userFragments.NewfeelActivity;
 import project.example.efriendly.activities.userFragments.NotificationsActivity;
+import project.example.efriendly.activities.userFragments.ProfileActivity;
 import project.example.efriendly.activities.userFragments.ShowPost;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.ActivityUserBinding;
@@ -27,8 +28,8 @@ public class UserActivity extends AppCompatActivity{
     FragmentTransaction ft;
     HomepageActivity homepage = new HomepageActivity();
     navBarActivity navbar = new navBarActivity();
-
     NewfeelActivity newFeel = new NewfeelActivity();
+    ProfileActivity profile = new ProfileActivity();
     CreatePost createPost = new CreatePost();
 
     NotificationsActivity notification = new NotificationsActivity();
@@ -78,6 +79,9 @@ public class UserActivity extends AppCompatActivity{
                     break;
                 case "3":
                     getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, notification).commit();
+                    break;
+                case "4":
+                    getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, profile).commit();
                     break;
                 default:
                     break;

@@ -6,167 +6,167 @@
 
     </data>
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginEnd="16dp">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/ivProduct"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:layout_marginStart="4dp"-->
-<!--            android:layout_marginTop="4dp"-->
-<!--            android:layout_marginBottom="4dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:contentDescription="@string/image"-->
-<!--            app:srcCompat="@drawable/clothes"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/txtProductName"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Ao thun den tron"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:layout_marginTop="14dp"-->
-<!--            app:layout_constraintStart_toEndOf="@id/ivProduct"-->
-<!--            app:layout_constraintTop_toTopOf="@id/ivProduct"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold"/>-->
-<!--        -->
-<!--        <ImageView-->
-<!--            android:id="@+id/BtnMinusCart"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="8dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/ivProduct"-->
-<!--            app:layout_constraintStart_toStartOf="@id/txtProductName"-->
-<!--            app:srcCompat="@drawable/minus"/>-->
-<!--        -->
-<!--        <TextView-->
-<!--            android:id="@+id/txtNumItems"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="1"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/BtnMinusCart"-->
-<!--            app:layout_constraintStart_toEndOf="@id/BtnMinusCart"-->
-<!--            app:layout_constraintTop_toTopOf="@id/BtnMinusCart"/>-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/btnPlusCart"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="8dp"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/ivProduct"-->
-<!--            app:layout_constraintStart_toEndOf="@id/txtNumItems"-->
-<!--            app:layout_constraintTop_toTopOf="@id/BtnMinusCart"-->
-<!--            app:srcCompat="@drawable/plus"/>-->
-<!--        -->
-<!--        <TextView-->
-<!--            android:id="@+id/initPrice"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:text="0"-->
-<!--            android:textSize="16sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@id/txtProductName"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/txtProductName"/>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="$"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/initPrice"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/initPrice"-->
-<!--            app:layout_constraintTop_toTopOf="@id/initPrice"-->
-<!--            android:layout_marginEnd="4dp"-->
-<!--            android:textColor="@color/green"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/txtTotalMoney"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:text="0"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@id/btnPlusCart"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/btnPlusCart"/>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="$"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/txtTotalMoney"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/txtTotalMoney"-->
-<!--            app:layout_constraintTop_toTopOf="@id/txtTotalMoney"-->
-<!--            android:layout_marginEnd="4dp"-->
-<!--            android:textColor="@color/green"/>-->
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <LinearLayout android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <CheckBox
-            android:id="@+id/cbCart"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
         <ImageView
             android:id="@+id/ivProduct"
-            android:layout_width="120dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/image"
-            app:srcCompat="@drawable/clothes"
-            tools:ignore="ImageContrastCheck" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="vertical">
+            app:srcCompat="@drawable/clothes"/>
 
-            <TextView
-                android:id="@+id/txtProductName"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"/>
-            <TextView
-                android:id="@+id/txtPrice"
-                android:layout_width="match_parent"
-                android:layout_height="28dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginStart="20dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="28dp"
-                android:layout_marginStart="20dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/txtSellerTitle"
-                    android:layout_width="55dp"
-                    android:layout_height="28dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="@string/SellerTitle" />
-                <TextView
-                    android:id="@+id/txtSeller"
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/txtProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ao thun den tron"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="14dp"
+            app:layout_constraintStart_toEndOf="@id/ivProduct"
+            app:layout_constraintTop_toTopOf="@id/ivProduct"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/btnMinusCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/ivProduct"
+            app:layout_constraintStart_toStartOf="@id/txtProductName"
+            app:srcCompat="@drawable/minus"/>
+
+        <TextView
+            android:id="@+id/txtNumItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/btnMinusCart"
+            app:layout_constraintStart_toEndOf="@id/btnMinusCart"
+            app:layout_constraintTop_toTopOf="@id/btnMinusCart"/>
+
+        <ImageView
+            android:id="@+id/btnPlusCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/ivProduct"
+            app:layout_constraintStart_toEndOf="@id/txtNumItems"
+            app:layout_constraintTop_toTopOf="@id/btnMinusCart"
+            app:srcCompat="@drawable/plus"/>
+
+        <TextView
+            android:id="@+id/unitPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="0"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtProductName"
+            app:layout_constraintBottom_toBottomOf="@id/txtProductName"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            app:layout_constraintEnd_toStartOf="@id/unitPrice"
+            app:layout_constraintBottom_toBottomOf="@id/unitPrice"
+            app:layout_constraintTop_toTopOf="@id/unitPrice"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/green"/>
+
+        <TextView
+            android:id="@+id/txtTotalMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnPlusCart"
+            app:layout_constraintBottom_toBottomOf="@id/btnPlusCart"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/txtTotalMoney"
+            app:layout_constraintBottom_toBottomOf="@id/txtTotalMoney"
+            app:layout_constraintTop_toTopOf="@id/txtTotalMoney"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/green"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <LinearLayout android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+<!--        <CheckBox-->
+<!--            android:id="@+id/cbCart"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:layout_marginEnd="15dp"/>-->
+<!--        <ImageView-->
+<!--            android:id="@+id/ivProduct"-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:contentDescription="@string/image"-->
+<!--            app:srcCompat="@drawable/clothes"-->
+<!--            tools:ignore="ImageContrastCheck" />-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txtProductName"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="20dp"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/txtPrice"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="28dp"-->
+<!--                android:layout_marginBottom="15dp"-->
+<!--                android:layout_marginStart="20dp"/>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="28dp"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:id="@+id/txtSellerTitle"-->
+<!--                    android:layout_width="55dp"-->
+<!--                    android:layout_height="28dp"-->
+<!--                    android:layout_marginEnd="5dp"-->
+<!--                    android:text="@string/SellerTitle" />-->
+<!--                <TextView-->
+<!--                    android:id="@+id/txtSeller"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="28dp" />-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
 </layout>

@@ -41,10 +41,11 @@ public class navBarActivity extends Fragment {
         public NavbarClickHandler(Context context){
             this.context = context;
         }
+        public void newFeelClick(View view ){main.onMsgFromFragToMain("nav", "1");}
         public void homeClick(View view){
             main.onMsgFromFragToMain("nav", "2");
         }
         public void notificationClick(View view){ main.onMsgFromFragToMain("nav", "3"); }
-        public void newFeelClick(View view ){main.onMsgFromFragToMain("nav", "1");}
+        public void profileClick(View view ){main.onMsgFromFragToMain("nav", "4");}
     }
 }
