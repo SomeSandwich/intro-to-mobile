@@ -50,6 +50,7 @@ import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Category.CategoryRes;
 import project.example.efriendly.data.model.Post.CreatePostReq;
+import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.FragmentCreatePostBinding;
 import project.example.efriendly.databinding.FragmentNewfeelActivityBinding;
@@ -74,11 +75,13 @@ public class CreatePost extends Fragment implements DatabaseConnection {
     FragmentCreatePostBinding binding;
     CreatePostClickHandler clickHandler;
     List<Uri> imgsList = new ArrayList<>();
-    List<File> sendList = new ArrayList<>();
+    List<MultipartBody.Part> sendList = new ArrayList<>();
     List<CategoryRes> categoryList = new ArrayList<>();
     UserService userService;
     PostService postService;
     CategoryService categoryService;
+
+    ClickListener clickListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,7 +112,8 @@ public class CreatePost extends Fragment implements DatabaseConnection {
         PostService postService = RetrofitClientGenerator.getService(PostService.class);
         clickHandler = new CreatePostClickHandler(context);
         binding.setClickHandler(clickHandler);
-        adapter = new CreatePostAdapter(context, imgsList);
+        clickListener = new ClickListener();
+        adapter = new CreatePostAdapter(context, imgsList, clickListener);
         binding.imageReview.setAdapter(adapter);
         SpacingItemDecorator itemDecorator = new SpacingItemDecorator(10);
         binding.imageReview.addItemDecoration(itemDecorator);
@@ -194,9 +198,14 @@ public class CreatePost extends Fragment implements DatabaseConnection {
         });
     }
 
+    public class ClickListener{
+        public void RemoveImageClick(int position){
+            imgsList.remove(position);
+        };
+    }
+
     public class CreatePostClickHandler {
         Context context;
-
         public CreatePostClickHandler(Context context) {
             this.context = context;
         }
@@ -206,7 +215,17 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             startActivityForResult(intent, 3);
         }
 
+        public void finish(){
+            int size = imgsList.size();
+            imgsList.clear();
+            adapter.notifyItemRangeRemoved(0, size);
+            binding.caption.setText("");
+            binding.des.setText("");
+            binding.prices.setText("");
+        }
+
         public void closeClick(View view) {
+            finish();
             main.onMsgFromFragToMain("createPost", "close");
         }
 
@@ -214,52 +233,48 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             if (binding.caption.getText().toString().matches("")) {
                 String message = "Can't post without caption";
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-            } else if (sendList.size() == 0) {
+            } else if (imgsList.size() == 0) {
                 String message = "Can't post without image";
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
             } else {
-
                 String categoryName = binding.CategoryBar.getSelectedItem().toString();
-
                 Integer categoryID = 0;
-
                 for (int i = 0; i < categoryList.size(); i++)
                     if (categoryName.equals(categoryList.get(i).getDescription()))
                         categoryID = categoryList.get(i).getId();
-
+                for (int i = 0; i<imgsList.size();i++){
+                    File file = new File(RealPathUtil.getRealPath(context, imgsList.get(i)));
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("MediaFiles", file.getName(), requestFile);
+                    sendList.add(body);
+                }
                 postService = RetrofitClientGenerator.getService(PostService.class);
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), sendList.get(0));
-                MultipartBody.Part body = MultipartBody.Part.createFormData("MediaFiles", sendList.get(0).getName(), requestFile);
-
                 Call<String> postCall = postService.Create(
                         RequestBody.create(MediaType.parse("multipart/form-data"), categoryID.toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.prices.getText().toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.caption.getText().toString()),
                         RequestBody.create(MediaType.parse("multipart/form-data"), binding.des.getText().toString()),
-                        body);
+                        sendList);
                 postCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(main, response.body(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(main, "Success", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(main, "An error occurred please try again later ...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(main, "An error occurred please try again later...", Toast.LENGTH_SHORT).show();
                         }
-
                     }
-
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
                         Log.d("Debug", t.getLocalizedMessage());
                         Toast.makeText(main, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-
+                finish();
+                main.onMsgFromFragToMain("createPost", "close");
             }
         }
     }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -267,10 +282,6 @@ public class CreatePost extends Fragment implements DatabaseConnection {
             Uri selectedImage = data.getData();
             imgsList.add(selectedImage);
             adapter.notifyItemInserted(imgsList.size() - 1);
-
-            File file = new File(RealPathUtil.getRealPath(context, selectedImage));
-
-            sendList.add(file);
         }
     }
 }

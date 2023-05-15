@@ -48,8 +48,6 @@
     <string name="logout">LOGOUT</string>
     <string name="checkout">CHECK OUT</string>
     <string name="splashText">Wish you have the best experience when using the application</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="newpostHint">Sell your old clothes to protect environment!!</string>
     <string name="detail"><b><font size="35">Detail</font></b></string>
@@ -61,4 +59,6 @@
     <string name="caption">Caption(required)</string>
     <string name="prices">Price(required)</string>
     <string name="hintCategory"> Select category</string>
+    <string name="addToCart">Add to cart</string>
+    <string name="Contact">Contact</string>
 </resources>

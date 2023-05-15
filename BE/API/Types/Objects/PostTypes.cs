@@ -62,7 +62,7 @@ public class PostRes
 
     public string[]? MediaPath { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDate;
 
     public DateTime UpdatedDate { get; set; }
 

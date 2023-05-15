@@ -1,10 +1,7 @@
 package project.example.efriendly.adapter;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import com.bumptech.glide.Glide;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -36,20 +32,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewfeelAdapter extends  RecyclerView.Adapter<NewfeelPostHolder> implements DatabaseConnection {
-    private Activity activity;
+public class NewfeelAdapter extends RecyclerView.Adapter<NewfeelPostHolder> implements DatabaseConnection {
     List<PostRes> posts = Collections.emptyList();
     Context context;
     ShowPostNewfeelAdapterBinding binding;
     final private UserService userService = RetrofitClientGenerator.getService(UserService.class);
     NewfeelActivity.ClickListener listener;
-
     public NewfeelAdapter(List<PostRes> posts, Context context, NewfeelActivity.ClickListener listener){
         this.posts = posts;
         this.context = context;
         this.listener = listener;
     }
-
     @NonNull
     @Override
     public NewfeelPostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,25 +50,45 @@ public class NewfeelAdapter extends  RecyclerView.Adapter<NewfeelPostHolder> imp
         LayoutInflater inflater = LayoutInflater.from(context);
         binding = ShowPostNewfeelAdapterBinding.inflate(inflater, parent, false);
         NewfeelPostHolder newfeelPostHolder = new NewfeelPostHolder(binding);
-
         return newfeelPostHolder;
     }
     @Override
     public void onBindViewHolder(@NonNull NewfeelPostHolder holder, int position) {
         final int index = holder.getAdapterPosition();
-        PostRes post = posts.get(index);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.click(post);
+                listener.click(posts.get(index));
             }
         });
-
+        holder.nextClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                posts.get(index).setCurrentIndex(posts.get(index).getCurrentIndex()+1);
+                if (posts.get(index).getCurrentIndex()>= posts.get(index).getMediaPath().size()) posts.get(index).setCurrentIndex(0);
+                holder.progressBar.setVisibility(View.VISIBLE);
+                Glide.with(context)
+                        .load(IMAGE_URL + posts.get(index).getMediaPath().get(posts.get(index).getCurrentIndex()))
+                        .into(holder.clothesImg);
+                holder.progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+        holder.previousClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                posts.get(index).setCurrentIndex( posts.get(index).getCurrentIndex() - 1);
+                if ( posts.get(index).getCurrentIndex() < 0)  posts.get(index).setCurrentIndex( posts.get(index).getMediaPath().size() - 1);
+                holder.progressBar.setVisibility(View.VISIBLE);
+                Glide.with(context)
+                        .load(IMAGE_URL +  posts.get(index).getMediaPath().get( posts.get(index).getCurrentIndex()))
+                        .into(holder.clothesImg);
+                holder.progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
         holder.progressBar.setVisibility(View.VISIBLE);
         holder.post.setVisibility(View.INVISIBLE);
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        LocalDateTime updatePost = LocalDateTime.parse(post.getUpdatedDate().substring(0,19), formatter);
+        LocalDateTime updatePost = LocalDateTime.parse(posts.get(index).getUpdatedDate().substring(0,19), formatter);
         LocalDateTime now = LocalDateTime.now();
 
         long minutes = ChronoUnit.MINUTES.between(updatePost, now);
@@ -99,38 +112,33 @@ public class NewfeelAdapter extends  RecyclerView.Adapter<NewfeelPostHolder> imp
         holder.time.setText(time);
         holder.likeCount.setText(String.valueOf(10));
         holder.commentCount.setText(String.valueOf(30) + " comments");
-        holder.shareCount.setText(String.valueOf(post.getUserShare().size() + " shares"));
-        holder.des.setText(post.getDescription());
+        holder.shareCount.setText(String.valueOf(posts.get(index).getUserShare().size() + " shares"));
+        holder.des.setText(posts.get(index).getDescription());
 
         try {
-            holder.name.setText(post.getUser().getName());
-            if (post.getUser().getAvatar() != null) holder.avt.setImageBitmap(post.getUser().getAvtBitmap());
+            holder.name.setText(posts.get(index).getUser().getName());
+            if (posts.get(index).getUser().getAvatar() != null) holder.avt.setImageBitmap(posts.get(index).getUser().getAvtBitmap());
             else holder.avt.setImageResource(R.drawable.user);
             holder.post.setVisibility(View.VISIBLE);
         }
         catch (NullPointerException err) {
-            Call<UserRes> userResCall = userService.GetById(post.getUserID());
+            Call<UserRes> userResCall = userService.GetById(posts.get(index).getUserID());
             userResCall.enqueue(new Callback<UserRes>() {
                 @Override
                 public void onResponse(Call<UserRes> call, Response<UserRes> response) {
                     if (response.isSuccessful()) {
                         UserRes user = response.body();
-                        post.setUser(user);
-                        if (post.getUser().getAvatar() != null) {
+                        posts.get(index).setUser(user);
+                        if (posts.get(index).getUser().getAvatar() != null) {
                             try {
-                                InputStream newUrl = new URL(IMAGE_URL + post.getUser().getAvatar()).openStream();
-                                Bitmap image = BitmapFactory.decodeStream(newUrl);
-                                holder.avt.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        holder.avt.setImageBitmap(image);
-                                        post.getUser().setAvtBitmap(image);
-                                    }
-                                });
+                                Glide.with(context)
+                                        .load(IMAGE_URL + posts.get(index).getUser().getAvatar()).placeholder(R.drawable.placeholder)
+                                        .into(holder.avt);
+                                holder.progressBar.setVisibility(View.INVISIBLE);
                             }
                             catch (Exception e) {Log.d("Debug", e.getMessage());}
                         }
-                        holder.name.setText(post.getUser().getName());
+                        holder.name.setText(posts.get(index).getUser().getName());
                         holder.post.setVisibility(View.VISIBLE);
 
                     } else {
@@ -147,89 +155,14 @@ public class NewfeelAdapter extends  RecyclerView.Adapter<NewfeelPostHolder> imp
         }
         holder.progressBar.setVisibility(View.VISIBLE);
 
-        try{
-            holder.clothesImg.setImageBitmap(post.getImgBitmap().get(post.getCurrentIndex()));
-            holder.progressBar.setVisibility(View.INVISIBLE);
-        }
-        catch (IndexOutOfBoundsException err){
-            try {
-
-                InputStream newUrl = new URL(IMAGE_URL + post.getMediaPath().get(post.getCurrentIndex())).openStream();
-                Bitmap image = BitmapFactory.decodeStream(newUrl);
-                holder.clothesImg.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        post.getImgBitmap().add(image);
-                        holder.clothesImg.setImageBitmap(post.getImgBitmap().get(0));
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                    }
-                });
-            }
-            catch (Exception e) {
-                Log.d("SetImageViewDebug", e.getMessage());
-            }
-        }
-
-        binding.setClickHandler(new PostNewFeelClickHandler(post, holder));
+        Glide.with(context)
+                .load(IMAGE_URL + posts.get(index).getMediaPath().get(posts.get(index).getCurrentIndex()))
+                .placeholder(R.drawable.placeholder)
+                .into(holder.clothesImg);
+        holder.progressBar.setVisibility(View.INVISIBLE);
     }
     @Override
     public int getItemCount() {
         return posts.size();
-    }
-    public class PostNewFeelClickHandler{
-        NewfeelPostHolder holder;
-        PostRes post;
-        public PostNewFeelClickHandler(PostRes post, NewfeelPostHolder holder){
-            this.post = post;
-            this.holder = holder;
-        }
-        public void nextPicClick(View view){
-            post.setCurrentIndex(post.getCurrentIndex()+1);
-            if (post.getCurrentIndex()>= post.getMediaPath().size()) post.setCurrentIndex(0);
-
-            holder.progressBar.setVisibility(View.VISIBLE);
-            try{
-                holder.clothesImg.setImageBitmap(post.getImgBitmap().get(post.getCurrentIndex()));
-                holder.progressBar.setVisibility(View.INVISIBLE);
-            }
-            catch (ArrayIndexOutOfBoundsException err){
-                try {
-                    InputStream newUrl = new URL(IMAGE_URL + post.getMediaPath().get(post.getCurrentIndex())).openStream();
-                    Bitmap image = BitmapFactory.decodeStream(newUrl);
-                    holder.clothesImg.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            post.getImgBitmap().add(image);
-                            holder.clothesImg.setImageBitmap(post.getImgBitmap().get(post.getCurrentIndex()));
-                            holder.progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.d("NextButtonDebug", e.getMessage());
-                }
-            }
-        }
-        public void previousClick(View view) {
-            post.setCurrentIndex(post.getCurrentIndex() - 1);
-            if (post.getCurrentIndex() < 0) post.setCurrentIndex(post.getMediaPath().size() - 1);
-            holder.progressBar.setVisibility(View.VISIBLE);
-            try {
-                holder.clothesImg.setImageBitmap(post.getImgBitmap().get(post.getCurrentIndex()));
-                holder.progressBar.setVisibility(View.INVISIBLE);
-            } catch (ArrayIndexOutOfBoundsException err) {
-                try {
-                    URL newUrl = new URL(IMAGE_URL + post.getMediaPath().get(post.getCurrentIndex()));
-                    URLConnection conn = newUrl.openConnection();
-                    Bitmap mIcon_val = BitmapFactory.decodeStream(conn.getInputStream());
-                    if (mIcon_val != null) {
-                        post.getImgBitmap().add(mIcon_val);
-                        holder.clothesImg.setImageBitmap(post.getImgBitmap().get(post.getCurrentIndex()));
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                    }
-                } catch (Exception e) {
-                    Log.d("NextButtonDebug", e.getMessage());
-                }
-            }
-        }
     }
 }

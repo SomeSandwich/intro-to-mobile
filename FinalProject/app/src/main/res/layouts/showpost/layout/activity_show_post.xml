@@ -2,8 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.showPost">
+    tools:context=".activities.userFragments.ShowPost">
     <data>
+        <variable
+            name="clickHandler"
+            type="project.example.efriendly.activities.userFragments.ShowPost.ShowPostClickHandler" />
     </data>
     <LinearLayout
         android:orientation="vertical"
@@ -112,7 +115,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
                 <RatingBar
                     android:id="@+id/rating"
                     android:layout_below="@id/name"
@@ -123,6 +125,26 @@
                     android:stepSize=".5"
                     style="@style/Base.Widget.AppCompat.RatingBar"
                     android:isIndicator="false"/>
+                <LinearLayout
+                    android:layout_below="@id/rating"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:onClick="@{clickHandler::addToCartClick}"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/addToCart"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"/>
+                    <Button
+                        android:onClick="@{clickHandler::contactClick}"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/Contact"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"/>
+                </LinearLayout>
             </RelativeLayout>
         </ScrollView>
     </LinearLayout>

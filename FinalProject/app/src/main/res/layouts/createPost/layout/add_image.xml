@@ -7,7 +7,7 @@
             name="clickHandler"
             type="project.example.efriendly.activities.userFragments.CreatePost.CreatePostClickHandler" />
     </data>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
@@ -15,5 +15,12 @@
             android:src="@drawable/clothes"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/removeImage"
+            android:contentDescription="@string/image"
+            android:layout_marginLeft="85dp"
+            android:src="@drawable/baseline_close_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 </layout>
