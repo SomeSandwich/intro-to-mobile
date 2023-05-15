@@ -1,49 +1,72 @@
 package project.example.efriendly.adapter;
 
-import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import project.example.efriendly.databinding.CustomCartItemsBinding;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 
-public class CartAdapter extends ArrayAdapter<String> {
-    private LayoutInflater inflater;
-    Context context;
-    Integer[] product;
-    String[] productName;
-    String[] price;
-    String[] seller;
+import java.util.ArrayList;
 
-    public CartAdapter( Context context, int layoutToBeInflated, String[] productName, String[] price, String[] seller, Integer[] product) {
-        super(context, layoutToBeInflated, productName);
-        this.context = context;
-        this.productName = productName;
-        this.price = price;
-        this.seller = seller;
-        this.product = product;
+import project.example.efriendly.R;
+import project.example.efriendly.activities.MessageActivity;
+import project.example.efriendly.activities.userFragments.CartActivity;
+import project.example.efriendly.activities.userFragments.ChatActivity;
+import project.example.efriendly.data.model.User.UserRes;
+
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
+    CartActivity cartActivity;
+    ArrayList<UserRes> userArrayList;
+
+    public CartAdapter(CartActivity cartActivity, ArrayList<UserRes> usersArrayList) {
+        this.cartActivity = cartActivity;
+        this.userArrayList = usersArrayList;
+    }
+
+    @NonNull
+    @Override
+    public CartAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(cartActivity).inflate(R.layout.custom_chat_items, parent, false);
+        return new viewHolder(view);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View result = convertView;
-        CustomCartItemsBinding binding;
+    public void onBindViewHolder(@NonNull CartAdapter.viewHolder holder, int position) {
+        UserRes user = userArrayList.get(position);
 
-        if (result == null){
-            if (inflater == null)
-                inflater = (LayoutInflater) parent.getContext().getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            binding = CustomCartItemsBinding.inflate(inflater, parent, false);
-            result = binding.getRoot();
-            result.setTag(binding);
+        holder.name.setText(user.getName());
+        Picasso.get().load(user.getAvatar()).into(holder.avatar);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(cartActivity, MessageActivity.class);
+                intent.putExtra("id", user.getId());
+                intent.putExtra("name", user.getName());
+                intent.putExtra("avatar", user.getAvatar());
+                cartActivity.startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return userArrayList.size();
+    }
+
+    public class viewHolder extends RecyclerView.ViewHolder {
+        ImageView avatar;
+        TextView name;
+        public viewHolder(@NonNull View itemView) {
+            super(itemView);
+            avatar = itemView.findViewById(R.id.ivAvatar);
+            name = itemView.findViewById(R.id.txtName);
         }
-        else binding = (CustomCartItemsBinding) result.getTag();
-
-        binding.txtProductName.setText(productName[position]);
-        binding.txtPrice.setText(price[position]);
-        binding.txtSeller.setText(seller[position]);
-        binding.ivProduct.setImageResource(product[position]);
-        return (result);
     }
 }

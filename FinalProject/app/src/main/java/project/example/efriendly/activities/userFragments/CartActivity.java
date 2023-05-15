@@ -2,6 +2,8 @@ package project.example.efriendly.activities.userFragments;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +14,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import project.example.efriendly.R;
 import project.example.efriendly.databinding.ActivityCartBinding;
@@ -19,6 +23,12 @@ import project.example.efriendly.adapter.CartAdapter;
 
 public class CartActivity extends AppCompatActivity {
     private ActivityCartBinding binding;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView recyclerViewList;
+    //private ManagementCart managementCart;
+    TextView txtTotal, txtEmpty;
+    private ScrollView scrollView;
+
     Integer[] product = {R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes,
             R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes, R.drawable.clothes};
 
@@ -53,13 +63,19 @@ public class CartActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cart);
-        CartAdapter adapter = new CartAdapter(this, R.layout.custom_cart_items, productName, price, seller, product);
-        binding.ChatList.setAdapter(adapter);
-        binding.ChatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("hehe");
-            }
-        });
+
+        initView();
     }//onCreate
+
+    private void initView() {
+        recyclerViewList = binding.recyclerview;
+        txtTotal = binding.txtTotalMoney;
+        scrollView = binding.scrollView;
+    }
+
+    private void initList() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewList.setLayoutManager(linearLayoutManager);
+
+    }
 }
