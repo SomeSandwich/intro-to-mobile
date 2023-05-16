@@ -84,9 +84,6 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
 
         FetchCategory();
         FetchNewestListPost();
-
-        binding.processBar.setVisibility(View.INVISIBLE);
-
     }
 
     public void FetchCategory() {
@@ -140,6 +137,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         btn.setId(categoryRes.getId());
 
         btn.setOnClickListener(e -> {
+            binding.processBar.setVisibility(View.VISIBLE);
             Integer cateId = categoryRes.getId();
             Call<List<PostRes>> postCateCall = postService.GetByCateId(cateId);
 
@@ -154,6 +152,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
 
                     binding.ListItems.setAdapter(adapter);
                     binding.ListItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                    binding.processBar.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
@@ -200,8 +199,8 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                     AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
                     binding.ListItems.setAdapter(adapter);
 
-                    binding.ListItems.setLayoutManager(
-                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                    binding.ListItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                    binding.processBar.setVisibility(View.INVISIBLE);
                 } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();

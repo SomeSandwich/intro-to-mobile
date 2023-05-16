@@ -15,22 +15,35 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.MessageActivity;
 import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.adapter.ChatAdapter;
+import project.example.efriendly.client.RetrofitClientGenerator;
+import project.example.efriendly.data.model.Conversation.ConversationRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityChatBinding;
+import project.example.efriendly.services.ConversationService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private RecyclerView recyclerView;
     private ChatAdapter adapter;
-    private ArrayList<UserRes> userArrayList;
-
+    private List<UserRes> userArrayList;
     private ChatClickHandler handler;
+
+    ConversationService conversationService;
+    ChatActivity.ClickListener listener;
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
@@ -55,31 +68,36 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        listener = new ClickListener();
 
-        userArrayList = new ArrayList<>();
-        userArrayList.add(new UserRes(1, "Truong Trong Khanh", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(2, "Hoang Quoc Bao", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(3, "Nguyen Tan Hieu", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(4, "Kha Vinh Dat", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(5, "Nguyen Quoc Su", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(6, "Tran Minh Truong", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(7, "Nguyen Ho Huu Bang", "FinalProject/app/src/main/res/drawable/user.jpg"));
+        conversationService = RetrofitClientGenerator.getService(ConversationService.class);
+        binding.processBar.setVisibility(View.VISIBLE);
+        conversationService.GetUserBySelf().enqueue(new Callback<List<UserRes>>() {
+            @Override
+            public void onResponse(Call<List<UserRes>> call, Response<List<UserRes>> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    userArrayList = response.body();
+                    recyclerView = binding.recyclerview;
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    adapter = new ChatAdapter(ChatActivity.this, userArrayList, listener);
+                    recyclerView.setAdapter(adapter);
+                    DividerItemDecoration dividerHorizontal = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+                    recyclerView.addItemDecoration(dividerHorizontal);
+                    binding.processBar.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Error when get conversation list", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-        recyclerView = binding.recyclerview;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ChatAdapter(ChatActivity.this, userArrayList);
-        recyclerView.setAdapter(adapter);
-
-        DividerItemDecoration dividerHorizontal =
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-
-        recyclerView.addItemDecoration(dividerHorizontal);
-
+            @Override
+            public void onFailure(Call<List<UserRes>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Can't connect to server", Toast.LENGTH_LONG).show();
+            }
+        });
         handler = new ChatClickHandler(this);
         binding.setClickHandler(handler);
-
     }
-
     public class ChatClickHandler{
         Context context;
         public ChatClickHandler(Context context){
@@ -88,6 +106,29 @@ public class ChatActivity extends AppCompatActivity {
         public void backClick(View view){
             Intent myIntent = new Intent(ChatActivity.this, UserActivity.class);
             startActivity(myIntent);
+        }
+    }
+    public class ClickListener{
+        public void ConvClick(int index){
+            binding.processBar.setVisibility(View.VISIBLE);
+            conversationService.GetBySelf().enqueue(new Callback<List<ConversationRes>>() {
+                @Override
+                public void onResponse(Call<List<ConversationRes>> call, Response<List<ConversationRes>> response) {
+                    if(response.isSuccessful() && response.body() != null){
+                        Intent intent = new Intent(ChatActivity.this, MessageActivity.class);
+                        intent.putExtra("conversation_id", response.body().get(index).getId());
+                        startActivity(intent);
+                        binding.processBar.setVisibility(View.INVISIBLE);
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Cant' download conversation list", Toast.LENGTH_LONG).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<List<ConversationRes>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Can't connect to server", Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }

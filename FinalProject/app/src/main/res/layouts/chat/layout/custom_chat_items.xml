@@ -34,7 +34,6 @@
             android:text="@string/name"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:textSize="16sp"
-            android:fontFamily="@font/alef_bold"/>
+            android:textSize="16sp" />
     </RelativeLayout>
 </layout>

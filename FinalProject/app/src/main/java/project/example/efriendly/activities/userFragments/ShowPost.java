@@ -155,17 +155,13 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                         }).into((ImageView) show.getCurrentView());
             }
         });
-
-
-        Call<UserRes> userResCall = userService.GetById(post.getUserID());
-        userResCall.enqueue(new Callback<UserRes>() {
+        binding.processBar.setVisibility(View.VISIBLE);
+        userService.GetById(post.getUserID()).enqueue(new Callback<UserRes>() {
             @Override
             public void onResponse(Call<UserRes> call, Response<UserRes> response) {
                 if (response.isSuccessful()) {
                     UserRes user = response.body();
                     post.setUser(user);
-
-
                     binding.ClothesDes.setText(post.getDescription());
                     binding.name.setText(post.getUser().getName());
                     binding.size.setText("M");
@@ -192,6 +188,7 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                                 .placeholder(R.drawable.placeholder)
                                 .into(binding.sellerAvt);
                     }
+                    binding.processBar.setVisibility(View.INVISIBLE);
 
                 } else {
                     String message = "An error occurred please try again later ...";
