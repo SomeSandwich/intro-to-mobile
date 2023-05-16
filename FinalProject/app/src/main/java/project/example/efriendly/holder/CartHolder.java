@@ -19,9 +19,9 @@ public class CartHolder extends RecyclerView.ViewHolder {
         super(binding.getRoot());
         this.productImg = binding.ivProduct;
         this.txtProductName = binding.txtProductName;
-//        this.txtPrice = binding.txtPrice;
-//        this.txtSeller = binding.txtSeller;
-//        this.checkBox = binding.cbCart;
+        this.txtPrice = binding.txtPrice;
+        this.txtSeller = binding.txtSeller;
+        this.checkBox = binding.cbCart;
 
         this.view = binding.getRoot();
     }

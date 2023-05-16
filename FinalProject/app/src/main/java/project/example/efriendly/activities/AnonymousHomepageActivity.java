@@ -35,6 +35,7 @@ import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.data.model.Category.CategoryRes;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.ActivityAnonymousHomepageBinding;
+import project.example.efriendly.databinding.ActivitySearchBarLoginBinding;
 import project.example.efriendly.services.CategoryService;
 import project.example.efriendly.services.PostService;
 import retrofit2.Call;
