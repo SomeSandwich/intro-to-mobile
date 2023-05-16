@@ -1,21 +1,16 @@
 package project.example.efriendly.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -23,26 +18,16 @@ import project.example.efriendly.R;
 import project.example.efriendly.activities.userFragments.CartActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
-import project.example.efriendly.data.model.Cart.CartItem;
 import project.example.efriendly.data.model.Cart.CartRes;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.CustomCartItemsBinding;
-import project.example.efriendly.helper.CartManagement;
 import project.example.efriendly.holder.CartHolder;
-import project.example.efriendly.services.ChangeNumberItemsListener;
 import project.example.efriendly.services.PostService;
 import project.example.efriendly.services.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import java.util.ArrayList;
-
-import project.example.efriendly.R;
-import project.example.efriendly.activities.MessageActivity;
-import project.example.efriendly.activities.userFragments.CartActivity;
-import project.example.efriendly.activities.userFragments.ChatActivity;
-import project.example.efriendly.data.model.User.UserRes;
 
 public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements DatabaseConnection {
     private LayoutInflater inflater;

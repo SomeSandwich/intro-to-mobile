@@ -1,9 +1,11 @@
 using System.Security.Claims;
 using System.Web;
+using Api.Context;
 using API.Services;
 using API.Types.Objects;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using shortid;
 using Stump.Storage.Types.Constant;
 
@@ -18,12 +20,16 @@ public class UserController : ControllerBase
     private readonly IPostService _postSer;
     private readonly IMinioFileService _fileSer;
 
+    private readonly MobileDbContext _context;
 
-    public UserController(IUserService userService, IPostService postSer, IMinioFileService fileSer)
+
+    public UserController(IUserService userService, IPostService postSer, IMinioFileService fileSer,
+        MobileDbContext context)
     {
         _userSer = userService;
         _postSer = postSer;
         _fileSer = fileSer;
+        _context = context;
     }
 
     [HttpGet]
@@ -100,6 +106,20 @@ public class UserController : ControllerBase
         return Ok(new SuccessRes());
     }
 
+    [HttpPost("{id:int}/money/{amount:int}")]
+    public async Task<ActionResult> AddMoney([FromRoute] int id, [FromRoute] int amount)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(e => e.Id == id);
+
+        if (user is null)
+            return BadRequest(new FailureRes { Message = $"Not found userID:{id}" });
+
+        user.Money += amount;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new SuccessRes());
+    }
 
     [HttpDelete]
     [Route("{id:int}/avatar")]

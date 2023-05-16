@@ -20,6 +20,8 @@ public class CreateUserReq
     public string PhoneNumber { get; set; }
 
     public string Address { get; set; }
+
+    public double Money { get; set; }
 }
 
 public class UserAvatarReq
@@ -42,6 +44,8 @@ public class UserRes
     public double Legit { get; set; }
 
     public string Address { get; set; }
+
+    public double Money { get; set; }
 
     public UserStatus Status { get; set; }
 }
