@@ -70,9 +70,12 @@ public class PostRes
 
     public RateRes Rate { get; set; }
 
-    [ForeignKey("User")] public int UserId { get; set; }
+    public int UserId { get; set; }
 
     public List<int> UserShare { get; set; }
+
+
+    public bool IsDeleted { get; set; }
 
     public IEnumerable<ReportRes> Reports { get; set; }
 }
