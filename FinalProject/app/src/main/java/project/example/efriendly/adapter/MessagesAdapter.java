@@ -49,7 +49,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessageHolder> {
     public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
         final int index = holder.getAdapterPosition();
         holder.message.setText(messages.get(index).getContent());
-        holder.time.setText(messages.get(index).getCreateAt());
     }
 
     @Override
