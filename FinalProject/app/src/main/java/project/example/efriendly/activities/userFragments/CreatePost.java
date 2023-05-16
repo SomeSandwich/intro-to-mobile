@@ -178,6 +178,7 @@ public class CreatePost extends Fragment implements DatabaseConnection {
     public class ClickListener{
         public void RemoveImageClick(int position){
             imgsList.remove(position);
+            adapter.notifyItemRemoved(position);
         };
     }
 

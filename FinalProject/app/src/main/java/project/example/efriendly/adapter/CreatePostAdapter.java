@@ -33,7 +33,7 @@ public class CreatePostAdapter extends RecyclerView.Adapter<AddImageHolder>{
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         AddImageBinding binding = AddImageBinding.inflate(inflater, parent, false);
-        AddImageHolder addImageHolder = new AddImageHolder(binding, this, listener);
+        AddImageHolder addImageHolder = new AddImageHolder(binding);
         return addImageHolder;
     }
 
@@ -41,6 +41,12 @@ public class CreatePostAdapter extends RecyclerView.Adapter<AddImageHolder>{
     public void onBindViewHolder(@NonNull AddImageHolder holder, int position) {
         final int index = holder.getAdapterPosition();
         holder.clothImg.setImageURI(imgsList.get(index));
+        holder.removeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.RemoveImageClick(index);
+            }
+        });
     }
 
     @Override

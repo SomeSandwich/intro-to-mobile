@@ -125,7 +125,7 @@ public class NewfeelAdapter extends RecyclerView.Adapter<NewfeelPostHolder> impl
                     if (posts.get(index).getUser().getAvatarPath() != null) {
                         try {
                             Glide.with(context)
-                                    .load(IMAGE_URL + "/avatar/" +posts.get(index).getUser().getAvatarPath()).placeholder(R.drawable.placeholder)
+                                    .load(IMAGE_URL + posts.get(index).getUser().getAvatarPath()).placeholder(R.drawable.placeholder)
                                     .into(holder.avt);
                             holder.progressBar.setVisibility(View.INVISIBLE);
                         }

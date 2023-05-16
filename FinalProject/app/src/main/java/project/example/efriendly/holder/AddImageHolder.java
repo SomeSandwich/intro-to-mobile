@@ -12,18 +12,12 @@ import project.example.efriendly.databinding.AddImageBinding;
 public class AddImageHolder extends RecyclerView.ViewHolder {
     public ImageView clothImg;
 
-    public CreatePostAdapter adapter;
+    public ImageView removeImage;
 
-    public AddImageHolder(AddImageBinding binding, CreatePostAdapter adapter, CreatePost.ClickListener listener){
+
+    public AddImageHolder(AddImageBinding binding){
         super(binding.getRoot());
         clothImg = binding.clotheImg;
-        binding.removeImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.RemoveImageClick(getAdapterPosition());
-                adapter.imgsList.remove(getAdapterPosition());
-                adapter.notifyItemRemoved(getAdapterPosition());
-            }
-        });
+        removeImage = binding.removeImage;
     }
 }

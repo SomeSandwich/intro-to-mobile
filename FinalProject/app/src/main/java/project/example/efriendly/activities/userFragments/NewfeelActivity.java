@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import project.example.efriendly.R;
@@ -21,6 +23,7 @@ import project.example.efriendly.adapter.NewfeelAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Post.PostRes;
+import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.FragmentNewfeelActivityBinding;
 import project.example.efriendly.services.PostService;
 import project.example.efriendly.services.UserService;
@@ -62,6 +65,30 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
         postService = RetrofitClientGenerator.getService(PostService.class);
         userService = RetrofitClientGenerator.getService(UserService.class);
         binding.setClickHandler(new NewfeelClickHandler(context));
+        userService.GetSelf().enqueue(new Callback<UserRes>() {
+            @Override
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                if (response.body() != null && response.isSuccessful()){
+                    if (response.body().getAvatarPath() != null){
+                        Glide.with(context)
+                                .load(IMAGE_URL + response.body().getAvatarPath())
+                                .placeholder(R.drawable.placeholder)
+                                .into(binding.userAvt);
+                    }
+                    else {
+                        binding.userAvt.setImageResource(R.drawable.user);
+                    }
+                }
+                else{
+                    Toast.makeText(main, "Can't get avatar", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                Toast.makeText(main, "Can't get avatar", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         binding.processBar.setVisibility(View.VISIBLE);
 
@@ -100,7 +127,6 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
             }
         });
     }
-
     public class ClickListener{
         public void click(PostRes postRes){
             main.onMsgFromFragToMain(postRes);

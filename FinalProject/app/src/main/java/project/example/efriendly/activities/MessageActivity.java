@@ -115,7 +115,7 @@ public class MessageActivity extends AppCompatActivity implements DatabaseConnec
                                                     if (receiver.getId().equals(sender.getId())) return;
                                                     if (receiver.getAvatarPath() != null) {
                                                         Glide.with(getApplicationContext())
-                                                                .load(IMAGE_URL + "/avatar/" + receiver.getAvatarPath())
+                                                                .load(IMAGE_URL + receiver.getAvatarPath())
                                                                 .placeholder(R.drawable.placeholder)
                                                                 .into(binding.ivAvatar);
                                                     }

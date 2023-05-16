@@ -3,6 +3,7 @@ package project.example.efriendly.adapter;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -52,7 +53,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
         CartHolder cartHolder = new CartHolder(binding);
         return cartHolder;
     }
-
     @Override
     public void onBindViewHolder(@NonNull CartHolder holder, int position) {
         final int index = holder.getAdapterPosition();
@@ -63,7 +63,47 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    listener.checkList.set(index, !listener.checkList.get(index));
+                    try{
+                        listener.checkList.set(index, !listener.checkList.get(index));
+                        final long currentTotalPrices = Long.parseLong(listener.binding.Prices.getText().toString()
+                                .substring(0,listener.binding.Prices.getText().toString().length() - 1));
+                        if (holder.checkBox.isChecked()){
+                            postService.GetById(carts.get(index).getPostId()).enqueue(new Callback<PostRes>() {
+                                @Override
+                                public void onResponse(Call<PostRes> call, Response<PostRes> response) {;
+                                    if (response.isSuccessful()){
+                                        if (!response.body().getSold())
+                                            listener.binding.Prices.setText(String.valueOf(currentTotalPrices + response.body().getPrice()) + "đ");
+                                    }
+                                    else{
+                                        Toast.makeText(context, "Can't get post prices", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<PostRes> call, Throwable t) {
+                                    Toast.makeText(context, "Can't connect to server", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else if (!holder.checkBox.isChecked() && currentTotalPrices > 0){
+                            postService.GetById(carts.get(index).getPostId()).enqueue(new Callback<PostRes>() {
+                                @Override
+                                public void onResponse(Call<PostRes> call, Response<PostRes> response) {;
+                                    if (response.isSuccessful()){
+                                        listener.binding.Prices.setText(String.valueOf(currentTotalPrices - response.body().getPrice()) + "đ");
+                                    }
+                                    else{
+                                        Toast.makeText(context, "Can't get post prices", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<PostRes> call, Throwable t) {
+                                    Toast.makeText(context, "Can't connect to server", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                    catch (IndexOutOfBoundsException exception){Log.d("CartAdapter", "out of bound");}
                 }
             });
         }
@@ -72,13 +112,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
         postService.GetById(PostId).enqueue(new Callback<PostRes>() {
             @Override
             public void onResponse(Call<PostRes> call, Response<PostRes> response) {
-                if(response.isSuccessful() && response.body() != null){
+                if(response.isSuccessful() && response.body() != null && !response.body().getSold()){
                     PostRes post = response.body();
                     Glide.with(context)
                             .load(IMAGE_URL + post.getMediaPath().get(0)).placeholder(R.drawable.placeholder)
                             .into(holder.productImg);
                     holder.txtProductName.setText(post.getCaption());
-                    holder.txtPrice.setText(post.getPrice().toString());
+                    holder.txtPrice.setText(post.getPrice().toString()+"đ");
                     userService.GetById(post.getUserID()).enqueue(new Callback<UserRes>() {
                         @Override
                         public void onResponse(Call<UserRes> call, Response<UserRes> response) {
@@ -96,6 +136,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                         }
                     });
+                }
+                else if (response.isSuccessful() && response.body() != null && response.body().getSold()){
+                    holder.view.setEnabled(false);
                 }
                 else{
                     String message = "An error occurred please try again later ...";

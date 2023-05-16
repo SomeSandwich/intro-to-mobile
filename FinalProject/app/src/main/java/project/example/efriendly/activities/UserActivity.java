@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.userFragments.CreatePost;
+import project.example.efriendly.activities.userFragments.EditPostActivity;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.activities.userFragments.NewfeelActivity;
 import project.example.efriendly.activities.userFragments.NotificationsActivity;
@@ -32,9 +33,8 @@ public class UserActivity extends AppCompatActivity {
     NewfeelActivity newFeel = new NewfeelActivity();
     ProfileActivity profile = new ProfileActivity();
     CreatePost createPost = new CreatePost();
-
     PaymentActivity paymentActivity = new PaymentActivity();
-
+    EditPostActivity editPostActivity = new EditPostActivity();
     NotificationsActivity notification = new NotificationsActivity();
     ActivityUserBinding binding;
 
@@ -114,7 +114,7 @@ public class UserActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, paymentActivity).commit();
             }
             else if (strValue.equals("editPost")){
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, editPostActivity).commit();
             }
         }
     }

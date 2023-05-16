@@ -23,7 +23,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="@string/image"
-            app:srcCompat="@drawable/clothes"
+            app:srcCompat="@drawable/placeholder"
             tools:ignore="ImageContrastCheck" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:layout_marginStart="20dp"
-                android:text="Áo thun đen trơn"
+                android:text="Sold"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txtPrice"
@@ -43,7 +43,7 @@
                 android:layout_height="28dp"
                 android:layout_marginBottom="15dp"
                 android:layout_marginStart="20dp"
-                android:text="100 000đ"/>
+                android:text="0đ"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="28dp"
@@ -60,7 +60,7 @@
                     android:id="@+id/txtSeller"
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
-                    android:text="Truong Trong Khanh"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

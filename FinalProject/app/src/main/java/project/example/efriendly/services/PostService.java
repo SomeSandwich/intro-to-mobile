@@ -58,5 +58,5 @@ public interface PostService {
     Call<String> HideToggle(@Path("id") Integer id);
 
     @DELETE("post/{id}")
-    Call<String> Delete(@Path("id") Integer id);
+    Call<SuccessRes> Delete(@Path("id") Integer id);
 }
