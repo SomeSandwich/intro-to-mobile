@@ -27,6 +27,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
+    [Route("")]
     public async Task<ActionResult> AddAsync(CreateOrderReq request)
     {
         var customerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -93,6 +94,16 @@ public class OrderController : ControllerBase
 
         return Ok(listPurchase);
     }
+
+    [HttpGet]
+    [Route("postId/{postId:int}")]
+    public async Task<ActionResult> GetOrderByPostIdAsync([FromRoute] int postId)
+    {
+        var order = await _orderService.GetByPostId(postId);
+
+        return Ok(order);
+    }
+
 
     [HttpGet]
     [Route("sale")]
