@@ -1,6 +1,7 @@
 package project.example.efriendly.activities;
 
 import androidx.fragment.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,32 +20,40 @@ public class navBarActivity extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try{
+        try {
             context = getActivity();
             main = (UserActivity) getActivity();
-        }
-        catch (IllegalStateException err){
+        } catch (IllegalStateException err) {
             throw new IllegalStateException("MainActivity must implement callbacks");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = ActivityNavBarBinding.inflate(inflater, container,false);
+        binding = ActivityNavBarBinding.inflate(inflater, container, false);
         handlers = new NavbarClickHandler(context);
         binding.setClickHandler(handlers);
 
         return binding.getRoot();
     }
-    public class NavbarClickHandler{
+
+    public class NavbarClickHandler {
         Context context;
-        public NavbarClickHandler(Context context){
+
+        public NavbarClickHandler(Context context) {
             this.context = context;
         }
-        public void homeClick(View view){
+
+        public void homeClick(View view) {
             main.onMsgFromFragToMain("nav", "2");
         }
-        public void notificationClick(View view){ main.onMsgFromFragToMain("nav", "3"); }
-        public void newFeelClick(View view ){main.onMsgFromFragToMain("nav", "1");}
+
+        public void notificationClick(View view) {
+            main.onMsgFromFragToMain("nav", "3");
+        }
+
+        public void newFeelClick(View view) {
+            main.onMsgFromFragToMain("nav", "1");
+        }
     }
 }

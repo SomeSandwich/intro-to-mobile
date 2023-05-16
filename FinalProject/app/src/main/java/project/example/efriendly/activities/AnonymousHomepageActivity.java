@@ -82,28 +82,38 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(binding.searchBarFragment.getId(), searchBar).commit();
 
-        addCategory();
-        addAdapter();
+        FetchCategory();
+        FetchNewestListPost();
 
         binding.processBar.setVisibility(View.INVISIBLE);
 
     }
 
-    private void addAdapter() {
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
-        postServiceCall.enqueue(new Callback<List<PostRes>>() {
+    public void FetchCategory() {
+        LinearLayout ll = binding.innerLay;
+
+        Call<List<CategoryRes>> categoryServiceCall = categoryService.getAll();
+        categoryServiceCall.enqueue(new Callback<List<CategoryRes>>() {
             @Override
-            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-
+            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
                 if (response.isSuccessful()) {
-                    List<PostRes> posts = new ArrayList<>();
-                    posts = response.body();
+                    try {
+                        List<CategoryRes> category = response.body();
+                        int size = category.size();
+                        for (int i = 0; i < size; i++) {
+                            android.widget.Button newCategory = createCateBtn(category.get(i));
 
-                    AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
-                    binding.ListItems.setAdapter(adapter);
+                            LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT);
+                            btnLayout.setMargins(5, 0, 5, 0);
 
-                    binding.ListItems.setLayoutManager(
-                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                            ll.addView(newCategory, btnLayout);
+                        }
+                    } catch (NullPointerException err) {
+                        String message = "An error occurred please try again later ...";
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -111,15 +121,14 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<PostRes>> call, Throwable t) {
+            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
                 String message = t.getLocalizedMessage();
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
-    private android.widget.Button createCategory(CategoryRes categoryRes) {
+    private android.widget.Button createCateBtn(CategoryRes categoryRes) {
         Context context = getApplicationContext();
         android.widget.Button btn = new android.widget.Button(context);
 
@@ -178,31 +187,21 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
         return btn;
     }
 
-    private void addCategory() {
-        LinearLayout ll = binding.innerLay;
-
-        Call<List<CategoryRes>> categoryServiceCall = categoryService.getAll();
-        categoryServiceCall.enqueue(new Callback<List<CategoryRes>>() {
+    public void FetchNewestListPost() {
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
+        postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
-            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
+            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
+
                 if (response.isSuccessful()) {
-                    try {
-                        List<CategoryRes> category = response.body();
-                        int size = category.size();
-                        for (int i = 0; i < size; i++) {
-                            android.widget.Button newCategory = createCategory(category.get(i));
+                    List<PostRes> posts = new ArrayList<>();
+                    posts = response.body();
 
-                            LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT);
-                            btnLayout.setMargins(5, 0, 5, 0);
+                    AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
+                    binding.ListItems.setAdapter(adapter);
 
-                            ll.addView(newCategory, btnLayout);
-                        }
-                    } catch (NullPointerException err) {
-                        String message = "An error occurred please try again later ...";
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                    }
+                    binding.ListItems.setLayoutManager(
+                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                 } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -210,7 +209,37 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
+            public void onFailure(Call<List<PostRes>> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void FetchSearchListPost(String query) {
+        // Search
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
+        postServiceCall.enqueue(new Callback<List<PostRes>>() {
+            @Override
+            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
+
+                if (response.isSuccessful()) {
+                    List<PostRes> posts = new ArrayList<>();
+                    posts = response.body();
+
+                    AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
+                    binding.ListItems.setAdapter(adapter);
+
+                    binding.ListItems.setLayoutManager(
+                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                } else {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PostRes>> call, Throwable t) {
                 String message = t.getLocalizedMessage();
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
