@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.userFragments.SearchBarCartChatActivity">
+
     <data>
+
         <variable
             name="clickHandler"
             type="project.example.efriendly.activities.userFragments.SearchBarCartChatActivity.SearchBarClickHandler" />
@@ -17,20 +19,22 @@
             android:id="@+id/SearchBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="120dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/search_bar_frame"
-            android:labelFor="@id/SearchBar"
             android:inputType="textFilter"
             android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:labelFor="@id/SearchBar"
+            app:defaultQueryHint="Search here..."
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null" />
 
         <ImageButton
-            android:onClick="@{clickHandler::cartClick}"
             android:id="@+id/CartPic"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -42,12 +46,13 @@
             app:layout_constraintTop_toTopOf="@id/SearchBar"
             app:layout_constraintBottom_toBottomOf="@id/SearchBar"
             app:layout_constraintStart_toEndOf="@id/SearchBar" />
+
         <ImageButton
             android:onClick="@{clickHandler::chatClick}"
             android:id="@+id/chatPic"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:scaleType="center"
+            android:layout_toEndOf="@id/CartPic"
             android:contentDescription="@string/image"
             app:srcCompat="@drawable/chat_icon"
             android:background="@color/white"

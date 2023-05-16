@@ -1,7 +1,9 @@
 package project.example.efriendly.activities.userFragments;
 
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,36 +26,54 @@ public class SearchBarCartChatActivity extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try{
+        try {
             context = getActivity();
             main = (UserActivity) getActivity();
-        }
-        catch (IllegalStateException err){
+        } catch (IllegalStateException err) {
             throw new IllegalStateException("MainActivity must implement callbacks");
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = ActivitySearchBarCartChatBinding.inflate(inflater, container,false);
+        binding = ActivitySearchBarCartChatBinding.inflate(inflater, container, false);
 
         handler = new SearchBarClickHandler(main);
 
         binding.setClickHandler(handler);
 
+        binding.SearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                main.onMsgFromFragToMain("searchBarSubmit", query);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return binding.getRoot();
     }
 
-    public class SearchBarClickHandler{
+    public class SearchBarClickHandler {
         Context context;
+
         public SearchBarClickHandler(Context context) {
             this.context = context;
+
         }
-        public void chatClick(View view){
+
+        public void chatClick(View view) {
             Intent myIntent = new Intent(context, ChatActivity.class);
             startActivity(myIntent);
             main.onMsgFromFragToMain("SearchBar", "Hello");
         }
-        public void cartClick(View view){
+
+        public void cartClick(View view) {
             Intent intent = new Intent(context, CartActivity.class);
             startActivity(intent);
         }

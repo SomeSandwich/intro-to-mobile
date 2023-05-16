@@ -2,7 +2,6 @@ package project.example.efriendly.activities.userFragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -25,7 +24,6 @@ import java.util.List;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.UserActivity;
-import project.example.efriendly.adapter.AnonymousHomepageAdapter;
 import project.example.efriendly.adapter.HomepageAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
@@ -74,27 +72,37 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         postService = RetrofitClientGenerator.getService(PostService.class);
         binding.processBar.setVisibility(View.VISIBLE);
 
-        addCategory();
-        addAdapter();
+        FetchCategory();
+        FetchNewestListPost();
 
         binding.processBar.setVisibility(View.INVISIBLE);
 
         return binding.getRoot();
     }
 
-    private void addAdapter() {
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
-        postServiceCall.enqueue(new Callback<List<PostRes>>() {
+    public void FetchCategory() {
+        LinearLayout ll = binding.innerLay;
+
+        Call<List<CategoryRes>> categoryServiceCall = categoryService.getAll();
+        categoryServiceCall.enqueue(new Callback<List<CategoryRes>>() {
             @Override
-            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-
+            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
                 if (response.isSuccessful()) {
-                    List<PostRes> posts = new ArrayList<>();
-                    posts = response.body();
+                    try {
+                        List<CategoryRes> category = response.body();
+                        int size = category.size();
+                        for (int i = 0; i < size; i++) {
+                            android.widget.Button newCategory = createCateBtn(category.get(i));
 
-                    HomepageAdapter adapter = new HomepageAdapter(posts, main, listener);
-                    binding.ListItems.setAdapter(adapter);
-                    binding.ListItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                            LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            btnLayout.setMargins(5, 0, 5, 0);
+
+                            ll.addView(newCategory, btnLayout);
+                        }
+                    } catch (NullPointerException err) {
+                        String message = "An error occurred please try again later ...";
+                        Toast.makeText(main, message, Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(main, message, Toast.LENGTH_LONG).show();
@@ -102,15 +110,14 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
             }
 
             @Override
-            public void onFailure(Call<List<PostRes>> call, Throwable t) {
+            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
                 String message = t.getLocalizedMessage();
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
-    private android.widget.Button createCategory(CategoryRes categoryRes) {
+    private android.widget.Button createCateBtn(CategoryRes categoryRes) {
         android.widget.Button btn = new android.widget.Button(context);
 
         LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -166,33 +173,48 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         return btn;
     }
 
-    public void fromUserActivityToRecyclerView(String searchText){
+    public void FetchSearchListPost(String query) {
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
+        postServiceCall.enqueue(new Callback<List<PostRes>>() {
+            @Override
+            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
 
+                if (response.isSuccessful()) {
+                    List<PostRes> posts = new ArrayList<>();
+                    posts = response.body();
+
+                    HomepageAdapter adapter = new HomepageAdapter(posts, context, listener);
+                    binding.ListItems.setAdapter(adapter);
+
+                    binding.ListItems.setLayoutManager(
+                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                } else {
+                    String message = "An error occurred please try again later ...";
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PostRes>> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
-    private void addCategory() {
-        LinearLayout ll = binding.innerLay;
-
-        Call<List<CategoryRes>> categoryServiceCall = categoryService.getAll();
-        categoryServiceCall.enqueue(new Callback<List<CategoryRes>>() {
+    private void FetchNewestListPost() {
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
+        postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
-            public void onResponse(Call<List<CategoryRes>> call, Response<List<CategoryRes>> response) {
+            public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
+
                 if (response.isSuccessful()) {
-                    try {
-                        List<CategoryRes> category = response.body();
-                        int size = category.size();
-                        for (int i = 0; i < size; i++) {
-                            android.widget.Button newCategory = createCategory(category.get(i));
+                    List<PostRes> posts = new ArrayList<>();
+                    posts = response.body();
 
-                            LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            btnLayout.setMargins(5, 0, 5, 0);
-
-                            ll.addView(newCategory, btnLayout);
-                        }
-                    } catch (NullPointerException err) {
-                        String message = "An error occurred please try again later ...";
-                        Toast.makeText(main, message, Toast.LENGTH_LONG).show();
-                    }
+                    HomepageAdapter adapter = new HomepageAdapter(posts, main, listener);
+                    binding.ListItems.setAdapter(adapter);
+                    binding.ListItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                 } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(main, message, Toast.LENGTH_LONG).show();
@@ -200,15 +222,23 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
             }
 
             @Override
-            public void onFailure(Call<List<CategoryRes>> call, Throwable t) {
+            public void onFailure(Call<List<PostRes>> call, Throwable t) {
                 String message = t.getLocalizedMessage();
                 Toast.makeText(main, message, Toast.LENGTH_LONG).show();
             }
         });
+
     }
+
+
+    public void fromUserActivityToRecyclerView(String searchText) {
+
+    }
+
 
     static public class ActivityHomepageClickHandler {
         Context context;
+
         public ActivityHomepageClickHandler(Context context) {
             this.context = context;
         }

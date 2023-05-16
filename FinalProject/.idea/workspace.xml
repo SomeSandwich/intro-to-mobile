@@ -13,22 +13,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ae97ffb-a6ab-4d4e-bcc8-b58e4125ef3b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/AnonymousHomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/AnonymousHomepageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/navBarActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/navBarActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/AnonymousHomepageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/AnonymousHomepageAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/HomepageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/HomepageAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Category/CategoryRes.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Category/CategoryRes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/SearchBarCartChatActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/SearchBarCartChatActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/SearchBarCartLoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/SearchBarCartLoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/chat/layout/activity_chat.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/chat/layout/activity_chat.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\A3 GIA KHANH\.android\avd\Pixel_4_API_33.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/hieucckha/.android/avd/Pixel_6_API_29.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -87,7 +86,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2Ok2zFXSYJIfdsuJ7EgkfWb9hPr" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -104,7 +103,7 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;C:/Users/A3 GIA KHANH/Desktop/intro-to-mobile/FinalProject/app/src/main/res/drawable&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/A3 GIA KHANH/Desktop/intro-to-mobile/FinalProject/app/src/main/res/layouts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Android Studio/Github FinalProject/intro-to-mobile/FinalProject/app/src/main/res/layouts/newfeel/layout&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -124,17 +123,17 @@
       <recent name="project.example.efriendly.activities" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\layouts" />
+      <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\newfeel\layout" />
       <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-xxxhdpi" />
       <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-xxhdpi" />
       <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-xhdpi" />
-      <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-hdpi" />
+      <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\drawable-mdpi" />
     </key>
     <key name="android.template.1576116413">
       <recent name="project.example.efriendly" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\A3 GIA KHANH\Desktop\intro-to-mobile\FinalProject\app\src\main\res\layouts\profile\layout" />
+      <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\chat\layout" />
       <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\showpost\layout" />
       <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\createPost\drawable" />
       <recent name="D:\Android Studio\Github FinalProject\intro-to-mobile\FinalProject\app\src\main\res\layouts\homepage\layout" />
@@ -149,7 +148,6 @@
       <recent name="project.example.efriendly.activities" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="project.example.efriendly.services" />
       <recent name="project.example.efriendly.activities.userFragments" />
     </key>
     <key name="android.template.1491525805">

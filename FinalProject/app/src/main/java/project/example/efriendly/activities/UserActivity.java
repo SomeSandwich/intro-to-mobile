@@ -24,7 +24,7 @@ import project.example.efriendly.activities.userFragments.ShowPost;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.ActivityUserBinding;
 
-public class UserActivity extends AppCompatActivity{
+public class UserActivity extends AppCompatActivity {
     FragmentTransaction ft;
     HomepageActivity homepage = new HomepageActivity();
     navBarActivity navbar = new navBarActivity();
@@ -44,7 +44,7 @@ public class UserActivity extends AppCompatActivity{
             float x = ev.getRawX() + view.getLeft() - scrcoords[0];
             float y = ev.getRawY() + view.getTop() - scrcoords[1];
             if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
-                ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+                ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -55,7 +55,7 @@ public class UserActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         //Hide Title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
         binding = ActivityUserBinding.inflate(getLayoutInflater());
@@ -70,7 +70,7 @@ public class UserActivity extends AppCompatActivity{
 
     public void onMsgFromFragToMain(String sender, String strValue) {
         if (sender.equals("nav")) {
-            switch (strValue){
+            switch (strValue) {
                 case "1":
                     getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, newFeel).commit();
                     break;
@@ -86,32 +86,33 @@ public class UserActivity extends AppCompatActivity{
                 default:
                     break;
             }
-        }
-        else if (sender.equals("newFeel")){
-            if (strValue.equals("CreatePost")) getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, createPost).commit();
+        } else if (sender.equals("newFeel")) {
+            if (strValue.equals("CreatePost"))
+                getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, createPost).commit();
 
-        }
-        else if (sender.equals("createPost")){
+        } else if (sender.equals("createPost")) {
             newFeel = new NewfeelActivity();
             if (strValue.equals("close")) {
                 refresh(R.id.userFragment);
                 getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, newFeel).commit();
             }
-        }
-        else if(sender.equals("showPost")){
+        } else if (sender.equals("showPost")) {
             if (strValue.equals("close")) {
                 refresh(R.id.userFragment);
                 getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, homepage).commit();
             }
-        }
-        else if (sender.equals("searchBar")){
+        } else if (sender.equals("searchBar")) {
             homepage.fromUserActivityToRecyclerView(strValue);
+        } else if (sender.equals("searchBarSubmit")) {
+            homepage.FetchSearchListPost(strValue);
         }
     }
-    public void onMsgFromFragToMain(PostRes post){
+
+    public void onMsgFromFragToMain(PostRes post) {
         getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, new ShowPost(post)).commit();
     }
-    public void refresh(int FragmentId){
+
+    public void refresh(int FragmentId) {
         Fragment fragment = this.getSupportFragmentManager().findFragmentById(FragmentId);
         this.getSupportFragmentManager().beginTransaction().detach(fragment).commit();
         this.getSupportFragmentManager().beginTransaction().attach(fragment).commit();

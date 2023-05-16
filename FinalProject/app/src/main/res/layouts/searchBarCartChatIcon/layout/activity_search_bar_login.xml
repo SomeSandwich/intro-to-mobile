@@ -2,27 +2,32 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="clickHandler"
-            type="project.example.efriendly.activities.userFragments.SearchBarCartLoginActivity.SearchBarClickHandler" />
+            type="project.example.efriendly.activities.userFragments.SearchBarLoginActivity.SearchBarClickHandler" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/SearchBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="90dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/search_bar_frame"
-            android:labelFor="@id/SearchBar"
             android:inputType="textFilter"
-            android:paddingHorizontal="10dp"
+            android:labelFor="@id/SearchBar"
+            app:defaultQueryHint="Search here ..."
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -30,10 +35,9 @@
         <ImageButton
             android:onClick="@{clickHandler::LoginClick}"
             android:id="@+id/loginPic"
-            android:layout_marginStart="20dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:scaleType="center"
+            android:layout_marginStart="20dp"
             android:contentDescription="@string/image"
             app:srcCompat="@drawable/login_homepage"
             android:background="@color/white"
