@@ -1,20 +1,19 @@
-﻿using System.ComponentModel;
-using Api.Context;
+﻿using Api.Context;
 using Api.Context.Constants.Enums;
 using Api.Context.Entities;
 using API.Types.Mapping;
 using API.Types.Objects;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Services;
 
 public interface IOrderService
 {
-    Task<int> AddAsync(CreateOrderReq args);
+    Task<int?> AddAsync(CreateOrderReq args);
 
     Task<Order?> GetAsync(int userId, int orderId);
+    Task<Order?> GetByPostId(int postId);
     Task<IEnumerable<Order>> GetByCustomerId(int customerId);
     Task<IEnumerable<Order>> GetBySellerId(int sellerId);
 
@@ -38,41 +37,71 @@ public class OrderService : IOrderService
         _mapper = config.CreateMapper();
     }
 
-    public async Task<int> AddAsync(CreateOrderReq args)
+    public async Task<int?> AddAsync(CreateOrderReq args)
     {
-        using var transaction = _context.Database.BeginTransaction();
+        await using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
         {
             var order = _mapper.Map<CreateOrderReq, Order>(args);
 
+            var firstDetail = args.Details.FirstOrDefault()?.PostId;
+            var sellerId = await _context.Posts.Where(e => e.Id == firstDetail).Select(e => e.UserId)
+                .FirstOrDefaultAsync();
+
+            order.SellerId = sellerId;
+
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
 
-            var listItems = args.Details;
-
-            var listDetail = _mapper.Map<ICollection<OrderItemReq>, ICollection<OrderDetail>>(listItems);
+            var listDetail = _mapper.Map<ICollection<OrderItemReq>, List<OrderDetail>>(args.Details, opt =>
+            {
+                opt.AfterMap((src, des) =>
+                {
+                    foreach (var desDetail in des)
+                    {
+                        desDetail.OrderId = order.Id;
+                    }
+                });
+            });
 
             if (listDetail is not null)
             {
-                foreach (var detail in listDetail)
-                {
-                    detail.OrderId = order.Id;
-                }
-
                 await _context.OrderDetails.AddRangeAsync(listDetail);
                 await _context.SaveChangesAsync();
             }
 
-            transaction.Commit();
+            foreach (var detail in listDetail)
+            {
+                var post = await _context.Posts.FirstOrDefaultAsync(e => e.Id == detail.PostId);
+
+                if (post is null)
+                {
+                    continue;
+                }
+
+                post.IsSold = true;
+                await _context.SaveChangesAsync();
+            }
+
+            var money = listDetail.Sum(e => e.UnitPrice);
+            var seller = await _context.Users.FirstOrDefaultAsync(e => e.Id == sellerId);
+            var customer = await _context.Users.FirstOrDefaultAsync(e => e.Id == args.CustomerId);
+
+            seller.Money += money;
+            customer.Money -= money;
+
+            Console.WriteLine(order.Id);
+
+            await transaction.CommitAsync();
 
             return order.Id;
         }
         catch (Exception e)
         {
-            transaction.Rollback();
+            await transaction.RollbackAsync();
             Console.WriteLine(e);
-            throw;
+            return null;
         }
     }
 
@@ -89,6 +118,21 @@ public class OrderService : IOrderService
             throw new InvalidOperationException("Không đủ quyền truy cập");
 
         return order;
+    }
+
+    public async Task<Order?> GetByPostId(int postId)
+    {
+        var od = await _context.OrderDetails
+            .Where(e => e.PostId == postId)
+            .FirstOrDefaultAsync();
+
+        if (od is null)
+            return null;
+
+        return await _context.Orders
+            .Include(e => e.OrderDetail)
+            .Where(e => e.Id == od.OrderId)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Order>> GetByCustomerId(int customerId)

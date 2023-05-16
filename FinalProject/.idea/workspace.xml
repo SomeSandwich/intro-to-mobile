@@ -4,6 +4,7 @@
     <shared>
       <config>
         <device id="pixel_4" />
+        <device id="_device_class_phone" />
         <target>android-33-ext5</target>
       </config>
     </shared>
@@ -13,36 +14,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ae97ffb-a6ab-4d4e-bcc8-b58e4125ef3b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/EditPostAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Order/OrderDetailReq.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/holder/EditPostHolder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layouts/profile/layout/item_post.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/MessageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/MessageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/CartActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/CartActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/CreatePost.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/CreatePost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/EditPostActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/EditPostActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/NewfeelActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/NewfeelActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/ShowPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/ShowPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/CartAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/CartAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/ChatAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/ChatAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/CreatePostAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/CreatePostAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/NewfeelAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/NewfeelAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Order/OrderReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Order/OrderReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/holder/AddImageHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/holder/AddImageHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/cart/layout/activity_cart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/cart/layout/activity_cart.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/cart/layout/custom_cart_items.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/cart/layout/custom_cart_items.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/profile/layout/activity_edit_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/profile/layout/activity_edit_post.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Admin\.android\avd\Pixel_6_API_29.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\A3 GIA KHANH\.android\avd\Pixel_4_API_33_1.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -89,8 +68,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="resourceFile" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -105,7 +84,9 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2Ok2zFXSYJIfdsuJ7EgkfWb9hPr" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -171,6 +152,7 @@
       <recent name="project.example.efriendly.activities" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="project.example.efriendly.holder" />
       <recent name="project.example.efriendly.activities.userFragments" />
     </key>
     <key name="android.template.1491525805">
@@ -191,8 +173,8 @@
       <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="true" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />

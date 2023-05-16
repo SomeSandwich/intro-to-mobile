@@ -118,7 +118,7 @@ public static class FakerGenerating
         var rate = new Rate
         {
             Id = s_rateId++,
-            RatingAt = DateTime.Now,
+            RatingAt = DateTime.Now.ToUniversalTime(),
             Rating = f.Random.Number(1, 10),
             Comment = f.Lorem.Sentences(2, " "),
             UserId = ratingUserId,

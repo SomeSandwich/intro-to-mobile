@@ -16,18 +16,18 @@
         <CheckBox
             android:id="@+id/cbCart"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:layout_marginEnd="10dp"/>
         <ImageView
             android:id="@+id/ivProduct"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:contentDescription="@string/image"
             app:srcCompat="@drawable/placeholder"
             tools:ignore="ImageContrastCheck" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:orientation="vertical">
 
             <TextView
@@ -36,6 +36,7 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="20dp"
                 android:text="Sold"
+                android:layout_marginTop="10dp"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txtPrice"

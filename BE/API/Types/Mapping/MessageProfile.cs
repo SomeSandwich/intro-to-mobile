@@ -11,7 +11,7 @@ public class MessageProfile : Profile
     {
         CreateMap<CreateMessageReq, CreateMessageArg>();
         CreateMap<CreateMessageArg, Message>()
-            .AfterMap((src, des) => des.CreateAt = DateTime.Now);
+            .AfterMap((src, des) => des.CreateAt = DateTime.Now.ToUniversalTime());
 
         CreateMap<Message, MessageRes>();
     }

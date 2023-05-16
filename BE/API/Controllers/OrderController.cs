@@ -1,7 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Runtime.InteropServices;
 using System.Security.Claims;
 using Api.Context.Constants.Enums;
-using Api.Context.Entities;
 using API.Services;
 using API.Types.Mapping;
 using API.Types.Objects;
@@ -28,6 +27,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
+    [Route("")]
     public async Task<ActionResult> AddAsync(CreateOrderReq request)
     {
         var customerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -43,7 +43,10 @@ public class OrderController : ControllerBase
 
         var orderId = await _orderService.AddAsync(request);
 
-        return CreatedAtAction(nameof(GetOne), new { id = orderId }, new SuccessRes());
+        if (orderId is null)
+            return StatusCode(500, new FailureRes());
+
+        return Ok(new SuccessRes());
     }
 
     [HttpGet]
@@ -91,6 +94,16 @@ public class OrderController : ControllerBase
 
         return Ok(listPurchase);
     }
+
+    [HttpGet]
+    [Route("postId/{postId:int}")]
+    public async Task<ActionResult> GetOrderByPostIdAsync([FromRoute] int postId)
+    {
+        var order = await _orderService.GetByPostId(postId);
+
+        return Ok(order);
+    }
+
 
     [HttpGet]
     [Route("sale")]

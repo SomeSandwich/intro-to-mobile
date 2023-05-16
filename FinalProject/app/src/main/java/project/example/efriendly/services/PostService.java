@@ -4,6 +4,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import project.example.efriendly.data.model.Post.CommentPostReq;
 import project.example.efriendly.data.model.Post.PostRes;
+import project.example.efriendly.data.model.Post.SearchPostReq;
 import project.example.efriendly.data.model.Post.UpdatePostReq;
 
 import java.util.List;
@@ -41,6 +42,9 @@ public interface PostService {
             @Part("Caption") RequestBody caption,
             @Part("Description") RequestBody description,
             @Part List<MultipartBody.Part> mediaFiles);
+
+    @POST("post/search")
+    Call<List<PostRes>> Search(@Body SearchPostReq req);
 
     @POST("post/{postId}/share-by/{userId}")
     Call<String> AddShareBy(@Path("postId") Integer postId, @Path("userId") Integer userId);

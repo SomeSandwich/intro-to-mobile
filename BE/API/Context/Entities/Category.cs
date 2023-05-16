@@ -25,7 +25,11 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     public void Configure(EntityTypeBuilder<Category> builder)
     {
         builder.HasData(
-            FakerGenerating.Categories
+            new Category { Id = 1, Description = "Áo", Icon = "category/shirt.png" },
+            new Category { Id = 2, Description = "Quần", Icon = "category/pant.png" },
+            new Category { Id = 3, Description = "Váy", Icon = "category/skirt.png" },
+            new Category { Id = 4, Description = "Áo khoác", Icon = "category/jacket.png" },
+            new Category { Id = 5, Description = "Mũ", Icon = "category/hat.png" }
         );
     }
 }

@@ -9,13 +9,14 @@ public class MobileDbContext : DbContext
     public MobileDbContext(DbContextOptions<MobileDbContext> options) : base(options)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        FakerGenerating.Init();
+        // FakerGenerating.Init();
 
         new UserDetailConfiguration().Configure(builder.Entity<User>());
         new CategoryConfiguration().Configure(builder.Entity<Category>());
