@@ -53,6 +53,6 @@ public class PostDetailConfiguration : IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
-        builder.HasData(FakerGenerating.Posts);
+        // builder.HasData(FakerGenerating.Posts);
     }
 }

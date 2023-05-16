@@ -1,13 +1,10 @@
-﻿using System.ComponentModel;
-using System.Reactive;
-using Api.Context;
+﻿using Api.Context;
 using Api.Context.Constants.Enums;
 using Api.Context.Entities;
 using API.Types.Mapping;
 using API.Types.Objects;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Services;
 
@@ -47,7 +44,12 @@ public class OrderService : IOrderService
         try
         {
             var order = _mapper.Map<CreateOrderReq, Order>(args);
-            order.SellerId = 1;
+
+            var firstDetail = args.Details.FirstOrDefault()?.PostId;
+            var sellerId = await _context.Posts.Where(e => e.Id == firstDetail).Select(e => e.UserId)
+                .FirstOrDefaultAsync();
+
+            order.SellerId = sellerId;
 
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
@@ -81,6 +83,15 @@ public class OrderService : IOrderService
                 post.IsSold = true;
                 await _context.SaveChangesAsync();
             }
+
+            var money = listDetail.Sum(e => e.UnitPrice);
+            var seller = await _context.Users.FirstOrDefaultAsync(e => e.Id == sellerId);
+            var customer = await _context.Users.FirstOrDefaultAsync(e => e.Id == args.CustomerId);
+
+            seller.Money += money;
+            customer.Money -= money;
+
+            Console.WriteLine(order.Id);
 
             await transaction.CommitAsync();
 

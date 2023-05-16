@@ -16,7 +16,7 @@ public class MobileDbContext : DbContext
     {
         base.OnModelCreating(builder);
 
-        FakerGenerating.Init();
+        // FakerGenerating.Init();
 
         new UserDetailConfiguration().Configure(builder.Entity<User>());
         new CategoryConfiguration().Configure(builder.Entity<Category>());

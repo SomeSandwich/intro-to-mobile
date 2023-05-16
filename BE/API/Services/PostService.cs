@@ -200,7 +200,7 @@ public class PostService : IPostService
         if (!string.IsNullOrEmpty(args.Description))
             post.Description = args.Description;
 
-        post.UpdatedDate = DateTime.Now;
+        post.UpdatedDate = DateTime.Now.ToUniversalTime();
 
         await _context.SaveChangesAsync();
 
@@ -234,7 +234,7 @@ public class PostService : IPostService
             return false;
 
         post.IsDeleted = true;
-        post.UpdatedDate = DateTime.Now;
+        post.UpdatedDate = DateTime.Now.ToUniversalTime();
 
         await _context.SaveChangesAsync();
 

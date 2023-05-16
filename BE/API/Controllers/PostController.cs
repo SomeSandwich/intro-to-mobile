@@ -135,7 +135,7 @@ public class PostController : ControllerBase
             }
         }
 
-        var now = DateTime.Now;
+        var now = DateTime.Now.ToUniversalTime();
 
         var post = _mapper.Map<CreatePostReq, Post>(request,
             opt =>
@@ -207,7 +207,7 @@ public class PostController : ControllerBase
 
         var success = await _commentServ.AddComment(new CreateCommentReq
         {
-            UserId = userId, PostId = id, Content = request.Content, CreateAt = DateTime.Now
+            UserId = userId, PostId = id, Content = request.Content, CreateAt = DateTime.Now.ToUniversalTime()
         });
 
         return !success ? StatusCode(500, new FailureRes()) : Ok(new SuccessRes());
