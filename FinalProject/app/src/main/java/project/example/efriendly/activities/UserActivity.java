@@ -113,6 +113,9 @@ public class UserActivity extends AppCompatActivity {
             if (strValue.equals("payment")){
                 getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, paymentActivity).commit();
             }
+            else if (strValue.equals("editPost")){
+
+            }
         }
     }
 

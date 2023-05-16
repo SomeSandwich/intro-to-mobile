@@ -131,12 +131,14 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
             postCateCall.enqueue(new Callback<List<PostRes>>() {
                 @Override
                 public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-                    List<PostRes> postsHehe = response.body();
-
-                    System.out.println(postsHehe.size());
-
-                    HomepageAdapter adapter = new HomepageAdapter(postsHehe, getContext(), listener);
-
+                    List<PostRes> posts = response.body();
+                    for (int i = 0; i<posts.size();i++){
+                        if (response.body().get(i).getSold()) {
+                            posts.remove(i);
+                            i--;
+                        }
+                    }
+                    HomepageAdapter adapter = new HomepageAdapter(posts, getContext(), listener);
                     binding.ListItems.setAdapter(adapter);
                     binding.ListItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                 }
@@ -176,7 +178,6 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-
                 if (response.isSuccessful()) {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
@@ -187,7 +188,6 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                             i--;
                         }
                     }
-
                     HomepageAdapter adapter = new HomepageAdapter(posts, context, listener);
                     binding.ListItems.setAdapter(adapter);
 

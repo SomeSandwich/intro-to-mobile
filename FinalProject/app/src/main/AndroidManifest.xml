@@ -17,6 +17,9 @@
         android:theme="@style/Theme.EFriendly"
         tools:targetApi="31">
         <activity
+            android:name=".activities.userFragments.EditPostActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.userFragments.PaymentActivity"
             android:exported="false" />
 
