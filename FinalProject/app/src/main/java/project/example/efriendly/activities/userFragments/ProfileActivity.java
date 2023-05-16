@@ -118,5 +118,8 @@ public class ProfileActivity extends Fragment implements DatabaseConnection {
         public void paymentClick(View view){
             main.onMsgFromFragToMain("profile", "payment");
         }
+        public void editPostClick(View view){
+            main.onMsgFromFragToMain("profile", "editPost");
+        }
     }
 }

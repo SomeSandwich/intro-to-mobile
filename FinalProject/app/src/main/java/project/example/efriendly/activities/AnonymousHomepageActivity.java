@@ -145,11 +145,14 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
             postCateCall.enqueue(new Callback<List<PostRes>>() {
                 @Override
                 public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-                    List<PostRes> postsHehe = response.body();
-
-                    System.out.println(postsHehe.size());
-
-                    AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(postsHehe, getApplicationContext(), listener);
+                    List<PostRes> posts = response.body();
+                    for (int i = 0; i<posts.size();i++){
+                        if (response.body().get(i).getSold()) {
+                            posts.remove(i);
+                            i--;
+                        }
+                    }
+                    AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
 
                     binding.ListItems.setAdapter(adapter);
                     binding.ListItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));

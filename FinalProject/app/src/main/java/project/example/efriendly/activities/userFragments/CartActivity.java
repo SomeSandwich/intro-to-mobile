@@ -139,7 +139,6 @@ public class CartActivity extends AppCompatActivity {
         }
         public void DeleteClick(View view){
             if(cartList.size() == 0) return;
-
             if (binding.cbAll.isChecked()){
                 for (int i = 0;i<listener.checkList.size();i++){
                     try {
