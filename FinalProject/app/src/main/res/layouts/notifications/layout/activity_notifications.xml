@@ -12,23 +12,30 @@
         android:orientation="vertical">
 
         <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Notifications"
-                android:textAlignment="center"
-                android:textColor="@color/green"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"/>
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Notifications"
+            android:textAlignment="center"
+            android:textColor="@color/green"
+            android:textSize="22sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"/>
 
-        <ListView
-            android:id="@+id/NotificationList"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/listview_border"
-            tools:listitem="@layout/custom_notification_items">
-        </ListView>
+            android:background="@color/gray"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/NotificationList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="48dp"
+                android:dividerHeight="10dp"
+                android:background="@drawable/listview_border">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
     </LinearLayout>
 </layout>

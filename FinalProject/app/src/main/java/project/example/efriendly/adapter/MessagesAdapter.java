@@ -1,6 +1,7 @@
 package project.example.efriendly.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -49,7 +50,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessageHolder> {
     public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
         final int index = holder.getAdapterPosition();
         holder.message.setText(messages.get(index).getContent());
-        holder.time.setText(messages.get(index).getCreateAt());
     }
 
     @Override

@@ -29,18 +29,18 @@ public class NotificationsActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        binding = ActivityNotificationsBinding.inflate(inflater, container,false);
-
-        NotificationsAdapter adapter = new NotificationsAdapter(container.getContext(), R.layout.custom_notification_items, notifications, times, avatars);
-        
-        binding.NotificationList.setAdapter(adapter);
-        binding.NotificationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("hehe");
-            }
-        });
-
+//        binding = ActivityNotificationsBinding.inflate(inflater, container,false);
+//
+//        NotificationsAdapter adapter = new NotificationsAdapter(container.getContext(), R.layout.custom_notification_items, notifications, times, avatars);
+//
+//        binding.NotificationList.setAdapter(adapter);
+//        binding.NotificationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                System.out.println("hehe");
+//            }
+//        });
+//
         return binding.getRoot();
     }
 }

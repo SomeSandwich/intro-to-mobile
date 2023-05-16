@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import project.example.efriendly.R;
+import project.example.efriendly.activities.LoginActivity;
 import project.example.efriendly.activities.userFragments.CartActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
@@ -104,7 +105,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
             }
             @Override
             public void onFailure(Call<PostRes> call, Throwable t) {
-                String message = "An error occurred please try again later ...";
+                String message = t.getLocalizedMessage();
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
             }
         });
