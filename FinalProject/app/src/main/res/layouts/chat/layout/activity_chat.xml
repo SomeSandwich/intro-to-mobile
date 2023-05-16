@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Chat"
                 android:textAlignment="center"
-                android:textColor="#BC6C25"
+                android:textColor="@color/green"
                 android:textSize="22sp" />
         </RelativeLayout>
 

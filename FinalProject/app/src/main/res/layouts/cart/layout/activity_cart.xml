@@ -5,237 +5,237 @@
     tools:context=".activities.userFragments.CartActivity">
 
     <data>
-<!--        <variable-->
-<!--            name="clickHandler"-->
-<!--            type="project.example.efriendly.activities.userFragments.CartActivity.CartActivityClickHandler" />-->
+        <variable
+            name="clickHandler"
+            type="project.example.efriendly.activities.userFragments.CartActivity.CartActivityClickHandler" />
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:orientation="horizontal">
 
             <ImageView
+                android:onClick="@{clickHandler::back}"
                 android:id="@+id/back_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
+                android:src="@drawable/back_arrow_color"
                 android:contentDescription="@string/image"
-                android:src="@drawable/back_arrow_color" />
-
+                />
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-60dp"
                 android:text="@string/Cart"
                 android:textAlignment="center"
                 android:textColor="@color/green"
-                android:textSize="26sp"
-                android:textStyle="bold" />
+                android:textSize="22sp"
+                android:layout_marginStart="-60dp"
+                tools:layout_editor_absoluteX="165dp"
+                tools:layout_editor_absoluteY="34dp" />
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/scrollView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="65dp">
+            android:background="@color/gray"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/CartList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="142dp"
+                android:choiceMode="multipleChoice"
+                android:dividerHeight="10dp"
+                android:background="@drawable/listview_border">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="-150dp"
+            android:orientation="vertical"
+            android:background="@drawable/border_shadow"
+            android:gravity="center">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview"
+                <CheckBox
+                    android:onCheckedChanged="@{clickHandler::allCheck}"
+                    android:id="@+id/cbAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"/>
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp" />
+                    android:layout_height="wrap_content"
+                    android:text="@string/All"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/TotalPayment"
+                    android:layout_marginStart="-270dp"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/Prices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#BC6C25"
+                    android:textSize="17sp"
+                    android:layout_marginStart="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/textView2"
+                    <Button
+                        android:onClick="@{clickHandler::DeleteClick}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/total"
-                        android:textSize="26sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txtTotalMoney"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/money"
-                        android:textSize="26sp"
-                        android:textStyle="bold" />
+                        android:layout_marginStart="25dp"
+                        android:backgroundTint="@color/button_background_while"
+                        android:text="@string/Delete"
+                        android:textColor="#DDA15E" />
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnLogOut"
-                    style="@style/Widget.AppCompat.Button"
-                    android:layout_width="match_parent"
+                <Button
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="25dp"
-                    android:background="@drawable/button_background"
-                    android:text="@string/checkout"
-                    android:textColor="@color/white"
-                    android:textSize="17sp" />
-
+                    android:layout_marginStart="-270dp"
+                    android:backgroundTint="@color/button_background_orange"
+                    android:text="@string/Buy"/>
             </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtEmpty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your Cart Is Empty"
-            app:layout_constraintEnd_toEndOf="@+id/scrollView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/scrollView"
-            app:layout_constraintTop_toTopOf="@id/scrollView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="gone"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <LinearLayout-->
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
 <!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical">-->
+<!--        android:layout_height="match_parent">-->
 
 <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="30dp"-->
+<!--            android:layout_marginTop="20dp"-->
 <!--            android:layout_marginBottom="10dp"-->
-<!--            android:orientation="horizontal">-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent">-->
 
 <!--            <ImageView-->
-<!--                android:onClick="@{clickHandler::back}"-->
 <!--                android:id="@+id/back_arrow"-->
 <!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="5dp"-->
 <!--                android:layout_marginStart="30dp"-->
-<!--                android:src="@drawable/back_arrow_color"-->
+<!--                android:layout_marginTop="10dp"-->
 <!--                android:contentDescription="@string/image"-->
-<!--                />-->
+<!--                android:src="@drawable/back_arrow_color" />-->
+
 <!--            <TextView-->
 <!--                android:id="@+id/txtTitle"-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="-60dp"-->
 <!--                android:text="@string/Cart"-->
 <!--                android:textAlignment="center"-->
-<!--                android:textColor="#BC6C25"-->
-<!--                android:textSize="22sp"-->
-<!--                android:layout_marginStart="-60dp"-->
-<!--                tools:layout_editor_absoluteX="165dp"-->
-<!--                tools:layout_editor_absoluteY="34dp" />-->
+<!--                android:textColor="@color/green"-->
+<!--                android:textSize="26sp"-->
+<!--                android:textStyle="bold" />-->
 <!--        </LinearLayout>-->
 
-<!--        <LinearLayout-->
+<!--        <ScrollView-->
+<!--            android:id="@+id/scrollView"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/gray"-->
-<!--            android:orientation="vertical">-->
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/CartList"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="142dp"-->
-<!--                android:choiceMode="multipleChoice"-->
-<!--                android:dividerHeight="10dp"-->
-<!--                android:background="@drawable/listview_border">-->
-<!--            </androidx.recyclerview.widget.RecyclerView>-->
-<!--        </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="150dp"-->
-<!--            android:layout_marginTop="-150dp"-->
-<!--            android:orientation="vertical"-->
-<!--            android:background="@drawable/border_shadow"-->
-<!--            android:gravity="center">-->
+<!--            android:layout_marginTop="65dp">-->
 
 <!--            <LinearLayout-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_marginBottom="10dp">-->
+<!--                android:orientation="vertical">-->
 
-<!--                <CheckBox-->
-<!--                    android:onCheckedChanged="@{clickHandler::allCheck}"-->
-<!--                    android:id="@+id/cbAll"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="15dp"/>-->
-<!--                <TextView-->
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/recyclerview"-->
 <!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/All"-->
-<!--                    android:textSize="15sp"/>-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/TotalPayment"-->
-<!--                    android:layout_marginStart="-270dp"-->
-<!--                    android:textSize="15sp"/>-->
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="50.000đ"-->
-<!--                    android:textColor="#BC6C25"-->
-<!--                    android:textSize="17sp"-->
-<!--                    android:layout_marginStart="10dp"/>-->
-<!--            </LinearLayout>-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal">-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginTop="10dp" />-->
 
 <!--                <LinearLayout-->
 <!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginTop="25dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:layout_marginBottom="4dp"-->
+<!--                    android:orientation="horizontal">-->
 
-<!--                    <Button-->
-<!--                        android:onClick="@{clickHandler::DeleteClick}"-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/textView2"-->
 <!--                        android:layout_width="wrap_content"-->
 <!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="25dp"-->
-<!--                        android:backgroundTint="@color/button_background_while"-->
-<!--                        android:text="@string/Delete"-->
-<!--                        android:textColor="#DDA15E" />-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="@string/total"-->
+<!--                        android:textSize="26sp"-->
+<!--                        android:textStyle="bold" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/txtTotalMoney"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/money"-->
+<!--                        android:textSize="26sp"-->
+<!--                        android:textStyle="bold" />-->
 <!--                </LinearLayout>-->
 
-<!--                <Button-->
-<!--                    android:layout_width="wrap_content"-->
+<!--                <androidx.appcompat.widget.AppCompatButton-->
+<!--                    android:id="@+id/btnLogOut"-->
+<!--                    style="@style/Widget.AppCompat.Button"-->
+<!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="-270dp"-->
-<!--                    android:backgroundTint="@color/button_background_orange"-->
-<!--                    android:text="@string/Buy"/>-->
+<!--                    android:layout_margin="25dp"-->
+<!--                    android:background="@drawable/button_background"-->
+<!--                    android:text="@string/checkout"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="17sp" />-->
+
 <!--            </LinearLayout>-->
-<!--        </LinearLayout>-->
-<!--    </LinearLayout>-->
+<!--        </ScrollView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtEmpty"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Your Cart Is Empty"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/scrollView"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/scrollView"-->
+<!--            app:layout_constraintTop_toTopOf="@id/scrollView"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:visibility="gone"/>-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>

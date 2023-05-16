@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.userFragments.ProfileActivity">
     <data>
-
+        <variable
+            name="clickHandler"
+            type="project.example.efriendly.activities.userFragments.ProfileActivity.ProfileActivityClickHandler"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -188,6 +190,7 @@
                                 android:textSize="18sp"/>
 
                             <TextView
+                                android:id="@+id/txtEmail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -223,6 +226,7 @@
                                 android:textSize="18sp"/>
 
                             <TextView
+                                android:id="@+id/txtPhone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -258,6 +262,7 @@
                                 android:textSize="18sp"/>
 
                             <TextView
+                                android:id="@+id/txtAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -289,7 +294,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:onClick="@{clickHandler::logout}"/>
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
