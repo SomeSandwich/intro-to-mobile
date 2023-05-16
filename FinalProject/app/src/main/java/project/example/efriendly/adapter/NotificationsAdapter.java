@@ -40,9 +40,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsHold
     UserService userService;
     PostService postService;
 
-    public NotificationsAdapter( Context context, ArrayList<NotificationsRes> notifications) {
+    public NotificationsAdapter( Context context) {
         this.context = context;
-        this.notifications = notifications;
     }
 
     @NonNull

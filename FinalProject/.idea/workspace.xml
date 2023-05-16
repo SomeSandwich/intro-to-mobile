@@ -14,17 +14,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ae97ffb-a6ab-4d4e-bcc8-b58e4125ef3b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/EditPostActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layouts/profile/layout/activity_edit_post.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/AnonymousHomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/AnonymousHomepageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/CartActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/CartActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/ProfileActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/profile/layout/activity_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/profile/layout/activity_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/NotificationsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/NotificationsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/NotificationsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/NotificationsAdapter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
