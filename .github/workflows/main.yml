@@ -76,7 +76,7 @@ jobs:
             # Stop container if is running and remove old container
             docker stop $(echo $IMAGE_NAME) || true && docker rm $(echo $IMAGE_NAME) || true
             # Remove old container
-            docker rm $(echo $IMAGE_NAME)
+            # docker rm $(echo $IMAGE_NAME)
             # Run a new container from a new image
             docker run -d \
             --restart always \
