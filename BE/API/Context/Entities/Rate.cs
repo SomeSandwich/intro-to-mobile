@@ -29,6 +29,6 @@ public class RateDetailConfiguration : IEntityTypeConfiguration<Rate>
 {
     public void Configure(EntityTypeBuilder<Rate> builder)
     {
-        builder.HasData(FakerGenerating.Rates);
+        // builder.HasData(FakerGenerating.Rates);
     }
 }
