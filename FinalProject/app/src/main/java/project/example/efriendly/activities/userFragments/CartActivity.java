@@ -24,7 +24,6 @@ import project.example.efriendly.R;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.data.model.Cart.CartRes;
 import project.example.efriendly.data.model.Order.OrderDetailReq;
-import project.example.efriendly.data.model.Order.OrderDetailRes;
 import project.example.efriendly.data.model.Order.OrderReq;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.data.model.SuccessRes;
