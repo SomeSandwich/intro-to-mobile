@@ -151,9 +151,11 @@ public class MessageActivity extends AppCompatActivity implements DatabaseConnec
             try {
                 Response<ConversationRes> res = conversationService.GetByConvId(conversationId).execute();
                 if (res.body()!=null && res.isSuccessful()){
-                    adapter.messages.add(res.body().getMessages().get(res.body().getMessages().size() - 1));
-                    adapter.notifyItemInserted(adapter.messages.size() - 1);
-                    binding.recyclerViewOfSpecific.getLayoutManager().scrollToPosition(adapter.messages.size() - 1);
+                    for (int i = 0; i < res.body().getMessages().size() - adapter.messages.size(); i++){
+                        adapter.messages.add(res.body().getMessages().get(adapter.messages.size() + i));
+                        adapter.notifyItemInserted(adapter.messages.size() - 1);
+                        binding.recyclerViewOfSpecific.getLayoutManager().scrollToPosition(adapter.messages.size() - 1);
+                    }
                 }
             }
             catch (IOException exception) {Toast.makeText(context, "Can't connect to server", Toast.LENGTH_LONG).show();}

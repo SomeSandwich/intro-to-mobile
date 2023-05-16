@@ -38,10 +38,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
     private LayoutInflater inflater;
     Context context;
     List<CartRes> carts;
-
     UserService userService;
     PostService postService;
-
     CartActivity.ClickListener listener;
 
     public CartAdapter( Context context, List<CartRes> carts,  CartActivity.ClickListener listener) {

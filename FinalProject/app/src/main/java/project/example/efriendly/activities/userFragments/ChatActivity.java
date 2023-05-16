@@ -15,22 +15,30 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import project.example.efriendly.R;
 import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.adapter.ChatAdapter;
+import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityChatBinding;
+import project.example.efriendly.services.ConversationService;
+import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private RecyclerView recyclerView;
     private ChatAdapter adapter;
-    private ArrayList<UserRes> userArrayList;
-
+    private List<UserRes> userArrayList;
     private ChatClickHandler handler;
+
+    ConversationService conversationService;
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
@@ -56,15 +64,19 @@ public class ChatActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 
-        userArrayList = new ArrayList<>();
-        userArrayList.add(new UserRes(1, "Truong Trong Khanh", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(2, "Hoang Quoc Bao", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(3, "Nguyen Tan Hieu", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(4, "Kha Vinh Dat", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(5, "Nguyen Quoc Su", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(6, "Tran Minh Truong", "FinalProject/app/src/main/res/drawable/user.jpg"));
-        userArrayList.add(new UserRes(7, "Nguyen Ho Huu Bang", "FinalProject/app/src/main/res/drawable/user.jpg"));
-
+        conversationService = RetrofitClientGenerator.getService(ConversationService.class);
+        try{
+            Response<List<UserRes>> response = conversationService.GetUserBySelf().execute();
+            if(response.isSuccessful() && response.body() != null){
+                userArrayList = response.body();
+            }
+            else{
+                Toast.makeText(this, "Error when get conversation list", Toast.LENGTH_SHORT).show();
+            }
+        }
+        catch (IOException e){
+            Toast.makeText(this, "Can't connect to server", Toast.LENGTH_LONG).show();
+        }
         recyclerView = binding.recyclerview;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ChatAdapter(ChatActivity.this, userArrayList);
@@ -77,7 +89,6 @@ public class ChatActivity extends AppCompatActivity {
 
         handler = new ChatClickHandler(this);
         binding.setClickHandler(handler);
-
     }
 
     public class ChatClickHandler{

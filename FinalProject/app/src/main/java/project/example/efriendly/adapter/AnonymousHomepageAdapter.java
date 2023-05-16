@@ -26,12 +26,13 @@ import project.example.efriendly.R;
 import project.example.efriendly.activities.AnonymousHomepageActivity;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.constants.DatabaseConnection;
+import project.example.efriendly.data.model.Category.CategoryRes;
 import project.example.efriendly.data.model.Post.PostRes;
 import project.example.efriendly.databinding.PostBinding;
 import project.example.efriendly.holder.PostHolder;
 
 public class AnonymousHomepageAdapter extends RecyclerView.Adapter<PostHolder> implements DatabaseConnection {
-    List<PostRes> posts = Collections.emptyList();
+    public List<PostRes> posts = Collections.emptyList();
     AnonymousHomepageActivity.ClickListener listener;
     Context context;
 
@@ -65,9 +66,9 @@ public class AnonymousHomepageAdapter extends RecyclerView.Adapter<PostHolder> i
 
         holder.price.setText(String.valueOf(posts.get(index).getPrice() + "VND"));
         holder.progressBar.setVisibility(View.VISIBLE);
-
         Glide.with(context)
-                .load(IMAGE_URL + posts.get(index).getMediaPath().get(0)).placeholder(R.drawable.placeholder)
+                .load(IMAGE_URL + posts.get(index).getMediaPath().get(0))
+                .placeholder(R.drawable.placeholder)
                 .into(holder.image);
         holder.progressBar.setVisibility(View.INVISIBLE);
     }
