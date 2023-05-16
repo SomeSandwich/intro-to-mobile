@@ -16,6 +16,7 @@ public interface IOrderService
     Task<int?> AddAsync(CreateOrderReq args);
 
     Task<Order?> GetAsync(int userId, int orderId);
+    Task<Order?> GetByPostId(int postId);
     Task<IEnumerable<Order>> GetByCustomerId(int customerId);
     Task<IEnumerable<Order>> GetBySellerId(int sellerId);
 
@@ -106,6 +107,21 @@ public class OrderService : IOrderService
             throw new InvalidOperationException("Không đủ quyền truy cập");
 
         return order;
+    }
+
+    public async Task<Order?> GetByPostId(int postId)
+    {
+        var od = await _context.OrderDetails
+            .Where(e => e.PostId == postId)
+            .FirstOrDefaultAsync();
+
+        if (od is null)
+            return null;
+
+        return await _context.Orders
+            .Include(e => e.OrderDetail)
+            .Where(e => e.Id == od.OrderId)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Order>> GetByCustomerId(int customerId)

@@ -20,6 +20,7 @@ public interface IPostService
     Task<IEnumerable<PostRes>> GetLatestAsync(int number);
     Task<IEnumerable<PostRes>> SearchAsync(string query);
 
+
     Task<bool> AddSharePost(int postId, int userId);
     Task<bool> RemoveSharePost(int postId, int userId);
 
