@@ -1,0 +1,222 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="30.0.1" />
+      <PackageReference Include="RestSharp" Version="110.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Clothes.csv" />
+      <EmbeddedResource Include="Clothes.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\1.jpg" />
+      <EmbeddedResource Include="img\1.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\2.jpg" />
+      <EmbeddedResource Include="img\2.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\3.jpg" />
+      <EmbeddedResource Include="img\3.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\4.jpg" />
+      <EmbeddedResource Include="img\4.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\5.jpg" />
+      <EmbeddedResource Include="img\5.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\6.jpg" />
+      <EmbeddedResource Include="img\6.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\7.jpg" />
+      <EmbeddedResource Include="img\7.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\8.jpg" />
+      <EmbeddedResource Include="img\8.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\9.jpg" />
+      <EmbeddedResource Include="img\9.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\10.jpg" />
+      <EmbeddedResource Include="img\10.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\11.jpg" />
+      <EmbeddedResource Include="img\11.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\12.jpg" />
+      <EmbeddedResource Include="img\12.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\13.jpg" />
+      <EmbeddedResource Include="img\13.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\14.jpg" />
+      <EmbeddedResource Include="img\14.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\15.jpg" />
+      <EmbeddedResource Include="img\15.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\16.jpg" />
+      <EmbeddedResource Include="img\16.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\17.jpg" />
+      <EmbeddedResource Include="img\17.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\18.jpg" />
+      <EmbeddedResource Include="img\18.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\19.jpg" />
+      <EmbeddedResource Include="img\19.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\20.jpg" />
+      <EmbeddedResource Include="img\20.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\21.jpg" />
+      <EmbeddedResource Include="img\21.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\22.jpg" />
+      <EmbeddedResource Include="img\22.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\23.jpg" />
+      <EmbeddedResource Include="img\23.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\24.jpg" />
+      <EmbeddedResource Include="img\24.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\25.jpg" />
+      <EmbeddedResource Include="img\25.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\26.jpg" />
+      <EmbeddedResource Include="img\26.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\27.jpg" />
+      <EmbeddedResource Include="img\27.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\28.jpg" />
+      <EmbeddedResource Include="img\28.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\29.jpg" />
+      <EmbeddedResource Include="img\29.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\30.jpg" />
+      <EmbeddedResource Include="img\30.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\31.jpg" />
+      <EmbeddedResource Include="img\31.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\32.jpg" />
+      <EmbeddedResource Include="img\32.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\33.jpg" />
+      <EmbeddedResource Include="img\33.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\34.jpg" />
+      <EmbeddedResource Include="img\34.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\35.jpg" />
+      <EmbeddedResource Include="img\35.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\36.jpg" />
+      <EmbeddedResource Include="img\36.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\37.jpg" />
+      <EmbeddedResource Include="img\37.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\38.jpg" />
+      <EmbeddedResource Include="img\38.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\39.jpg" />
+      <EmbeddedResource Include="img\39.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\40.jpg" />
+      <EmbeddedResource Include="img\40.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\41.jpg" />
+      <EmbeddedResource Include="img\41.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\42.jpg" />
+      <EmbeddedResource Include="img\42.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\43.jpg" />
+      <EmbeddedResource Include="img\43.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\44.jpg" />
+      <EmbeddedResource Include="img\44.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\45.jpg" />
+      <EmbeddedResource Include="img\45.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\46.jpg" />
+      <EmbeddedResource Include="img\46.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\47.jpg" />
+      <EmbeddedResource Include="img\47.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\48.jpg" />
+      <EmbeddedResource Include="img\48.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\49.jpg" />
+      <EmbeddedResource Include="img\49.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="img\50.jpg" />
+      <EmbeddedResource Include="img\50.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>
