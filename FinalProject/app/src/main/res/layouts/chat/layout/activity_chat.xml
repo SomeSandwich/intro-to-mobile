@@ -45,7 +45,8 @@
                     android:text="@string/Chat"
                     android:textAlignment="center"
                     android:textColor="@color/green"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    android:textStyle="bold"/>
             </RelativeLayout>
 
             <SearchView

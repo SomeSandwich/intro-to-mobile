@@ -4,7 +4,6 @@ import java.util.List;
 
 public class CartItem {
     private String productName;
-
     private String mediaPath;
     private Integer unitPrice;
     private Integer numInCart;
