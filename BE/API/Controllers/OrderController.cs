@@ -48,7 +48,7 @@ public class OrderController : ControllerBase
 
     [HttpGet]
     [Route("{orderId:int}")]
-    public async Task<ActionResult<CreateOrderReq>> GetOne([FromBody] int orderId)
+    public async Task<ActionResult<CreateOrderReq>> GetOne([FromRoute] int orderId)
     {
         var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Api.Context.Constants.Enums;
 using Api.Context.GenerateData;
@@ -26,6 +27,8 @@ public class User
     [Range(-1, 10)] public double Legit { get; set; } = -1;
 
     public string Address { get; set; }
+
+    [DefaultValue(0)] public double Money { get; set; } = 0;
 
     public UserStatus Status { get; set; } = UserStatus.Default;
 
