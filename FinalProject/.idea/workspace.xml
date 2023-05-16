@@ -13,22 +13,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ae97ffb-a6ab-4d4e-bcc8-b58e4125ef3b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/AnonymousHomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/AnonymousHomepageActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/UserActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/navBarActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/navBarActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/HomepageActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/AnonymousHomepageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/AnonymousHomepageAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/HomepageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/adapter/HomepageAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Category/CategoryRes.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/data/model/Category/CategoryRes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/services/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/SearchBarCartChatActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/SearchBarCartChatActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/SearchBarCartLoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/project/example/efriendly/activities/userFragments/SearchBarCartLoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layouts/chat/layout/activity_chat.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layouts/chat/layout/activity_chat.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Admin\.android\avd\Pixel_6_API_29.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\A3 GIA KHANH\.android\avd\Pixel_4_API_33_1.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -95,23 +94,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "android-custom-viewC:/Users/Admin/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED": "RecyclerView",
-    "cidr.known.project.marker": "true",
-    "ignore.preview.features.used": "true",
-    "last_directory_selection": "C:/Users/A3 GIA KHANH/Desktop/intro-to-mobile/FinalProject/app/src/main/res/drawable",
-    "last_opened_file_path": "D:/Android Studio/Github FinalProject/intro-to-mobile/FinalProject/app/src/main/res/layouts/newfeel/layout",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/A3 GIA KHANH/Desktop/intro-to-mobile/FinalProject/app/src/main/res/drawable&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Android Studio/Github FinalProject/intro-to-mobile/FinalProject/app/src/main/res/layouts/newfeel/layout&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Signing Configs" />
     <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />

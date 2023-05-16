@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/Chat"
                     android:textAlignment="center"
-                    android:textColor="#BC6C25"
+                    android:textColor="@color/green"
                     android:textSize="22sp" />
             </RelativeLayout>
 
@@ -71,7 +71,6 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/SearchBar"
                 android:background="@drawable/listview_border">
-
             </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
         <ProgressBar
