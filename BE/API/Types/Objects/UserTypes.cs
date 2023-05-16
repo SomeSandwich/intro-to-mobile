@@ -45,6 +45,8 @@ public class UserRes
 
     public string Address { get; set; }
 
+    public double Money { get; set; }
+
     public UserStatus Status { get; set; }
 }
 
