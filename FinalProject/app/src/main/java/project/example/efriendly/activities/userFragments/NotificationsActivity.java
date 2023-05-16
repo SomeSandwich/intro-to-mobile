@@ -39,9 +39,9 @@ public class NotificationsActivity extends Fragment {
 
         binding = ActivityNotificationsBinding.inflate(inflater, container,false);
 
-        adapter = new NotificationsAdapter(context);
+        adapter = new NotificationsAdapter(getContext());
         binding.NotificationList.setAdapter(adapter);
-        binding.NotificationList.setLayoutManager(new LinearLayoutManager(context));
+        binding.NotificationList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return binding.getRoot();
     }

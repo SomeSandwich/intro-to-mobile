@@ -34,9 +34,8 @@ import retrofit2.Response;
 
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsHolder> implements DatabaseConnection {
-    private LayoutInflater inflater;
     Context context;
-    ArrayList<NotificationsRes> notifications;
+    int size= 0;
     UserService userService;
     PostService postService;
 
@@ -71,6 +70,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsHold
                         public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
                             if(response.isSuccessful() && response.body() != null){
                                 List<PostRes> postList = response.body();
+                                size = postList.size();
                                 for (int i = 0; i < postList.size(); i++) {
                                     if(postList.get(i).getSold()) {
                                         Glide.with(context)
@@ -108,6 +108,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsHold
 
     @Override
     public int getItemCount() {
-        return notifications.size();
+        return size;
     }
 }

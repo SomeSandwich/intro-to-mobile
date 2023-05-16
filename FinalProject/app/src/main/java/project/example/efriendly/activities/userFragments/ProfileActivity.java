@@ -65,6 +65,7 @@ public class ProfileActivity extends Fragment implements DatabaseConnection {
                     binding.txtUsername.setText(userRes.getName());
                     binding.txtEmail.setText(userRes.getEmail());
                     binding.txtAddress.setText(userRes.getAddress());
+                    binding.txtPhone.setText(userRes.getPhoneNumber());
                     if (userRes.getAvatarPath() != null) {
                         Glide.with(getActivity())
                                 .load(IMAGE_URL + userRes.getAvatarPath())
