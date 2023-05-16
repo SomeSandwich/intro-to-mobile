@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Reactive;
 using Api.Context;
 using Api.Context.Constants.Enums;
 using Api.Context.Entities;
@@ -12,7 +13,7 @@ namespace API.Services;
 
 public interface IOrderService
 {
-    Task<int> AddAsync(CreateOrderReq args);
+    Task<int?> AddAsync(CreateOrderReq args);
 
     Task<Order?> GetAsync(int userId, int orderId);
     Task<IEnumerable<Order>> GetByCustomerId(int customerId);
@@ -38,41 +39,57 @@ public class OrderService : IOrderService
         _mapper = config.CreateMapper();
     }
 
-    public async Task<int> AddAsync(CreateOrderReq args)
+    public async Task<int?> AddAsync(CreateOrderReq args)
     {
-        using var transaction = _context.Database.BeginTransaction();
+        await using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
         {
             var order = _mapper.Map<CreateOrderReq, Order>(args);
+            order.SellerId = 1;
 
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
 
-            var listItems = args.Details;
-
-            var listDetail = _mapper.Map<ICollection<OrderItemReq>, ICollection<OrderDetail>>(listItems);
+            var listDetail = _mapper.Map<ICollection<OrderItemReq>, List<OrderDetail>>(args.Details, opt =>
+            {
+                opt.AfterMap((src, des) =>
+                {
+                    foreach (var desDetail in des)
+                    {
+                        desDetail.OrderId = order.Id;
+                    }
+                });
+            });
 
             if (listDetail is not null)
             {
-                foreach (var detail in listDetail)
-                {
-                    detail.OrderId = order.Id;
-                }
-
                 await _context.OrderDetails.AddRangeAsync(listDetail);
                 await _context.SaveChangesAsync();
             }
 
-            transaction.Commit();
+            foreach (var detail in listDetail)
+            {
+                var post = await _context.Posts.FirstOrDefaultAsync(e => e.Id == detail.PostId);
+
+                if (post is null)
+                {
+                    continue;
+                }
+
+                post.IsSold = true;
+                await _context.SaveChangesAsync();
+            }
+
+            await transaction.CommitAsync();
 
             return order.Id;
         }
         catch (Exception e)
         {
-            transaction.Rollback();
+            await transaction.RollbackAsync();
             Console.WriteLine(e);
-            throw;
+            return null;
         }
     }
 

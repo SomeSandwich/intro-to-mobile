@@ -17,7 +17,7 @@ public class CreateOrderReq
 
     public string DeliveryAddress { get; set; } = string.Empty;
 
-    public ICollection<OrderItemReq> Details { get; set; }
+    public List<OrderItemReq> Details { get; set; }
 }
 
 public class UpdateOrderAddressReq

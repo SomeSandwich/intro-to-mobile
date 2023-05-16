@@ -1,6 +1,7 @@
 using System.Reactive;
 using Api.Context;
 using Api.Context.Entities;
+using Api.Helper;
 using API.Types.Mapping;
 using API.Types.Objects;
 using AutoMapper;
@@ -17,6 +18,7 @@ public interface IPostService
     Task<PostRes?> GetAsync(int id);
     Task<IEnumerable<PostRes>> GetByShopIdAsync(int shopId);
     Task<IEnumerable<PostRes>> GetLatestAsync(int number);
+    Task<IEnumerable<PostRes>> SearchAsync(string query);
 
     Task<bool> AddSharePost(int postId, int userId);
     Task<bool> RemoveSharePost(int postId, int userId);
@@ -41,6 +43,28 @@ public class PostService : IPostService
 
         _mapper = config.CreateMapper();
     }
+
+    public async Task<IEnumerable<PostRes>> SearchAsync(string query)
+    {
+        query = query.NonUnicode();
+
+        var listProduct = await _context.Posts
+            .Where(p => p.IsDeleted == false)
+            .ToListAsync();
+
+        var listCationNonUnicode =
+            listProduct.ToDictionary(p => p.Id, p => p.Caption.NonUnicode() + " " + p.Description.NonUnicode());
+
+        var listIdMatchQuery = (
+            from b in listCationNonUnicode
+            where b.Value.Contains(query)
+            select b.Key).ToList();
+
+        var result = listProduct.Where(p => listIdMatchQuery.Contains(p.Id));
+
+        return _mapper.Map<IEnumerable<Post>, IEnumerable<PostRes>>(result);
+    }
+
 
     #region Create
 
@@ -95,12 +119,15 @@ public class PostService : IPostService
 
     public async Task<IEnumerable<PostRes>> GetLatestAsync(int number)
     {
-        var listPost = _context.Posts
+        var listPost = await _context.Posts
             .Join(_context.Users, e => e.UserId, p => p.Id, (e, p) => e)
-            .Where(e => e.IsDeleted == false && e.IsHide == false)
+            .Where(e => e.IsDeleted == false)
+            .Where(e => e.IsHide == false)
+            .Where(e => e.IsSold == false)
             .OrderByDescending(e => e.CreatedDate)
             .Take(number)
-            .AsEnumerable();
+            .ToListAsync();
+
         return _mapper.Map<IEnumerable<Post>, IEnumerable<PostRes>>(listPost);
     }
 
