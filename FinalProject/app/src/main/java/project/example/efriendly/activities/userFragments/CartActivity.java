@@ -20,6 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +75,7 @@ public class CartActivity extends AppCompatActivity {
         initList();
         calculateCart();
     }//onCreate
+
 
     private void initView() {
         txtTotal = binding.txtTotalMoney;

@@ -6,4 +6,12 @@ import lombok.Getter;
 public class CreateMessageReq {
 
     private String content;
+
+    public CreateMessageReq(String content) {
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

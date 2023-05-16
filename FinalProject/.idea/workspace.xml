@@ -4,6 +4,7 @@
     <shared>
       <config>
         <device id="pixel_4" />
+        <target>android-33-ext5</target>
       </config>
     </shared>
   </component>

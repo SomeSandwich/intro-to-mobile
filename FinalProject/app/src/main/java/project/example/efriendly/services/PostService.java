@@ -8,6 +8,7 @@ import project.example.efriendly.data.model.Post.UpdatePostReq;
 
 import java.util.List;
 
+import project.example.efriendly.data.model.SuccessRes;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -34,7 +35,7 @@ public interface PostService {
 
     @POST("post")
     @Multipart
-    Call<String> Create(
+    Call<SuccessRes> Create(
             @Part("CategoryId") RequestBody categoryId,
             @Part("Price") RequestBody price,
             @Part("Caption") RequestBody caption,

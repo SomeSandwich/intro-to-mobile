@@ -166,6 +166,10 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         return btn;
     }
 
+    public void fromUserActivityToRecyclerView(String searchText){
+
+    }
+
     private void addCategory() {
         LinearLayout ll = binding.innerLay;
 

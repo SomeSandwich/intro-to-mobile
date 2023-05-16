@@ -40,7 +40,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.viewHolder> {
         UserRes user = userArrayList.get(position);
 
         holder.name.setText(user.getName());
-        Picasso.get().load(user.getAvatar()).into(holder.avatar);
+        Picasso.get().load(user.getAvatarPath()).into(holder.avatar);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +48,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.viewHolder> {
                 Intent intent = new Intent(chatActivity, MessageActivity.class);
                 intent.putExtra("id", user.getId());
                 intent.putExtra("name", user.getName());
-                intent.putExtra("avatar", user.getAvatar());
+                intent.putExtra("avatar", user.getAvatarPath());
                 chatActivity.startActivity(intent);
             }
         });

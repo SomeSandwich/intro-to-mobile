@@ -115,44 +115,36 @@ public class NewfeelAdapter extends RecyclerView.Adapter<NewfeelPostHolder> impl
         holder.shareCount.setText(String.valueOf(posts.get(index).getUserShare().size() + " shares"));
         holder.des.setText(posts.get(index).getDescription());
 
-        try {
-            holder.name.setText(posts.get(index).getUser().getName());
-            if (posts.get(index).getUser().getAvatar() != null) holder.avt.setImageBitmap(posts.get(index).getUser().getAvtBitmap());
-            else holder.avt.setImageResource(R.drawable.user);
-            holder.post.setVisibility(View.VISIBLE);
-        }
-        catch (NullPointerException err) {
-            Call<UserRes> userResCall = userService.GetById(posts.get(index).getUserID());
-            userResCall.enqueue(new Callback<UserRes>() {
-                @Override
-                public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                    if (response.isSuccessful()) {
-                        UserRes user = response.body();
-                        posts.get(index).setUser(user);
-                        if (posts.get(index).getUser().getAvatar() != null) {
-                            try {
-                                Glide.with(context)
-                                        .load(IMAGE_URL + posts.get(index).getUser().getAvatar()).placeholder(R.drawable.placeholder)
-                                        .into(holder.avt);
-                                holder.progressBar.setVisibility(View.INVISIBLE);
-                            }
-                            catch (Exception e) {Log.d("Debug", e.getMessage());}
+        Call<UserRes> userResCall = userService.GetById(posts.get(index).getUserID());
+        userResCall.enqueue(new Callback<UserRes>() {
+            @Override
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                if (response.isSuccessful()) {
+                    UserRes user = response.body();
+                    posts.get(index).setUser(user);
+                    if (posts.get(index).getUser().getAvatarPath() != null) {
+                        try {
+                            Glide.with(context)
+                                    .load(IMAGE_URL + posts.get(index).getUser().getAvatarPath()).placeholder(R.drawable.placeholder)
+                                    .into(holder.avt);
+                            holder.progressBar.setVisibility(View.INVISIBLE);
                         }
-                        holder.name.setText(posts.get(index).getUser().getName());
-                        holder.post.setVisibility(View.VISIBLE);
-
-                    } else {
-                        String message = "An error occurred please try again later ...";
-                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                        catch (Exception e) {Log.d("Debug", e.getMessage());}
                     }
-                }
-                @Override
-                public void onFailure(Call<UserRes> call, Throwable t) {
-                    String message = t.getLocalizedMessage();;
+                    holder.name.setText(posts.get(index).getUser().getName());
+                    holder.post.setVisibility(View.VISIBLE);
+
+                } else {
+                    String message = "An error occurred please try again later ...";
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 }
-            });
-        }
+            }
+            @Override
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                String message = t.getLocalizedMessage();;
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            }
+        });
         holder.progressBar.setVisibility(View.VISIBLE);
 
         Glide.with(context)
