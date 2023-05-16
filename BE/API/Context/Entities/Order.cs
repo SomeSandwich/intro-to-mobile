@@ -22,7 +22,6 @@ public class Order
 
     public virtual ICollection<OrderDetail> OrderDetail { get; set; }
 
-
     [ForeignKey("Customer")] public int CustomerId { get; set; }
     public virtual User Customer { get; set; }
 

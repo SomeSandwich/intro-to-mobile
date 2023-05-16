@@ -10,7 +10,12 @@ public static class DbConfiguration
     {
         if (env.IsDevelopment())
         {
-            services.AddDbContextPool<MobileDbContext>(opt => { opt.UseNpgsql(config["ConnectionStrings:Url"]); });
+            services.AddDbContextPool<MobileDbContext>(opt =>
+            {
+                opt.UseNpgsql(config["ConnectionStrings:Url"]);
+                opt.EnableDetailedErrors();
+                opt.EnableSensitiveDataLogging();
+            });
         }
         else
         {

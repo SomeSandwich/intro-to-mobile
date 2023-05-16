@@ -76,3 +76,8 @@ public class PostRes
 
     public IEnumerable<ReportRes> Reports { get; set; }
 }
+
+public class SearchPostReq
+{
+    public string Query { get; set; }
+}

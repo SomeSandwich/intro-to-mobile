@@ -2,7 +2,6 @@ using System.Security.Claims;
 using System.Web;
 using Api.Context.Entities;
 using API.Services;
-using API.Types.Mapping;
 using API.Types.Objects;
 using Asp.Versioning;
 using AutoMapper;
@@ -19,19 +18,20 @@ public class PostController : ControllerBase
 {
     private readonly IPostService _postSer;
     private readonly IUserService _userSer;
-    private readonly ICommentService _commentSer;
+    private readonly ICommentService _commentServ;
     private readonly IMinioFileService _fileSer;
 
     private readonly IMapper _mapper;
 
-    public PostController(IPostService postSer, IUserService userSer, IMinioFileService fileSer)
+    public PostController(IPostService postSer, IUserService userSer, IMinioFileService fileSer,
+        ICommentService commentServ, IMapper mapper)
     {
         _postSer = postSer;
-        _userSer = userSer;
         _fileSer = fileSer;
+        _commentServ = commentServ;
+        _userSer = userSer;
 
-        var config = new MapperConfiguration(opt => { opt.AddProfile<PostProfile>(); });
-        _mapper = config.CreateMapper();
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -66,10 +66,19 @@ public class PostController : ControllerBase
 
     [HttpGet]
     [Route("category/{categoryId:int}")]
-    public async Task<ActionResult> GetListByCategory([FromRoute] int categoryId, [FromQuery] int number = 10,
+    public async Task<ActionResult> GetByCategory([FromRoute] int categoryId, [FromQuery] int number = 10,
         [FromQuery] string sort = "inc")
     {
         var list = await _postSer.GetByCategoryAsync(categoryId, number, sort);
+
+        return Ok(list);
+    }
+
+    [HttpPost]
+    [Route("search")]
+    public async Task<ActionResult> SearchAsync([FromBody] SearchPostReq req)
+    {
+        var list = await _postSer.SearchAsync(req.Query);
 
         return Ok(list);
     }
@@ -91,14 +100,6 @@ public class PostController : ControllerBase
         {
             return Unauthorized();
         }
-
-        Console.WriteLine(request.UserId);
-        Console.WriteLine(request.CategoryId);
-        Console.WriteLine(request.Price);
-        Console.WriteLine(request.Caption);
-        Console.WriteLine(request.Description);
-        Console.WriteLine(request.MediaFiles?.Count);
-
 
         // Todo: Check file if upload if failed
         var keysSuccess = new List<string>();
@@ -204,7 +205,7 @@ public class PostController : ControllerBase
             return Unauthorized();
         }
 
-        var success = await _commentSer.AddComment(new CreateCommentReq
+        var success = await _commentServ.AddComment(new CreateCommentReq
         {
             UserId = userId, PostId = id, Content = request.Content, CreateAt = DateTime.Now
         });
