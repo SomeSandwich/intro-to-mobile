@@ -11,47 +11,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <TextView
+        <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/Notifications"
                 android:textAlignment="center"
-                android:textColor="#BC6C25"
+                android:textColor="@color/green"
                 android:textSize="22sp"
-                tools:layout_editor_absoluteX="165dp"
-                tools:layout_editor_absoluteY="34dp" />
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"/>
 
-            <ImageView
-                android:id="@+id/ivCart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-100dp"
-                android:layout_marginTop="5dp"
-                android:contentDescription="@string/image"
-                app:srcCompat="@drawable/cart_icon"
-                tools:ignore="ImageContrastCheck"
-                tools:layout_editor_absoluteX="303dp"
-                tools:layout_editor_absoluteY="37dp" />
-
-            <ImageView
-                android:id="@+id/ivMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/image"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/chat_icon"
-                tools:layout_editor_absoluteX="333dp"
-                tools:layout_editor_absoluteY="37dp" />
-        </LinearLayout>
         <ListView
             android:id="@+id/NotificationList"
             android:layout_width="match_parent"
