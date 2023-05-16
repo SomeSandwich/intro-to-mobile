@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import project.example.efriendly.R;
-import project.example.efriendly.activities.userFragments.SearchBarCartLoginActivity;
+import project.example.efriendly.activities.userFragments.SearchBarLoginActivity;
 import project.example.efriendly.adapter.AnonymousHomepageAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.data.model.Category.CategoryRes;
@@ -44,7 +44,7 @@ import retrofit2.Response;
 public class AnonymousHomepageActivity extends AppCompatActivity {
     ActivityAnonymousHomepageBinding binding;
     FragmentTransaction ft;
-    SearchBarCartLoginActivity searchBar = new SearchBarCartLoginActivity();
+    SearchBarLoginActivity searchBar = new SearchBarLoginActivity();
     private CategoryService categoryService;
     private PostService postService;
     AnonymousHomepageActivity.ClickListener listener = new AnonymousHomepageActivity.ClickListener();
