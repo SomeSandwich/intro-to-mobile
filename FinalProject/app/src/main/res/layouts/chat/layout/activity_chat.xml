@@ -4,6 +4,7 @@
     tools:context=".activities.userFragments.ChatActivity">
 
     <data>
+
         <variable
             name="clickHandler"
             type="project.example.efriendly.activities.userFragments.ChatActivity.ChatClickHandler" />
@@ -21,15 +22,15 @@
             android:layout_marginTop="20dp">
 
             <ImageView
-                android:onClick="@{clickHandler::backClick}"
                 android:id="@+id/back_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="30dp"
-                android:src="@drawable/back_arrow_color"
+                android:layout_marginTop="5dp"
                 android:contentDescription="@string/image"
-                />
+                android:onClick="@{clickHandler::backClick}"
+                android:src="@drawable/back_arrow_color" />
+
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
@@ -44,22 +45,21 @@
             android:id="@+id/SearchBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_below="@id/layout"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:layout_below="@id/layout"
             android:background="@drawable/search_bar_frame_2"
-            android:labelFor="@id/SearchBar"
             android:inputType="textFilter"
-            android:paddingHorizontal="10dp"
-            />
+            android:labelFor="@id/SearchBar"
+            android:paddingHorizontal="10dp" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/SearchBar"
-            android:id="@+id/recyclerview"
             android:background="@drawable/listview_border">
 
         </androidx.recyclerview.widget.RecyclerView>

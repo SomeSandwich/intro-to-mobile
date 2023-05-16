@@ -3,49 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.userFragments.SearchBarCartChatActivity">
+
     <data>
+
         <variable
             name="clickHandler"
             type="project.example.efriendly.activities.userFragments.SearchBarCartChatActivity.SearchBarClickHandler" />
     </data>
+
     <RelativeLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/SearchBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="150dp"
             android:background="@drawable/search_bar_frame"
-            android:labelFor="@id/SearchBar"
             android:inputType="textFilter"
-            android:paddingHorizontal="10dp" />
+            android:labelFor="@id/SearchBar"
+            app:defaultQueryHint="Search here..."
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null" />
+
         <ImageButton
-            android:onClick="@{clickHandler::cartClick}"
             android:id="@+id/CartPic"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="-120dp"
-            android:layout_toEndOf="@id/SearchBar"
-            android:scaleType="center"
-            android:contentDescription="@string/image"
-            android:background="@color/white"
-            app:srcCompat="@drawable/cart_icon" />
-        <ImageButton
-            android:onClick="@{clickHandler::chatClick}"
-            android:id="@+id/chatPic"
             android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/CartPic"
+            android:layout_toEndOf="@id/SearchBar"
+            android:background="@color/white"
+            android:contentDescription="@string/image"
+            android:onClick="@{clickHandler::cartClick}"
+            android:scaleType="center"
+            app:srcCompat="@drawable/cart_icon" />
+
+        <ImageButton
+            android:id="@+id/chatPic"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:scaleType="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@id/CartPic"
+            android:background="@color/white"
             android:contentDescription="@string/image"
-            app:srcCompat="@drawable/chat_icon"
-            android:background="@color/white"/>
+            android:onClick="@{clickHandler::chatClick}"
+            android:scaleType="center"
+            app:srcCompat="@drawable/chat_icon" />
     </RelativeLayout>
 </layout>
