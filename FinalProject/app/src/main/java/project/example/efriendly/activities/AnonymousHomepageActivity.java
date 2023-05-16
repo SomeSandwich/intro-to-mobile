@@ -35,6 +35,7 @@ import project.example.efriendly.adapter.AnonymousHomepageAdapter;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.data.model.Category.CategoryRes;
 import project.example.efriendly.data.model.Post.PostRes;
+import project.example.efriendly.data.model.Post.SearchPostReq;
 import project.example.efriendly.databinding.ActivityAnonymousHomepageBinding;
 import project.example.efriendly.services.CategoryService;
 import project.example.efriendly.services.PostService;
@@ -146,7 +147,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
                     List<PostRes> posts = response.body();
-                    for (int i = 0; i<posts.size();i++){
+                    for (int i = 0; i < posts.size(); i++) {
                         if (response.body().get(i).getSold()) {
                             posts.remove(i);
                             i--;
@@ -200,7 +201,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
-                    for (int i = 0; i<posts.size();i++){
+                    for (int i = 0; i < posts.size(); i++) {
                         if (response.body().get(i).getSold()) {
                             posts.remove(i);
                             i--;
@@ -228,8 +229,8 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
 
     public void FetchSearchListPost(String query) {
         // Search
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
-        postServiceCall.enqueue(new Callback<List<PostRes>>() {
+        Call<List<PostRes>> searchCall = postService.Search(new SearchPostReq(query));
+        searchCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
 
@@ -237,7 +238,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
-                    for (int i = 0; i<posts.size();i++){
+                    for (int i = 0; i < posts.size(); i++) {
                         if (response.body().get(i).getSold()) {
                             posts.remove(i);
                             i--;

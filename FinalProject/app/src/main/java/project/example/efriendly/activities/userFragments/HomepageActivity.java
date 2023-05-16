@@ -29,6 +29,7 @@ import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Category.CategoryRes;
 import project.example.efriendly.data.model.Post.PostRes;
+import project.example.efriendly.data.model.Post.SearchPostReq;
 import project.example.efriendly.databinding.ActivityHomepageBinding;
 import project.example.efriendly.services.CategoryService;
 import project.example.efriendly.services.PostService;
@@ -132,7 +133,7 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                 @Override
                 public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
                     List<PostRes> posts = response.body();
-                    for (int i = 0; i<posts.size();i++){
+                    for (int i = 0; i < posts.size(); i++) {
                         if (response.body().get(i).getSold()) {
                             posts.remove(i);
                             i--;
@@ -173,16 +174,17 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
 
         return btn;
     }
+
     public void FetchSearchListPost(String query) {
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(62);
-        postServiceCall.enqueue(new Callback<List<PostRes>>() {
+        Call<List<PostRes>> searchCall = postService.Search(new SearchPostReq(query));
+        searchCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
                 if (response.isSuccessful()) {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
-                    for (int i = 0; i<posts.size();i++){
+                    for (int i = 0; i < posts.size(); i++) {
                         if (response.body().get(i).getSold()) {
                             posts.remove(i);
                             i--;
@@ -206,6 +208,7 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
             }
         });
     }
+
     private void FetchNewestListPost() {
         Call<List<PostRes>> postServiceCall = postService.GetNewest(100);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
@@ -216,7 +219,7 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
-                    for (int i = 0; i<posts.size();i++){
+                    for (int i = 0; i < posts.size(); i++) {
                         if (response.body().get(i).getSold()) {
                             posts.remove(i);
                             i--;
@@ -240,14 +243,18 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         });
 
     }
+
     public void fromUserActivityToRecyclerView(String searchText) {
     }
+
     static public class ActivityHomepageClickHandler {
         Context context;
+
         public ActivityHomepageClickHandler(Context context) {
             this.context = context;
         }
     }
+
     public class ClickListener {
         public void Click(PostRes post) {
             main.onMsgFromFragToMain(post);

@@ -108,12 +108,10 @@ public class UserActivity extends AppCompatActivity {
             homepage.fromUserActivityToRecyclerView(strValue);
         } else if (sender.equals("searchBarSubmit")) {
             homepage.FetchSearchListPost(strValue);
-        }
-        else if (sender.equals("profile")){
-            if (strValue.equals("payment")){
+        } else if (sender.equals("profile")) {
+            if (strValue.equals("payment")) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, paymentActivity).commit();
-            }
-            else if (strValue.equals("editPost")){
+            } else if (strValue.equals("editPost")) {
 
             }
         }
