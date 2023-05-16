@@ -66,10 +66,6 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
         binding.processBar.setVisibility(View.VISIBLE);
 
         addPost();
-
-        binding.processBar.setVisibility(View.INVISIBLE);
-
-
         return binding.getRoot();
     }
     void addPost(){

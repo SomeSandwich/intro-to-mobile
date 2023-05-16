@@ -22,6 +22,7 @@ import java.util.List;
 import project.example.efriendly.R;
 import project.example.efriendly.activities.MessageActivity;
 import project.example.efriendly.activities.userFragments.ChatActivity;
+import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.data.model.Conversation.ConversationRes;
 import project.example.efriendly.data.model.User.UserRes;
@@ -29,6 +30,8 @@ import project.example.efriendly.databinding.ActivityChatBinding;
 import project.example.efriendly.databinding.CustomChatItemsBinding;
 import project.example.efriendly.holder.ChatHolder;
 import project.example.efriendly.services.ConversationService;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> implements DatabaseConnection {
@@ -36,13 +39,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> implements Dat
     List<UserRes> userArrayList;
 
     ConversationService conversationService;
-
     Context context;
+    ChatActivity.ClickListener listener;
 
-    public ChatAdapter(ChatActivity chatActivity, List<UserRes> usersArrayList) {
+    public ChatAdapter(ChatActivity chatActivity, List<UserRes> usersArrayList, ChatActivity.ClickListener listener) {
         this.context = chatActivity.getApplicationContext();
         this.chatActivity = chatActivity;
         this.userArrayList = usersArrayList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -60,6 +64,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> implements Dat
     public void onBindViewHolder(@NonNull ChatHolder holder, int position) {
         final int index = holder.getAdapterPosition();
         UserRes user = userArrayList.get(index);
+        conversationService = RetrofitClientGenerator.getService(ConversationService.class);
 
         holder.name.setText(user.getName());
         if (user.getAvatarPath() != null) {
@@ -73,20 +78,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> implements Dat
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Response<List<ConversationRes>> conversations = conversationService.GetBySelf().execute();
-                    if(conversations.isSuccessful() && conversations.body() != null){
-                        Intent intent = new Intent(chatActivity, MessageActivity.class);
-                        intent.putExtra("conversation_id", conversations.body().get(index).getId());
-                        chatActivity.startActivity(intent);
-                    }
-                    else {
-                        Toast.makeText(context, "Cant' download conversation list", Toast.LENGTH_LONG).show();
-                    }
-                }
-                catch (IOException e) {
-                    Toast.makeText(context, "Can't connect to server", Toast.LENGTH_LONG).show();
-                }
+                listener.ConvClick(index);
             }
         });
     }

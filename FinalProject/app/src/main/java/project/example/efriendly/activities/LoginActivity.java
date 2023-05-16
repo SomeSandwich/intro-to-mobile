@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         handlers = new LoginActivity.LoginActivityClickHandler(this);
         binding.setClickHandler(handlers);
+        binding.processBar.setVisibility(View.INVISIBLE);
     }
 
     public class LoginActivityClickHandler{
@@ -106,14 +107,15 @@ public class LoginActivity extends AppCompatActivity {
     public void loginUser(LoginReq loginReq) {
         authService = RetrofitClientGenerator.getService(AuthService.class);
         Call<LoginRes> loginResCall = authService.Login(loginReq);
+        binding.processBar.setVisibility(View.VISIBLE);
         loginResCall.enqueue(new Callback<LoginRes>() {
             @Override
             public void onResponse(Call<LoginRes> call, Response<LoginRes> response) {
                 if (response.isSuccessful()) {
                     LoginRes loginRes = response.body();
-                    
                     StorageHelper.Token = loginRes.getToken();
-                    
+                    binding.processBar.setVisibility(View.INVISIBLE);
+
                     startActivity(new Intent(LoginActivity.this, UserActivity.class).putExtra("data", loginRes));
                     finish();
                 } else {

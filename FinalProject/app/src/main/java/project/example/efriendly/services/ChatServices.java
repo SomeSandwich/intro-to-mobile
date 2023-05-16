@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -51,7 +52,6 @@ public class ChatServices extends Service {
         IntentFilter intentFilter = new IntentFilter(ACTION_STRING_SERVICE);
         registerReceiver(serviceReceiver, intentFilter);
     }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         conversationId = intent.getExtras().getInt("conversation_id");
@@ -64,7 +64,6 @@ public class ChatServices extends Service {
                 List<MessageRes> messageResList = new ArrayList<MessageRes>();
                 while(true){
                     try{
-                        Thread.sleep(3000);
                         Response<ConversationRes> res = conversationService.GetByConvId(conversationId).execute();
                         if (res.isSuccessful() && res.body() != null){
                             List<MessageRes> currentList = res.body().getMessages();
@@ -73,8 +72,6 @@ public class ChatServices extends Service {
                                 sendBroadcast();
                             }
                         }
-                    }
-                    catch (InterruptedException e){
                     }
                     catch (IOException exception){
                         Toast.makeText(ChatServices.this, "Can't connect to server", Toast.LENGTH_SHORT).show();

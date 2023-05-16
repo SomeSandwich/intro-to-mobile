@@ -79,28 +79,34 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<CartRes>> call, Response<List<CartRes>> response) {
                 if(response.isSuccessful()){
-                    long totalPrices = 0;
+
                     if (response.body().size() == 0) return;
                     List<Boolean> checkList = new ArrayList<Boolean>(response.body().size());
                     for (int i = 0; i < response.body().size(); i++) {
                         checkList.add(Boolean.FALSE);
-                        try{
-                            Response<PostRes> res = postService.GetById(response.body().get(i).getPostId()).execute();
-                            if (res.isSuccessful()){
-                                totalPrices += res.body().getPrice();
+                        postService.GetById(response.body().get(i).getPostId()).enqueue(new Callback<PostRes>() {
+                            @Override
+                            public void onResponse(Call<PostRes> call, Response<PostRes> response) {
+                                if (response.isSuccessful()){
+                                    String prices = binding.Prices.getText().toString();
+                                    long currentPrices = 0;
+                                    if (!prices.equals(""))
+                                        currentPrices = Long.parseLong(prices.substring(0, prices.length() - 2)) + response.body().getPrice();
+                                    binding.Prices.setText(String.valueOf(currentPrices) + "đ");
+                                }
+                                else {
+                                    String message = "An error occurred please try again later ...";
+                                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                }
                             }
-                            else {
+
+                            @Override
+                            public void onFailure(Call<PostRes> call, Throwable t) {
                                 String message = "An error occurred please try again later ...";
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                             }
-
-                        }
-                        catch (IOException exception){
-                            String message = "An error occurred please try again later ...";
-                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                        }
+                        });
                     }
-                    binding.Prices.setText(String.valueOf(totalPrices) + "đ");
                     cartList = response.body();
                     listener.setCheckList(checkList);
                     adapter = new CartAdapter(context, response.body(), listener);
@@ -129,7 +135,11 @@ public class CartActivity extends AppCompatActivity {
             finish();
         }
         public void allCheck(CompoundButton compoundButton, boolean b){
-            for (int i = 0; i < listener.checkList.size();i++) listener.checkList.set(i, binding.cbAll.isChecked());
+            for (int i = 0; i < listener.checkList.size();i++)
+            {
+                listener.checkList.set(i, binding.cbAll.isChecked());
+                adapter.notifyItemChanged(i);
+            }
             adapter.notifyDataSetChanged();
         }
         public void DeleteClick(View view){

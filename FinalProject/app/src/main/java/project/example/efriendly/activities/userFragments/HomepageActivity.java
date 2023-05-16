@@ -75,8 +75,6 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         FetchCategory();
         FetchNewestListPost();
 
-        binding.processBar.setVisibility(View.INVISIBLE);
-
         return binding.getRoot();
     }
 
@@ -98,6 +96,7 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                             btnLayout.setMargins(5, 0, 5, 0);
 
                             ll.addView(newCategory, btnLayout);
+                            binding.processBar.setVisibility(View.INVISIBLE);
                         }
                     } catch (NullPointerException err) {
                         String message = "An error occurred please try again later ...";
@@ -186,8 +185,8 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                     HomepageAdapter adapter = new HomepageAdapter(posts, context, listener);
                     binding.ListItems.setAdapter(adapter);
 
-                    binding.ListItems.setLayoutManager(
-                            new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                    binding.ListItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                    binding.processBar.setVisibility(View.INVISIBLE);
                 } else {
                     String message = "An error occurred please try again later ...";
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();

@@ -218,5 +218,14 @@
                 android:contentDescription="@string/loginHint"
                 android:onClick="@{clickHandler::login}"/>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/processBar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

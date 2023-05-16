@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.userFragments.ChatActivity">
 
     <data>
@@ -10,58 +11,76 @@
             type="project.example.efriendly.activities.userFragments.ChatActivity.ChatClickHandler" />
 
     </data>
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <RelativeLayout
-            android:id="@+id/layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/back_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:contentDescription="@string/image"
-                android:onClick="@{clickHandler::backClick}"
-                android:src="@drawable/back_arrow_color" />
-
-            <TextView
-                android:id="@+id/txtTitle"
+            <RelativeLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Chat"
-                android:textAlignment="center"
-                android:textColor="#BC6C25"
-                android:textSize="22sp" />
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/back_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="@string/image"
+                    android:onClick="@{clickHandler::backClick}"
+                    android:src="@drawable/back_arrow_color" />
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Chat"
+                    android:textAlignment="center"
+                    android:textColor="#BC6C25"
+                    android:textSize="22sp" />
+            </RelativeLayout>
+
+            <SearchView
+                android:id="@+id/SearchBar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/search_bar_frame_2"
+                android:inputType="textFilter"
+                android:labelFor="@id/SearchBar"
+                android:paddingHorizontal="10dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/SearchBar"
+                android:background="@drawable/listview_border">
+
+            </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
+        <ProgressBar
+            android:id="@+id/processBar"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <SearchView
-            android:id="@+id/SearchBar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layout"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/search_bar_frame_2"
-            android:inputType="textFilter"
-            android:labelFor="@id/SearchBar"
-            android:paddingHorizontal="10dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/SearchBar"
-            android:background="@drawable/listview_border">
-
-        </androidx.recyclerview.widget.RecyclerView>
-    </RelativeLayout>
 </layout>
