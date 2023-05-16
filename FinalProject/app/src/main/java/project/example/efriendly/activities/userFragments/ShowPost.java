@@ -184,7 +184,7 @@ public class ShowPost extends Fragment implements DatabaseConnection {
                         binding.sellerAvt.setImageResource(R.drawable.user);
                     else {
                         Glide.with(context)
-                                .load(IMAGE_URL + post.getUser().getAvatarPath())
+                                .load(IMAGE_URL + "/avatar/" + post.getUser().getAvatarPath())
                                 .placeholder(R.drawable.placeholder)
                                 .into(binding.sellerAvt);
                     }

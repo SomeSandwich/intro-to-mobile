@@ -172,7 +172,7 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         return btn;
     }
     public void FetchSearchListPost(String query) {
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(62);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
@@ -200,7 +200,7 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         });
     }
     private void FetchNewestListPost() {
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(10);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {

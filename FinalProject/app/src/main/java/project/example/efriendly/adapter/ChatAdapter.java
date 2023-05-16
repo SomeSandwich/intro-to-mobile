@@ -69,7 +69,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> implements Dat
         holder.name.setText(user.getName());
         if (user.getAvatarPath() != null) {
             Glide.with(context)
-                    .load(IMAGE_URL + user.getAvatarPath())
+                    .load(IMAGE_URL + "/avatar/" + user.getAvatarPath())
                     .placeholder(R.drawable.placeholder)
                     .into(holder.avatar);
         }

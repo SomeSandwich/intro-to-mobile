@@ -39,9 +39,7 @@ public class CartActivity extends AppCompatActivity {
     private ClickListener listener;
     private CartActivityClickHandler clickHandler;
     public CartAdapter adapter;
-
     public List<CartRes> cartList;
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
         View view = getCurrentFocus();
@@ -213,6 +211,13 @@ public class CartActivity extends AppCompatActivity {
                     }
                 }
            }
+        }
+        public void buyClick(View view){
+            if (cartList.size() == 0) return;
+            for (int i = 0; i < listener.checkList.size(); i++){
+
+            }
+
         }
     }
     public class ClickListener{

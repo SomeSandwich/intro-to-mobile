@@ -21,6 +21,7 @@ import project.example.efriendly.activities.UserActivity;
 import project.example.efriendly.client.RetrofitClientGenerator;
 import project.example.efriendly.constants.DatabaseConnection;
 import project.example.efriendly.constants.StorageHelper;
+import project.example.efriendly.data.model.SuccessRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityPaymentBinding;
 import project.example.efriendly.databinding.ActivityProfileBinding;
@@ -35,7 +36,7 @@ public class PaymentActivity extends Fragment implements DatabaseConnection {
     Context context = null;
     private ActivityPaymentBinding binding;
     private UserService userService;
-
+    private UserRes user;
     public PaymentActivity() {}
 
     @Override
@@ -56,7 +57,23 @@ public class PaymentActivity extends Fragment implements DatabaseConnection {
         binding.setClickHandler(new PaymentActivity.ClickHandler(context));
 
         userService = RetrofitClientGenerator.getService(UserService.class);
+        userService.GetSelf().enqueue(new Callback<UserRes>() {
+            @Override
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                if(response.isSuccessful()){
+                    user = response.body();
+                    binding.userMoney.setText(response.body().getMoney().toString() + "đ");
+                }
+                else{
+                    Toast.makeText(main, "Can't get user money", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserRes> call, Throwable t) {
+                Toast.makeText(main, "Can't connect to server", Toast.LENGTH_SHORT).show();
+            }
+        });
         return binding.getRoot();
     }
 
@@ -66,6 +83,21 @@ public class PaymentActivity extends Fragment implements DatabaseConnection {
 
         public void depositClick(View view){
 
+            if (user != null) {
+                user.setMoney(user.getMoney() + Double.parseDouble(binding.money.getText().toString()));
+                userService.setMoney(user.getId(), user.getMoney().intValue()).enqueue(new Callback<SuccessRes>() {
+                    @Override
+                    public void onResponse(Call<SuccessRes> call, Response<SuccessRes> response) {
+                        Toast.makeText(main, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        binding.userMoney.setText(user.getMoney().toString() + "đ");
+                    }
+                    @Override
+                    public void onFailure(Call<SuccessRes> call, Throwable t) {
+                        Toast.makeText(main, "Can't connect to server", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            binding.money.setText("");
         }
 
     }

@@ -10,22 +10,15 @@ import lombok.Getter;
 @Getter
 @Setter
 public class UserRes {
-
     private Integer id;
-
     private String name;
-
     private String email;
-
     private String phoneNumber;
-
     private String avatarPath;
-
     private Double legit;
-
     private String address;
-
     private UserStatus status;
+    private Double money;
 
     public UserRes(Integer id, String name, String avatar) {
         this.id = id;
@@ -62,5 +55,13 @@ public class UserRes {
 
     public UserStatus getStatus() {
         return status;
+    }
+
+    public Double getMoney() {
+        return money;
+    }
+
+    public void setMoney(Double money) {
+        this.money = money;
     }
 }
