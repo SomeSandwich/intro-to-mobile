@@ -93,7 +93,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
                             .load(IMAGE_URL + post.getMediaPath().get(0)).placeholder(R.drawable.placeholder)
                             .into(holder.productImg);
                     holder.txtProductName.setText(post.getCaption());
-                    Log.d("CartActivity", post.getPrice().toString());
                     holder.txtPrice.setText(post.getPrice().toString());
                     userService.GetById(post.getUserID()).enqueue(new Callback<UserRes>() {
                         @Override
@@ -132,83 +131,3 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
     }
 
 }
-
-//public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-//    private ArrayList<CartItem> cartItemArrayList;
-//    private CartManagement cartManagement;
-//    private ChangeNumberItemsListener changeNumberItemsListener;
-//
-//    public CartAdapter(ArrayList<CartItem> cartItemArrayList, Context context, ChangeNumberItemsListener changeNumberItemsListener) {
-//        this.cartItemArrayList = cartItemArrayList;
-//        this.cartManagement = new CartManagement(context);
-//        this.changeNumberItemsListener = changeNumberItemsListener;
-//    }
-//
-//    @Override
-//    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_cart_items, parent, false);
-//        return new ViewHolder(inflate);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
-//        holder.productName.setText(cartItemArrayList.get(position).getProductName());
-//        holder.unitPrice.setText(String.valueOf(cartItemArrayList.get(position).getUnitPrice()));
-//        holder.totalMoney.setText(String.valueOf(cartItemArrayList.get(position).getNumInCart() * cartItemArrayList.get(position).getUnitPrice()));
-//        holder.numInCart.setText(String.valueOf(cartItemArrayList.get(position).getNumInCart()));
-//
-//        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(cartItemArrayList.get(position).getMediaPath(), "drawable",
-//                holder.itemView.getContext().getPackageName());
-//
-//        Glide.with(holder.itemView.getContext())
-//                .load(drawableResourceId)
-//                .into(holder.ivProduct);
-//
-//        holder.btnPlus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                cartManagement.plusNumberProduct(cartItemArrayList, position, new ChangeNumberItemsListener() {
-//                    @Override
-//                    public void changed() {
-//                        notifyDataSetChanged();
-//                        changeNumberItemsListener.changed();
-//                    }
-//                });
-//            }
-//        });
-//
-//        holder.btnMinus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                cartManagement.minusNumberProduct(cartItemArrayList, position, new ChangeNumberItemsListener() {
-//                    @Override
-//                    public void changed() {
-//                        notifyDataSetChanged();
-//                        changeNumberItemsListener.changed();
-//                    }
-//                });
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return cartItemArrayList.size();
-//    }
-//
-//    public class ViewHolder extends RecyclerView.ViewHolder {
-//        TextView productName, unitPrice, numInCart, totalMoney;
-//        ImageView ivProduct, btnPlus, btnMinus;
-//
-//        public ViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            productName = itemView.findViewById(R.id.txtProductName);
-//            unitPrice = itemView.findViewById(R.id.unitPrice);
-//            ivProduct = itemView.findViewById(R.id.ivProduct);
-//            totalMoney = itemView.findViewById(R.id.txtTotalMoney);
-//            numInCart = itemView.findViewById(R.id.txtNumItems);
-//            btnPlus = itemView.findViewById(R.id.btnPlusCart);
-//            btnMinus = itemView.findViewById(R.id.btnMinusCart);
-//        }
-//    }
-//}

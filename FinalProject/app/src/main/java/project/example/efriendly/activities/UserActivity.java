@@ -19,6 +19,7 @@ import project.example.efriendly.activities.userFragments.CreatePost;
 import project.example.efriendly.activities.userFragments.HomepageActivity;
 import project.example.efriendly.activities.userFragments.NewfeelActivity;
 import project.example.efriendly.activities.userFragments.NotificationsActivity;
+import project.example.efriendly.activities.userFragments.PaymentActivity;
 import project.example.efriendly.activities.userFragments.ProfileActivity;
 import project.example.efriendly.activities.userFragments.ShowPost;
 import project.example.efriendly.data.model.Post.PostRes;
@@ -31,6 +32,8 @@ public class UserActivity extends AppCompatActivity {
     NewfeelActivity newFeel = new NewfeelActivity();
     ProfileActivity profile = new ProfileActivity();
     CreatePost createPost = new CreatePost();
+
+    PaymentActivity paymentActivity = new PaymentActivity();
 
     NotificationsActivity notification = new NotificationsActivity();
     ActivityUserBinding binding;
@@ -105,6 +108,11 @@ public class UserActivity extends AppCompatActivity {
             homepage.fromUserActivityToRecyclerView(strValue);
         } else if (sender.equals("searchBarSubmit")) {
             homepage.FetchSearchListPost(strValue);
+        }
+        else if (sender.equals("profile")){
+            if (strValue.equals("payment")){
+                getSupportFragmentManager().beginTransaction().replace(R.id.userFragment, paymentActivity).commit();
+            }
         }
     }
 

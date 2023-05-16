@@ -196,6 +196,10 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
+                    for (int i = 0; i<response.body().size();i++){
+                        if (response.body().get(i).getSold()) posts.remove(i);
+                    }
+
                     AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
                     binding.ListItems.setAdapter(adapter);
 

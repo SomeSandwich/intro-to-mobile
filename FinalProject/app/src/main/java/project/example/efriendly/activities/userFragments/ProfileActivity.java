@@ -92,13 +92,10 @@ public class ProfileActivity extends Fragment implements DatabaseConnection {
 
     public class ProfileActivityClickHandler {
         Context context;
-
         public ProfileActivityClickHandler(Context context) {this.context = context;}
-
         public void logout(View view){
             logoutMenu(ProfileActivity.this);
         }
-
         private void logoutMenu(ProfileActivity profileActivity) {
             AlertDialog.Builder builder = new AlertDialog.Builder(profileActivity.context);
             builder.setTitle("Logout");
@@ -117,6 +114,9 @@ public class ProfileActivity extends Fragment implements DatabaseConnection {
                 }
             });
             builder.show();
+        }
+        public void paymentClick(View view){
+            main.onMsgFromFragToMain("profile", "payment");
         }
     }
 }

@@ -62,4 +62,7 @@
     <string name="addToCart">Add to cart</string>
     <string name="Contact">Contact</string>
     <string name="Category">Category</string>
+    <string name="moneyInput">How much money do you want to deposit?</string>
+    <string name="Deposit">Deposit</string>
+    <string name="defaultMoney">00000000đ</string>
 </resources>

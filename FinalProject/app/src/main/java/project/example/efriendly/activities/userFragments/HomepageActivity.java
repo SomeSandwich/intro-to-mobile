@@ -171,7 +171,6 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
 
         return btn;
     }
-
     public void FetchSearchListPost(String query) {
         Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
@@ -200,7 +199,6 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
             }
         });
     }
-
     private void FetchNewestListPost() {
         Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
@@ -210,6 +208,10 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                 if (response.isSuccessful()) {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
+
+                    for (int i = 0; i<response.body().size();i++){
+                        if (response.body().get(i).getSold()) posts.remove(i);
+                    }
 
                     HomepageAdapter adapter = new HomepageAdapter(posts, main, listener);
                     binding.ListItems.setAdapter(adapter);
@@ -228,21 +230,14 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         });
 
     }
-
-
     public void fromUserActivityToRecyclerView(String searchText) {
-
     }
-
-
     static public class ActivityHomepageClickHandler {
         Context context;
-
         public ActivityHomepageClickHandler(Context context) {
             this.context = context;
         }
     }
-
     public class ClickListener {
         public void Click(PostRes post) {
             main.onMsgFromFragToMain(post);

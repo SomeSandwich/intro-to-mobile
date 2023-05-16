@@ -47,6 +47,8 @@ public class CartActivity extends AppCompatActivity {
     private CartActivityClickHandler clickHandler;
     public CartAdapter adapter;
 
+    public List<CartRes> cartList;
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) { //Disable keyboard when click around
         View view = getCurrentFocus();
@@ -82,8 +84,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<CartRes>> call, Response<List<CartRes>> response) {
                 if(response.isSuccessful()){
-                    final List<CartRes> cartList = response.body();
-
+                    cartList = response.body();
                     if (response.body().size() == 0) return;
                     List<Boolean> checkList = new ArrayList<Boolean>(response.body().size());
                     for (int i = 0; i < response.body().size(); i++) {
@@ -96,7 +97,6 @@ public class CartActivity extends AppCompatActivity {
                                     long currentPrices = 0;
                                     if (!prices.equals("")) {
                                         currentPrices = Long.parseLong(prices.substring(0, prices.length() - 1)) + response.body().getPrice();
-                                        Log.d("cartActivity", String.valueOf(currentPrices));
                                     }
 
                                     binding.Prices.setText(String.valueOf(currentPrices) + "đ");
@@ -110,7 +110,6 @@ public class CartActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                                 }
                             }
-
                             @Override
                             public void onFailure(Call<PostRes> call, Throwable t) {
                                 String message = "An error occurred please try again later ...";
@@ -141,15 +140,52 @@ public class CartActivity extends AppCompatActivity {
             finish();
         }
         public void allCheck(CompoundButton compoundButton, boolean b){
-            for (int i = 0; i < listener.checkList.size();i++)
-            {
-                listener.checkList.set(i, binding.cbAll.isChecked());
+            for (int i = 0; i < listener.checkList.size();i++) {
+                listener.checkList.set(i, b);
                 adapter.notifyItemChanged(i);
             }
             adapter.notifyDataSetChanged();
         }
         public void DeleteClick(View view){
-           /* for (int i = 0;i<listener.checkList.size();i++){
+            if(cartList.size() == 0) return;
+
+            if (binding.cbAll.isChecked()){
+                for (int i = 0;i<listener.checkList.size();i++){
+                    try {
+                        Response<SuccessRes> res = cartService.RemovePostFromSelfCart(cartList.get(i).getPostId()).execute();
+                        if (res.isSuccessful()){
+                            Toast.makeText(getApplicationContext(),"Success", Toast.LENGTH_LONG).show();
+                            Response<PostRes> post = postService.GetById(cartList.get(i).getPostId()).execute();
+                            if (post.isSuccessful()){
+                                long updatePrices =
+                                        Long.parseLong(binding.Prices.getText().toString().substring(0, binding.Prices.getText().toString().length() - 1))
+                                                - post.body().getPrice();
+                                binding.Prices.setText(String.valueOf(updatePrices) + "đ");
+                            }
+                            else {
+                                String message = "Can't update total price.";
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                            }
+
+                            listener.checkList.remove(i);
+                            cartList.remove(i);
+                            adapter.notifyItemRemoved(i);
+
+                            i--;
+                        }
+                        else {
+                            String message = "There is an error when deleting.";
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    catch (IOException exception){
+                        String message = "There is an error when deleting.";
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    }
+                }
+                return;
+            }
+            for (int i = 0;i<listener.checkList.size();i++){
                 if (listener.checkList.get(i).equals(Boolean.TRUE)){
                     try {
                         Response<SuccessRes> res = cartService.RemovePostFromSelfCart(cartList.get(i).getPostId()).execute();
@@ -183,7 +219,7 @@ public class CartActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 }
-            }*/
+           }
         }
     }
     public class ClickListener{
