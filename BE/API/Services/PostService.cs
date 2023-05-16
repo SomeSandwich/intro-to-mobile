@@ -90,7 +90,6 @@ public class PostService : IPostService
             .Where(e => e.IsDeleted == false)
             .AsEnumerable();
 
-
         return _mapper.Map<IEnumerable<Post>, IEnumerable<PostRes>>(listPost);
     }
 
