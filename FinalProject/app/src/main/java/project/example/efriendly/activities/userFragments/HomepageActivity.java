@@ -181,6 +181,13 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
+                    for (int i = 0; i<posts.size();i++){
+                        if (response.body().get(i).getSold()) {
+                            posts.remove(i);
+                            i--;
+                        }
+                    }
+
                     HomepageAdapter adapter = new HomepageAdapter(posts, context, listener);
                     binding.ListItems.setAdapter(adapter);
 
@@ -200,7 +207,7 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
         });
     }
     private void FetchNewestListPost() {
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(10);
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(100);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
@@ -209,8 +216,11 @@ public class HomepageActivity extends Fragment implements DatabaseConnection {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
-                    for (int i = 0; i<response.body().size();i++){
-                        if (response.body().get(i).getSold()) posts.remove(i);
+                    for (int i = 0; i<posts.size();i++){
+                        if (response.body().get(i).getSold()) {
+                            posts.remove(i);
+                            i--;
+                        }
                     }
 
                     HomepageAdapter adapter = new HomepageAdapter(posts, main, listener);

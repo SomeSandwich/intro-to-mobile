@@ -69,16 +69,23 @@ public class NewfeelActivity extends Fragment implements DatabaseConnection {
         return binding.getRoot();
     }
     void addPost(){
-        Call<List<PostRes>> postsCallback = postService.GetNewest(10);
+        Call<List<PostRes>> postsCallback = postService.GetNewest(100);
         postsCallback.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
                 if (response.isSuccessful()) {
                     List<PostRes> posts = response.body();
+
+                    for (int i = 0; i<posts.size();i++){
+                        if (response.body().get(i).getSold()) {
+                            posts.remove(i);
+                            i--;
+                        }
+                    }
+
                     NewfeelAdapter adapter = new NewfeelAdapter(posts, main, listener);
                     binding.newfeelPost.setAdapter(adapter);
                     binding.newfeelPost.setLayoutManager(new LinearLayoutManager(main));
-
                     binding.processBar.setVisibility(View.INVISIBLE);
                 }
                 else {

@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -187,7 +188,7 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
     }
 
     public void FetchNewestListPost() {
-        Call<List<PostRes>> postServiceCall = postService.GetNewest(15);
+        Call<List<PostRes>> postServiceCall = postService.GetNewest(100);
         postServiceCall.enqueue(new Callback<List<PostRes>>() {
             @Override
             public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
@@ -196,8 +197,11 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
 
-                    for (int i = 0; i<response.body().size();i++){
-                        if (response.body().get(i).getSold()) posts.remove(i);
+                    for (int i = 0; i<posts.size();i++){
+                        if (response.body().get(i).getSold()) {
+                            posts.remove(i);
+                            i--;
+                        }
                     }
 
                     AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
@@ -229,6 +233,13 @@ public class AnonymousHomepageActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     List<PostRes> posts = new ArrayList<>();
                     posts = response.body();
+
+                    for (int i = 0; i<posts.size();i++){
+                        if (response.body().get(i).getSold()) {
+                            posts.remove(i);
+                            i--;
+                        }
+                    }
 
                     AnonymousHomepageAdapter adapter = new AnonymousHomepageAdapter(posts, getApplicationContext(), listener);
                     binding.ListItems.setAdapter(adapter);
