@@ -18,6 +18,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import project.example.efriendly.activities.userFragments.ProfileActivity;
+
 public class MainActivity extends AppCompatActivity {
 
 //    private static CategoryService categoryService = RetrofitClientGenerator.createService(CategoryService.class);

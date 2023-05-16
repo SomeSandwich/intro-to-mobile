@@ -2,9 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.ProfileActivity">
+    tools:context=".activities.userFragments.ProfileActivity">
     <data>
-
+        <variable
+            name="clickHandler"
+            type="project.example.efriendly.activities.userFragments.ProfileActivity.ProfileActivityClickHandler"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,7 +36,7 @@
                     <ImageView
                         android:id="@+id/top_background"
                         android:layout_width="match_parent"
-                        android:layout_height="360dp"
+                        android:layout_height="320dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/profile_top_background"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -43,8 +45,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/userAvatar"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:src="@drawable/user"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="4dp"
@@ -52,7 +54,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/top_background"
                         app:layout_constraintTop_toTopOf="@id/view"
-                        app:layout_constraintVertical_bias="0.25"/>
+                        app:layout_constraintVertical_bias="0.2"/>
 
                     <TextView
                         android:id="@+id/txtUsername"
@@ -81,9 +83,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="365dp"
                         android:layout_marginStart="24dp"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginTop="18dp"
                         android:layout_marginEnd="24dp"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="22dp"
                         android:background="@drawable/white_background"
                         android:orientation="vertical"
                         android:elevation="3dp"
@@ -188,6 +190,7 @@
                                 android:textSize="18sp"/>
 
                             <TextView
+                                android:id="@+id/txtEmail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -223,6 +226,7 @@
                                 android:textSize="18sp"/>
 
                             <TextView
+                                android:id="@+id/txtPhone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -258,6 +262,7 @@
                                 android:textSize="18sp"/>
 
                             <TextView
+                                android:id="@+id/txtAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -285,8 +290,12 @@
                     android:text="@string/logout"
                     android:background="@drawable/button_background"
                     style="@style/Widget.AppCompat.Button"
-                    android:layout_margin="20dp"
-                    android:textColor="@color/white"/>
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:onClick="@{clickHandler::logout}"/>
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

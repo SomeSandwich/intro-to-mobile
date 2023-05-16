@@ -19,7 +19,13 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ECE5DD">
+            android:background="#ECE5DD"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:background="@color/green"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:id="@+id/toolbar">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -104,7 +110,6 @@
                 android:textColor="@color/black"
                 android:textColorHint="#A8A7A7"
                 android:id="@+id/getMessage" />
-
             <androidx.cardview.widget.CardView
                 android:layout_width="45dp"
                 android:layout_height="45dp"

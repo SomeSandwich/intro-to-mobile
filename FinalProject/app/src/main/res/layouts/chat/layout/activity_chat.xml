@@ -60,8 +60,12 @@
                 android:background="@drawable/search_bar_frame_2"
                 android:inputType="textFilter"
                 android:labelFor="@id/SearchBar"
-                android:paddingHorizontal="10dp" />
-
+                android:paddingHorizontal="10dp"
+                android:text="@string/Chat"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="22sp" />
+        </RelativeLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
