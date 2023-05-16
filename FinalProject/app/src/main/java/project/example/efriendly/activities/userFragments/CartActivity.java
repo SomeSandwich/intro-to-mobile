@@ -38,7 +38,6 @@ public class CartActivity extends AppCompatActivity {
     private PostService postService;
     private ClickListener listener;
     private CartActivityClickHandler clickHandler;
-    public List<CartRes> cartList;
     public CartAdapter adapter;
 
     @Override
@@ -68,6 +67,7 @@ public class CartActivity extends AppCompatActivity {
         clickHandler = new CartActivityClickHandler(context);
         binding.setClickHandler(clickHandler);
         listener = new ClickListener();
+
         cartService = RetrofitClientGenerator.getService(CartService.class);
         postService = RetrofitClientGenerator.getService(PostService.class);
 
@@ -75,6 +75,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<CartRes>> call, Response<List<CartRes>> response) {
                 if(response.isSuccessful()){
+                    final List<CartRes> cartList = response.body();
 
                     if (response.body().size() == 0) return;
                     List<Boolean> checkList = new ArrayList<Boolean>(response.body().size());
@@ -86,9 +87,16 @@ public class CartActivity extends AppCompatActivity {
                                 if (response.isSuccessful()){
                                     String prices = binding.Prices.getText().toString();
                                     long currentPrices = 0;
-                                    if (!prices.equals(""))
-                                        currentPrices = Long.parseLong(prices.substring(0, prices.length() - 2)) + response.body().getPrice();
+                                    if (!prices.equals("")) {
+                                        currentPrices = Long.parseLong(prices.substring(0, prices.length() - 1)) + response.body().getPrice();
+                                        Log.d("cartActivity", String.valueOf(currentPrices));
+                                    }
+
                                     binding.Prices.setText(String.valueOf(currentPrices) + "đ");
+                                    listener.setCheckList(checkList);
+                                    adapter = new CartAdapter(context, cartList, listener);
+                                    binding.CartList.setAdapter(adapter);
+                                    binding.CartList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                 }
                                 else {
                                     String message = "An error occurred please try again later ...";
@@ -103,11 +111,6 @@ public class CartActivity extends AppCompatActivity {
                             }
                         });
                     }
-                    cartList = response.body();
-                    listener.setCheckList(checkList);
-                    adapter = new CartAdapter(context, response.body(), listener);
-                    binding.CartList.setAdapter(adapter);
-                    binding.CartList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 }
                 else {
                     String message = "An error occurred please try again later ...";
@@ -139,7 +142,7 @@ public class CartActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
         public void DeleteClick(View view){
-            for (int i = 0;i<listener.checkList.size();i++){
+           /* for (int i = 0;i<listener.checkList.size();i++){
                 if (listener.checkList.get(i).equals(Boolean.TRUE)){
                     try {
                         Response<SuccessRes> res = cartService.RemovePostFromSelfCart(cartList.get(i).getPostId()).execute();
@@ -173,7 +176,7 @@ public class CartActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     }
                 }
-            }
+            }*/
         }
     }
     public class ClickListener{

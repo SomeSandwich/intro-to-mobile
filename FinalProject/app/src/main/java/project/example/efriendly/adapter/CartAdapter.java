@@ -1,6 +1,7 @@
 package project.example.efriendly.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -57,24 +58,27 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> implements Dat
         final int index = holder.getAdapterPosition();
         postService = RetrofitClientGenerator.getService(PostService.class);
         userService = RetrofitClientGenerator.getService(UserService.class);
-        holder.checkBox.setChecked(listener.checkList.get(index).equals(Boolean.TRUE));
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                listener.checkList.set(index, !listener.checkList.get(index));
-            }
-        });
-
+        try {
+            holder.checkBox.setChecked(listener.checkList.get(index).equals(Boolean.TRUE));
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    listener.checkList.set(index, !listener.checkList.get(index));
+                }
+            });
+        }
+        catch (NullPointerException e) {Log.d("CartActivity", "nullpointer");}
         int PostId = carts.get(index).getPostId();
         postService.GetById(PostId).enqueue(new Callback<PostRes>() {
             @Override
             public void onResponse(Call<PostRes> call, Response<PostRes> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful() && response.body() != null){
                     PostRes post = response.body();
                     Glide.with(context)
                             .load(IMAGE_URL + post.getMediaPath().get(0)).placeholder(R.drawable.placeholder)
                             .into(holder.productImg);
                     holder.txtProductName.setText(post.getCaption());
+                    Log.d("CartActivity", post.getPrice().toString());
                     holder.txtPrice.setText(post.getPrice().toString());
                     userService.GetById(post.getUserID()).enqueue(new Callback<UserRes>() {
                         @Override

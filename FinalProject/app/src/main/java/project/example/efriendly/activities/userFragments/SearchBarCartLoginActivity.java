@@ -15,7 +15,7 @@ import project.example.efriendly.activities.AnonymousHomepageActivity;
 import project.example.efriendly.activities.LoginActivity;
 import project.example.efriendly.databinding.ActivitySearchBarLoginBinding;
 
-public class SearchBarLoginActivity extends Fragment {
+public class SearchBarCartLoginActivity extends Fragment {
     ActivitySearchBarLoginBinding binding;
     Context context = null;
     AnonymousHomepageActivity anonymousActivity;
@@ -36,8 +36,7 @@ public class SearchBarLoginActivity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = ActivitySearchBarLoginBinding.inflate(inflater, container,false);
-
+        binding = ActivitySearchBarLoginBinding.inflate(inflater, container, false);
         binding.setClickHandler(clickHandler);
 
         binding.SearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -7,7 +7,7 @@
 
         <variable
             name="clickHandler"
-            type="project.example.efriendly.activities.userFragments.SearchBarLoginActivity.SearchBarClickHandler" />
+            type="project.example.efriendly.activities.userFragments.SearchBarCartLoginActivity.SearchBarClickHandler" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
