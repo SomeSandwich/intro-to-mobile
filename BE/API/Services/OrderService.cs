@@ -81,6 +81,8 @@ public class OrderService : IOrderService
                 }
 
                 post.IsSold = true;
+                post.UpdatedDate = DateTime.Now.ToUniversalTime();
+
                 await _context.SaveChangesAsync();
             }
 
