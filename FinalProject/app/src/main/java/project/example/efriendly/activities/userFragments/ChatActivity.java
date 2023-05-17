@@ -30,6 +30,7 @@ import project.example.efriendly.data.model.Conversation.ConversationRes;
 import project.example.efriendly.data.model.User.UserRes;
 import project.example.efriendly.databinding.ActivityChatBinding;
 import project.example.efriendly.services.ConversationService;
+import project.example.efriendly.services.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,10 +39,10 @@ public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private RecyclerView recyclerView;
     private ChatAdapter adapter;
-    private List<UserRes> userArrayList;
+    private List<UserRes> userArrayList = new ArrayList<>();
     private ChatClickHandler handler;
-
     ConversationService conversationService;
+    UserService userService;
     ChatActivity.ClickListener listener;
 
 
@@ -71,30 +72,58 @@ public class ChatActivity extends AppCompatActivity {
         listener = new ClickListener();
 
         conversationService = RetrofitClientGenerator.getService(ConversationService.class);
+        userService = RetrofitClientGenerator.getService(UserService.class);
         binding.processBar.setVisibility(View.VISIBLE);
-        conversationService.GetUserBySelf().enqueue(new Callback<List<UserRes>>() {
+
+        userService.GetSelf().enqueue(new Callback<UserRes>() {
             @Override
-            public void onResponse(Call<List<UserRes>> call, Response<List<UserRes>> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    userArrayList = response.body();
-                    recyclerView = binding.recyclerview;
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    adapter = new ChatAdapter(ChatActivity.this, userArrayList, listener);
-                    recyclerView.setAdapter(adapter);
-                    DividerItemDecoration dividerHorizontal = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
-                    recyclerView.addItemDecoration(dividerHorizontal);
-                    binding.processBar.setVisibility(View.INVISIBLE);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Error when get conversation list", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                if (response.isSuccessful()){
+                    final UserRes self = response.body();
+                    conversationService.GetBySelf().enqueue(new Callback<List<ConversationRes>>() {
+                        @Override
+                        public void onResponse(Call<List<ConversationRes>> call, Response<List<ConversationRes>> response) {
+                            if (response.isSuccessful()){
+                                for (int i = 0; i < response.body().size(); i++){
+                                    response.body().get(i).getParticipations().forEach(user->{
+                                        userService.GetById(user.getUserId()).enqueue(new Callback<UserRes>() {
+                                            @Override
+                                            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
+                                                if (response.isSuccessful() && !response.body().getId().equals(self.getId())){
+                                                    userArrayList.add(response.body());
+                                                    adapter.notifyItemChanged(userArrayList.size() - 1);
+                                                    binding.processBar.setVisibility(View.INVISIBLE);
+                                                }
+                                            }
+                                            @Override
+                                            public void onFailure(Call<UserRes> call, Throwable t) {
+                                                Toast.makeText(getApplicationContext(), "Can't connect to server", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    });
+                                    recyclerView = binding.recyclerview;
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                    adapter = new ChatAdapter(ChatActivity.this, userArrayList, listener);
+                                    recyclerView.setAdapter(adapter);
+                                    DividerItemDecoration dividerHorizontal = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+                                    recyclerView.addItemDecoration(dividerHorizontal);
+                                }
+                            }
+
+                        }
+                        @Override
+                        public void onFailure(Call<List<ConversationRes>> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(), "Can't connect to server", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }
-
             @Override
-            public void onFailure(Call<List<UserRes>> call, Throwable t) {
+            public void onFailure(Call<UserRes> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Can't connect to server", Toast.LENGTH_LONG).show();
             }
         });
+
         handler = new ChatClickHandler(this);
         binding.setClickHandler(handler);
     }

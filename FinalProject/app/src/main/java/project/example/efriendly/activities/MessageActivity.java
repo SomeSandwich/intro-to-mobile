@@ -167,6 +167,7 @@ public class MessageActivity extends AppCompatActivity implements DatabaseConnec
     @Override
     public void onDestroy() {
         try {
+            sendBroadcast();
             stopService(realTimeChat);
             unregisterReceiver(activityReceiver);
         }
@@ -220,6 +221,7 @@ public class MessageActivity extends AppCompatActivity implements DatabaseConnec
 
         public void back(View view){
             try {
+                sendBroadcast();
                 stopService(realTimeChat);
                 unregisterReceiver(activityReceiver);
             }

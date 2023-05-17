@@ -14,9 +14,11 @@ public class MessageHolder extends RecyclerView.ViewHolder {
     public MessageHolder(@NonNull SenderchatlayoutBinding binding) {
         super(binding.getRoot());
         message = binding.senderMessage;
+        time = binding.timeofmessage;
     }
     public MessageHolder(@NonNull RecieverchatlayoutBinding binding){
         super(binding.getRoot());
         message = binding.receiverMessage;
+        time = binding.timeofmessage;
     }
 }

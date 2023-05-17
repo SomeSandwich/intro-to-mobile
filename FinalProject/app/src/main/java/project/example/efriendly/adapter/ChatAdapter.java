@@ -37,8 +37,6 @@ import retrofit2.Response;
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> implements DatabaseConnection {
     ChatActivity chatActivity;
     List<UserRes> userArrayList;
-
-    ConversationService conversationService;
     Context context;
     ChatActivity.ClickListener listener;
 
@@ -64,8 +62,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> implements Dat
     public void onBindViewHolder(@NonNull ChatHolder holder, int position) {
         final int index = holder.getAdapterPosition();
         UserRes user = userArrayList.get(index);
-        conversationService = RetrofitClientGenerator.getService(ConversationService.class);
-
         holder.name.setText(user.getName());
         if (user.getAvatarPath() != null) {
             Glide.with(context)
@@ -74,7 +70,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> implements Dat
                     .into(holder.avatar);
         }
         else {holder.avatar.setImageResource(R.drawable.user);}
-
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

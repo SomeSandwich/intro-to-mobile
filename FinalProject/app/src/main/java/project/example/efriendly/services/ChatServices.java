@@ -25,11 +25,13 @@ public class ChatServices extends Service {
     private static final String TAG = "ChatServices";
     private int conversationId;
 
+    boolean servicesStop = true;
+
     ConversationService conversationService;
     private final BroadcastReceiver serviceReceiver  = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
+            servicesStop = false;
         }
     };
     private void sendBroadcast() {
@@ -62,8 +64,9 @@ public class ChatServices extends Service {
             @Override
             public void run() {
                 List<MessageRes> messageResList = new ArrayList<MessageRes>();
-                while(true){
+                while(servicesStop){
                     try{
+                        Thread.sleep(3000);
                         Response<ConversationRes> res = conversationService.GetByConvId(conversationId).execute();
                         if (res.isSuccessful() && res.body() != null){
                             List<MessageRes> currentList = res.body().getMessages();
@@ -75,6 +78,9 @@ public class ChatServices extends Service {
                     }
                     catch (IOException exception){
                         Toast.makeText(ChatServices.this, "Can't connect to server", Toast.LENGTH_SHORT).show();
+                    }
+                    catch (InterruptedException exception){
+                        Toast.makeText(ChatServices.this, "Thread stop", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
