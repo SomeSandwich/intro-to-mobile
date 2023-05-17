@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import project.example.efriendly.data.model.Message.MessageRes;
@@ -50,6 +53,31 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessageHolder> {
     public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
         final int index = holder.getAdapterPosition();
         holder.message.setText(messages.get(index).getContent());
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime updatePost = LocalDateTime.parse(messages.get(index).getCreateAt().substring(0,19), formatter);
+        LocalDateTime now = LocalDateTime.now();
+
+        long minutes = ChronoUnit.MINUTES.between(updatePost, now);
+        long hour = ChronoUnit.HOURS.between(updatePost, now);
+        long day = ChronoUnit.DAYS.between(updatePost, now);
+
+        String time = String.valueOf(minutes) + " minutes";
+        if (day > 7){
+            time = updatePost.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
+        else if (hour > 24){
+            minutes -= hour * 60;
+            hour -= day * 24;
+            time = String.valueOf(day)+" days "+String.valueOf(hour) + " hours " + String.valueOf(minutes) + " minutes";
+        }
+        else if (minutes > 60) {
+            minutes -= hour * 60;
+            time = String.valueOf(hour) + " hours " + String.valueOf(minutes) + " minutes";
+        }
+
+        holder.time.setText(time);
     }
 
     @Override

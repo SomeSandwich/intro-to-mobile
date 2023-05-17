@@ -95,7 +95,7 @@ public class NewfeelAdapter extends RecyclerView.Adapter<NewfeelPostHolder> impl
         long hour = ChronoUnit.HOURS.between(updatePost, now);
         long day = ChronoUnit.DAYS.between(updatePost, now);
 
-        String time = String.valueOf(minutes) + "minutes";
+        String time = String.valueOf(minutes) + " minutes";
         if (day > 7){
             time = updatePost.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         }

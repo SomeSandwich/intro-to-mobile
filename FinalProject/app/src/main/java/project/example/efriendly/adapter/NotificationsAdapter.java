@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +38,12 @@ import retrofit2.Response;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsHolder> implements DatabaseConnection {
     Context context;
-    int size= 0;
-    UserService userService;
-    PostService postService;
 
-    public NotificationsAdapter( Context context) {
+    List<PostRes> postList;
+
+    public NotificationsAdapter(Context context, List<PostRes> postList) {
         this.context = context;
+        this.postList = postList;
     }
 
     @NonNull
@@ -56,58 +59,39 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsHold
     @Override
     public void onBindViewHolder(@NonNull NotificationsHolder holder, int position) {
         final int index = holder.getAdapterPosition();
-        postService = RetrofitClientGenerator.getService(PostService.class);
-        userService = RetrofitClientGenerator.getService(UserService.class);
+        Glide.with(context)
+                .load(IMAGE_URL + postList.get(index).getMediaPath().get(0)).placeholder(R.drawable.placeholder)
+                .into(holder.avatar);
+        holder.txtNotification.setText(postList.get(index).getCaption() + " has been sold");
 
-        Call<UserRes> userResCall = userService.GetSelf();
-        userResCall.enqueue(new Callback<UserRes>() {
-            @Override
-            public void onResponse(Call<UserRes> call, Response<UserRes> response) {
-                if (response.isSuccessful()) {
-                    UserRes userRes = response.body();
-                    postService.GetBySeller(userRes.getId()).enqueue(new Callback<List<PostRes>>() {
-                        @Override
-                        public void onResponse(Call<List<PostRes>> call, Response<List<PostRes>> response) {
-                            if(response.isSuccessful() && response.body() != null){
-                                List<PostRes> postList = response.body();
-                                size = postList.size();
-                                for (int i = 0; i < postList.size(); i++) {
-                                    if(postList.get(i).getSold()) {
-                                        Glide.with(context)
-                                                .load(IMAGE_URL + postList.get(i).getMediaPath().get(0)).placeholder(R.drawable.placeholder)
-                                                .into(holder.avatar);
-                                        holder.txtNotification.setText(postList.get(i).getCaption() + " has been sold");
-                                        holder.txtTime.setText("1 minute ago");
-                                    }
-                                }
-                            }
-                            else{
-                                String message = "An error occurred please try again later ...";
-                                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<List<PostRes>> call, Throwable t) {
-                            String message = t.getLocalizedMessage();
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else {
-                    String message = "An error occurred ...";
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                }
-            }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime updatePost = LocalDateTime.parse(postList.get(index).getUpdatedDate().substring(0,19), formatter);
+        LocalDateTime now = LocalDateTime.now();
 
-            @Override
-            public void onFailure(Call<UserRes> call, Throwable t) {
-                String message = t.getLocalizedMessage();
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-            }
-        });
+        long minutes = ChronoUnit.MINUTES.between(updatePost, now);
+        long hour = ChronoUnit.HOURS.between(updatePost, now);
+        long day = ChronoUnit.DAYS.between(updatePost, now);
+
+        String time = String.valueOf(minutes) + " minutes";
+        if (day > 7){
+            time = updatePost.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
+        else if (hour > 24){
+            minutes -= hour * 60;
+            hour -= day * 24;
+            time = String.valueOf(day)+" days "+String.valueOf(hour) + " hours " + String.valueOf(minutes) + " minutes";
+        }
+        else if (minutes > 60) {
+            minutes -= hour * 60;
+            time = String.valueOf(hour) + " hours " + String.valueOf(minutes) + " minutes";
+        }
+
+        holder.txtTime.setText(time + " ago");
     }
+
 
     @Override
     public int getItemCount() {
-        return size;
+        return postList.size();
     }
 }
